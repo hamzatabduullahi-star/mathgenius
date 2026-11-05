@@ -1,494 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d1c">
 
     <title>Equation Solver | MathGenius</title>
 
-    <meta name="theme-color" content="#080d1c">
-
-    <link rel="stylesheet" href="./style.css">
-
-    <style>
-        .solver-page {
-            width: min(1050px, 92%);
-            margin: auto;
-            padding: 55px 0 100px;
-        }
-
-        .solver-heading {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .solver-heading h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(32px, 5vw, 46px);
-        }
-
-        .solver-heading p {
-            color: #a0abc2;
-            margin-top: 12px;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: #91aaff;
-            margin-bottom: 25px;
-            font-size: 13px;
-        }
-
-        .solver-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 22px;
-        }
-
-        .solver-card {
-            background: #111a30;
-            border: 1px solid rgba(255,255,255,0.09);
-            border-radius: 18px;
-            padding: 25px;
-        }
-
-        .solver-card h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 21px;
-            margin-bottom: 10px;
-        }
-
-        .solver-description {
-            color: #a0abc2;
-            font-size: 13px;
-            margin-bottom: 25px;
-            line-height: 1.7;
-        }
-
-        .equation-type {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .type-button {
-            flex: 1;
-            padding: 12px 8px;
-            border-radius: 9px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: #080d1c;
-            color: #a0abc2;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .type-button.active {
-            background: rgba(71,118,255,0.18);
-            border-color: #4776ff;
-            color: white;
-        }
-
-        .input-group {
-            margin-bottom: 18px;
-        }
-
-        .input-group label {
-            display: block;
-            color: #dce4ff;
-            font-size: 13px;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 14px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.12);
-            background: #080d1c;
-            color: white;
-            font-size: 16px;
-            outline: none;
-        }
-
-        .input-group input:focus {
-            border-color: #6d91ff;
-            box-shadow: 0 0 0 3px rgba(71,118,255,0.12);
-        }
-
-        .equation-preview {
-            background: #080d1c;
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 18px;
-            border-radius: 12px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .equation-preview small {
-            display: block;
-            color: #a0abc2;
-            margin-bottom: 8px;
-        }
-
-        .equation-preview strong {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 23px;
-            color: #91aaff;
-        }
-
-        .solve-button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(110deg, #4776ff, #9b6dff);
-            color: white;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .solve-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(71,118,255,0.25);
-        }
-
-        .result-box {
-            min-height: 180px;
-            background: #080d1c;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 13px;
-            padding: 20px;
-        }
-
-        .result-placeholder {
-            color: #a0abc2;
-            text-align: center;
-            padding: 35px 5px;
-            font-size: 13px;
-        }
-
-        .result-title {
-            color: #a0abc2;
-            font-size: 12px;
-            margin-bottom: 12px;
-        }
-
-        .solution {
-            display: block;
-            font-family: 'Space Grotesk', sans-serif;
-            color: #65a0ff;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            overflow-wrap: anywhere;
-        }
-
-        .result-message {
-            color: #a0abc2;
-            font-size: 13px;
-            line-height: 1.7;
-            margin-top: 12px;
-        }
-
-        .steps-box {
-            margin-top: 20px;
-        }
-
-        .steps-box h3 {
-            font-size: 16px;
-            margin-bottom: 15px;
-        }
-
-        .step-item {
-            background: rgba(255,255,255,0.035);
-            border-left: 3px solid #6d91ff;
-            padding: 13px;
-            margin-bottom: 10px;
-            border-radius: 0 8px 8px 0;
-            color: #dce4ff;
-            font-size: 13px;
-            line-height: 1.7;
-        }
-
-        .error-message {
-            color: #ff91a9;
-            background: rgba(255,70,100,0.08);
-            padding: 12px;
-            border-radius: 9px;
-            font-size: 13px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @media(max-width: 750px) {
-            .solver-container {
-                grid-template-columns: 1fr;
-            }
-
-            .solver-card {
-                padding: 20px;
-            }
-
-            .solver-page {
-                padding-top: 35px;
-            }
-        }
-
-        @media(max-width: 380px) {
-            .equation-preview strong {
-                font-size: 19px;
-            }
-        }
-    </style>
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header class="header">
-
-    <nav class="navbar">
-
-        <a href="index.html" class="logo">
-            <span class="logo-icon">∑</span>
-            <span>Math<span class="logo-highlight">Genius</span></span>
+    <header class="navbar">
+        <a href="dashboard.html" class="logo">
+            Math<span>Genius</span>
         </a>
 
-        <a href="index.html" class="btn btn-small">Home</a>
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="calculator.html">Calculator</a>
+            <a href="solver.html" class="active">Equation Solver</a>
+            <a href="statistics.html">Statistics</a>
+            <a href="matrix.html">Matrix</a>
+            <a href="history.html">History</a>
+        </nav>
+    </header>
 
-    </nav>
+    <main class="page-container">
 
-</header>
+        <section class="page-heading">
+            <p class="section-label">MATH TOOLS</p>
 
+            <h1>Equation Solver</h1>
 
-<main class="solver-page">
-
-    <a href="index.html#tools" class="back-link">
-        ← Back to Mathematics Tools
-    </a>
-
-
-    <div class="solver-heading">
-
-        <span class="section-label">MATHGENIUS TOOL</span>
-
-        <h1>
-            Equation <span class="gradient-text">Solver</span>
-        </h1>
-
-        <p>
-            Solve mathematical equations and understand
-            how each answer is calculated.
-        </p>
-
-    </div>
-
-
-    <div class="solver-container">
-
-
-        <!-- INPUT SECTION -->
-
-        <section class="solver-card">
-
-            <h2>Enter Your Equation</h2>
-
-            <p class="solver-description">
-                Select an equation type and enter its coefficients.
+            <p>
+                Solve linear and quadratic equations with clear,
+                step-by-step solutions.
             </p>
+        </section>
 
+        <section class="tool-card">
 
-            <div class="equation-type">
+            <h2>Choose Equation Type</h2>
 
-                <button
-                    class="type-button active"
-                    id="linearButton"
-                    type="button">
+            <select id="equationType">
+                <option value="linear">Linear Equation</option>
+                <option value="quadratic">Quadratic Equation</option>
+            </select>
 
-                    Linear
-
-                </button>
-
-
-                <button
-                    class="type-button"
-                    id="quadraticButton"
-                    type="button">
-
-                    Quadratic
-
-                </button>
-
-            </div>
-
-
-            <!-- LINEAR INPUTS -->
+            <!-- LINEAR EQUATION -->
 
             <div id="linearInputs">
 
-                <div class="input-group">
+                <h2>Linear Equation</h2>
 
-                    <label for="linearA">
-                        Coefficient a
-                    </label>
+                <p>
+                    Standard form: ax + b = 0
+                </p>
+
+                <div class="input-group">
+                    <label for="linearA">Value of a</label>
 
                     <input
                         type="number"
                         id="linearA"
-                        value="2"
+                        placeholder="Enter a"
                         step="any"
-                        placeholder="Enter a">
-
+                    >
                 </div>
 
-
                 <div class="input-group">
-
-                    <label for="linearB">
-                        Constant b
-                    </label>
+                    <label for="linearB">Value of b</label>
 
                     <input
                         type="number"
                         id="linearB"
-                        value="-8"
+                        placeholder="Enter b"
                         step="any"
-                        placeholder="Enter b">
-
-                </div>
-
-                <div class="equation-preview">
-
-                    <small>Your equation</small>
-
-                    <strong id="linearPreview">
-                        2x - 8 = 0
-                    </strong>
-
+                    >
                 </div>
 
             </div>
 
+            <!-- QUADRATIC EQUATION -->
 
-            <!-- QUADRATIC INPUTS -->
+            <div id="quadraticInputs" hidden>
 
-            <div id="quadraticInputs" class="hidden">
+                <h2>Quadratic Equation</h2>
+
+                <p>
+                    Standard form: ax² + bx + c = 0
+                </p>
 
                 <div class="input-group">
-
-                    <label for="quadraticA">
-                        Coefficient a
-                    </label>
+                    <label for="quadraticA">Value of a</label>
 
                     <input
                         type="number"
                         id="quadraticA"
-                        value="1"
+                        placeholder="Enter a"
                         step="any"
-                        placeholder="Enter a">
-
+                    >
                 </div>
 
-
                 <div class="input-group">
-
-                    <label for="quadraticB">
-                        Coefficient b
-                    </label>
+                    <label for="quadraticB">Value of b</label>
 
                     <input
                         type="number"
                         id="quadraticB"
-                        value="-5"
+                        placeholder="Enter b"
                         step="any"
-                        placeholder="Enter b">
-
+                    >
                 </div>
 
-
                 <div class="input-group">
-
-                    <label for="quadraticC">
-                        Constant c
-                    </label>
+                    <label for="quadraticC">Value of c</label>
 
                     <input
                         type="number"
                         id="quadraticC"
-                        value="6"
+                        placeholder="Enter c"
                         step="any"
-                        placeholder="Enter c">
-
-                </div>
-
-
-                <div class="equation-preview">
-
-                    <small>Your equation</small>
-
-                    <strong id="quadraticPreview">
-                        x² - 5x + 6 = 0
-                    </strong>
-
+                    >
                 </div>
 
             </div>
 
-
-            <button
-                class="solve-button"
-                id="solveButton"
-                type="button">
-
-                Solve Equation →
-
+            <button id="solveButton" class="primary-btn">
+                Solve Equation
             </button>
 
         </section>
 
+        <!-- SOLUTION -->
 
-
-        <!-- RESULT SECTION -->
-
-        <section class="solver-card">
+        <section id="resultBox" class="tool-card" hidden>
 
             <h2>Solution</h2>
 
-            <p class="solver-description">
-                Your answer and calculation steps will appear below.
-            </p>
-
-
-            <div class="result-box" id="resultBox">
-
-                <p class="result-placeholder">
-                    Enter your equation and tap
-                    "Solve Equation" to see your solution.
-                </p>
-
-            </div>
-
-
-            <div class="steps-box" id="stepsBox">
-
-            </div>
+            <div id="resultContent"></div>
 
         </section>
 
+        <!-- SOLUTION STEPS -->
 
-    </div>
+        <section id="stepsBox" class="tool-card" hidden>
 
-</main>
+            <h2>Step-by-Step Explanation</h2>
 
+            <div id="stepsContent"></div>
 
-<script src="./solver.js"></script>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 MathGenius. Solve Smarter. Learn Better.</p>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script src="history.js"></script>
+    <script src="solver.js"></script>
+
+    <script>
+        const equationType = document.getElementById("equationType");
+        const linearInputs = document.getElementById("linearInputs");
+        const quadraticInputs = document.getElementById("quadraticInputs");
+
+        equationType.addEventListener("change", function () {
+            if (this.value === "linear") {
+                linearInputs.hidden = false;
+                quadraticInputs.hidden = true;
+            } else {
+                linearInputs.hidden = true;
+                quadraticInputs.hidden = false;
+            }
+
+            document.getElementById("resultBox").hidden = true;
+            document.getElementById("stepsBox").hidden = true;
+        });
+    </script>
 
 </body>
-
 </html>
