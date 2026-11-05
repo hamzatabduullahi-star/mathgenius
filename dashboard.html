@@ -5,290 +5,202 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#080d1c">
 
-    <title>My Dashboard | MathGenius</title>
+    <title>Dashboard | MathGenius</title>
 
-    <link rel="stylesheet" href="./style.css">
-
-    <style>
-        .dashboard {
-            width: min(1150px, 92%);
-            margin: 35px auto;
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-
-        .dashboard-header h1 {
-            font-size: clamp(25px, 5vw, 36px);
-        }
-
-        .dashboard-header p {
-            color: #aebbd8;
-            margin-top: 7px;
-        }
-
-        .logout-button {
-            background: #e5484d;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 9px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .welcome-card {
-            background: linear-gradient(120deg, #172b62, #542b91);
-            border-radius: 18px;
-            padding: 30px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .welcome-card h2 {
-            font-size: 25px;
-            margin-bottom: 10px;
-        }
-
-        .welcome-card p {
-            color: #e0e7ff;
-            line-height: 1.7;
-        }
-
-        .profile-card {
-            background: #141d37;
-            border: 1px solid #303d60;
-            border-radius: 15px;
-            padding: 22px;
-            margin-bottom: 30px;
-        }
-
-        .profile-card h3 {
-            margin-bottom: 15px;
-        }
-
-        .profile-detail {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid #303d60;
-            flex-wrap: wrap;
-        }
-
-        .profile-detail:last-child {
-            border-bottom: none;
-        }
-
-        .profile-detail span:first-child {
-            color: #aebbd8;
-        }
-
-        .profile-detail span:last-child {
-            color: #ffffff;
-            overflow-wrap: anywhere;
-        }
-
-        .tools-heading {
-            margin-bottom: 18px;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
-        }
-
-        .tool-card {
-            background: #141d37;
-            border: 1px solid #303d60;
-            border-radius: 15px;
-            padding: 23px;
-            transition: 0.2s ease;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-5px);
-            border-color: #7775ff;
-        }
-
-        .tool-icon {
-            font-size: 32px;
-            margin-bottom: 15px;
-        }
-
-        .tool-card h3 {
-            margin-bottom: 9px;
-        }
-
-        .tool-card p {
-            color: #aebbd8;
-            line-height: 1.6;
-            font-size: 14px;
-            margin-bottom: 18px;
-        }
-
-        .tool-card a {
-            display: inline-block;
-            background: linear-gradient(135deg, #536dfe, #9333ea);
-            color: white;
-            text-decoration: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .dashboard-footer {
-            text-align: center;
-            color: #8794b2;
-            margin: 40px 0 20px;
-            font-size: 13px;
-        }
-
-        @media(max-width: 550px) {
-            .welcome-card {
-                padding: 22px;
-            }
-
-            .dashboard-header {
-                align-items: flex-start;
-            }
-
-            .logout-button {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <header>
+    <header class="navbar">
+        <a href="dashboard.html" class="logo">
+            Math<span>Genius</span>
+        </a>
+
         <nav>
-            <a href="index.html" class="logo">MathGenius</a>
-            <a href="index.html">Home</a>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="calculator.html">Calculator</a>
+            <a href="solver.html">Equation Solver</a>
+            <a href="statistics.html">Statistics</a>
+            <a href="matrix.html">Matrix</a>
+            <a href="history.html">History</a>
         </nav>
     </header>
 
-    <main class="dashboard">
+    <main class="page-container">
 
-        <section class="dashboard-header">
-            <div>
-                <h1>My Dashboard</h1>
-                <p>Your personal mathematics workspace.</p>
-            </div>
+        <!-- WELCOME SECTION -->
 
-            <button class="logout-button" onclick="logout()">
-                Log Out
-            </button>
-        </section>
+        <section class="dashboard-welcome">
+            <p class="section-label">YOUR PERSONAL WORKSPACE</p>
 
-        <section class="welcome-card">
-
-            <h2>Welcome, <span id="userName">User</span>! 👋</h2>
+            <h1>
+                Welcome back,
+                <span id="userName">Math Genius</span>!
+            </h1>
 
             <p>
-                Welcome to your MathGenius workspace.
-                Explore mathematical tools, solve problems
-                and continue learning at your own pace.
+                Your mathematics workspace is ready.
+                What would you like to solve today?
+            </p>
+        </section>
+
+        <!-- ACCOUNT OVERVIEW -->
+
+        <section class="dashboard-section">
+
+            <div class="section-heading">
+                <h2>Your Workspace</h2>
+                <p>Manage your mathematics activities.</p>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <a href="calculator.html" class="dashboard-card">
+                    <div class="card-icon">🧮</div>
+                    <h3>Scientific Calculator</h3>
+                    <p>
+                        Perform basic and advanced mathematical calculations.
+                    </p>
+                    <span>Open Calculator →</span>
+                </a>
+
+                <a href="solver.html" class="dashboard-card">
+                    <div class="card-icon">📐</div>
+                    <h3>Equation Solver</h3>
+                    <p>
+                        Solve linear and quadratic equations step by step.
+                    </p>
+                    <span>Solve Equations →</span>
+                </a>
+
+                <a href="statistics.html" class="dashboard-card">
+                    <div class="card-icon">📊</div>
+                    <h3>Statistics Calculator</h3>
+                    <p>
+                        Calculate mean, median, mode, variance and more.
+                    </p>
+                    <span>Calculate Statistics →</span>
+                </a>
+
+                <a href="matrix.html" class="dashboard-card">
+                    <div class="card-icon">🔢</div>
+                    <h3>Matrix Calculator</h3>
+                    <p>
+                        Perform matrix addition, subtraction,
+                        multiplication and other operations.
+                    </p>
+                    <span>Open Matrix Tool →</span>
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- PERSONAL ACCOUNT -->
+
+        <section class="dashboard-section">
+
+            <div class="section-heading">
+                <h2>Your Account</h2>
+                <p>Your personal mathematics space.</p>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <a href="history.html" class="dashboard-card">
+                    <div class="card-icon">📚</div>
+                    <h3>Calculation History</h3>
+                    <p>
+                        Review and manage your previously saved calculations.
+                    </p>
+                    <span>View History →</span>
+                </a>
+
+                <a href="profile.html" class="dashboard-card">
+                    <div class="card-icon">👤</div>
+                    <h3>My Profile</h3>
+                    <p>
+                        View and update your personal account information.
+                    </p>
+                    <span>Manage Profile →</span>
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- ACCOUNT INFORMATION -->
+
+        <section class="information-card">
+
+            <h2>Keep Learning. Keep Solving.</h2>
+
+            <p>
+                MathGenius provides free mathematical tools for students,
+                lecturers and researchers. Use your workspace to practise,
+                explore problems and improve your understanding of mathematics.
+            </p>
+
+            <p>
+                <strong>Remember:</strong> Your calculations are saved
+                locally in the browser on this device.
             </p>
 
         </section>
 
-        <section class="profile-card">
+        <!-- LOGOUT -->
 
-            <h3>My Account Information</h3>
-
-            <div class="profile-detail">
-                <span>Full Name</span>
-                <span id="userName">Loading...</span>
-            </div>
-
-            <div class="profile-detail">
-                <span>Email Address</span>
-                <span id="userEmail">Loading...</span>
-            </div>
-
-            <div class="profile-detail">
-                <span>Account Category</span>
-                <span id="userRole">Loading...</span>
-            </div>
-
+        <section class="dashboard-logout">
+            <button
+                type="button"
+                id="logoutButton"
+                class="secondary-btn"
+            >
+                Log Out
+            </button>
         </section>
-
-        <h2 class="tools-heading">Mathematics Workspace</h2>
-
-        <section class="tools-grid">
-
-            <article class="tool-card">
-                <div class="tool-icon">🧮</div>
-                <h3>Scientific Calculator</h3>
-                <p>
-                    Perform basic and advanced mathematical calculations.
-                </p>
-                <a href="calculator.html">Open Calculator</a>
-            </article>
-
-            <article class="tool-card">
-                <div class="tool-icon">📐</div>
-                <h3>Equation Solver</h3>
-                <p>
-                    Solve linear and quadratic equations with steps.
-                </p>
-                <a href="solver.html">Solve Equations</a>
-            </article>
-
-            <article class="tool-card">
-                <div class="tool-icon">📊</div>
-                <h3>Statistics Calculator</h3>
-                <p>
-                    Calculate mean, median, mode, variance and more.
-                </p>
-                <a href="statistics.html">Open Statistics</a>
-            </article>
-
-            <article class="tool-card">
-                <div class="tool-icon">🔢</div>
-                <h3>Matrix Calculator</h3>
-                <p>
-                    Perform matrix addition, subtraction,
-                    multiplication and other operations.
-                </p>
-                <a href="matrix.html">Open Matrix Tool</a>
-            </article>
-
-        </section>
-
-        <footer class="dashboard-footer">
-            © 2026 MathGenius. Solve Smarter. Learn Better.
-        </footer>
 
     </main>
 
-    <script src="./auth.js"></script>
+    <footer class="site-footer">
+        <p>© 2026 MathGenius. Solve Smarter. Learn Better.</p>
+    </footer>
+
+    <script src="auth.js"></script>
 
     <script>
-        // Protect this page from logged-out visitors
-        requireLogin();
+        document.addEventListener("DOMContentLoaded", function () {
 
-        // Display account information
-        displayCurrentUser();
+            if (typeof getCurrentUser !== "function") {
+                window.location.href = "login.html";
+                return;
+            }
 
-        // Use the first matching user name element
-        const user = getCurrentUser();
+            const user = getCurrentUser();
 
-        if (user) {
-            document.querySelectorAll("#userName").forEach(element => {
-                element.textContent = user.fullName;
+            if (!user) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            const nameElement = document.getElementById("userName");
+
+            if (nameElement) {
+                nameElement.textContent =
+                    user.fullName || "Math Genius";
+            }
+
+            const logoutButton =
+                document.getElementById("logoutButton");
+
+            logoutButton.addEventListener("click", function () {
+                if (confirm("Are you sure you want to log out?")) {
+                    logout();
+                }
             });
-        }
+
+        });
     </script>
 
 </body>
