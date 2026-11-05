@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scientific Calculator | MathGenius</title>
+    <meta name="theme-color" content="#080d1c">
+
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+        .calculator-page {
+            width: min(1100px, 92%);
+            margin: auto;
+            padding: 65px 0 100px;
+        }
+
+        .calculator-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .calculator-heading h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .calculator-heading p {
+            color: #a0abc2;
+            margin-top: 10px;
+        }
+
+        .calculator-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .calculator-box,
+        .history-box {
+            background: #111a30;
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 20px;
+            padding: 22px;
+        }
+
+        .calculator-screen {
+            background: #080d1c;
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 18px;
+            min-height: 125px;
+            text-align: right;
+            overflow: hidden;
+        }
+
+        .screen-expression {
+            color: #a0abc2;
+            font-size: 15px;
+            min-height: 27px;
+            overflow-wrap: anywhere;
+        }
+
+        .screen-result {
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(28px, 5vw, 38px);
+            font-weight: 700;
+            margin-top: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .calc-btn {
+            min-height: 57px;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 11px;
+            background: #1a2742;
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .calc-btn:hover {
+            background: #26385f;
+            transform: translateY(-2px);
+        }
+
+        .calc-btn.function {
+            background: #20264b;
+            color: #b9a3ff;
+        }
+
+        .calc-btn.operator {
+            background: #172d54;
+            color: #8eb0ff;
+        }
+
+        .calc-btn.clear {
+            background: #51273c;
+            color: #ff9cbd;
+        }
+
+        .calc-btn.equals {
+            background: linear-gradient(110deg, #4776ff, #9b6dff);
+            color: white;
+        }
+
+        .calc-btn.zero {
+            grid-column: span 2;
+        }
+
+        .calculator-help {
+            color: #a0abc2;
+            font-size: 12px;
+            margin-top: 17px;
+            text-align: center;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .history-header h3 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .clear-history {
+            border: none;
+            background: none;
+            color: #ff9cbd;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .history-item {
+            padding: 12px;
+            background: #080d1c;
+            border-radius: 10px;
+            overflow-wrap: anywhere;
+            cursor: pointer;
+        }
+
+        .history-item p {
+            color: #a0abc2;
+            font-size: 12px;
+        }
+
+        .history-item strong {
+            display: block;
+            color: #91aaff;
+            margin-top: 5px;
+        }
+
+        .empty-history {
+            color: #a0abc2;
+            font-size: 13px;
+            text-align: center;
+            padding: 25px 5px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #91aaff;
+            margin-bottom: 25px;
+            font-size: 13px;
+        }
+
+        @media(max-width: 750px) {
+            .calculator-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-page {
+                padding-top: 40px;
+            }
+        }
+
+        @media(max-width: 420px) {
+            .calculator-box {
+                padding: 13px;
+            }
+
+            .calculator-buttons {
+                gap: 6px;
+            }
+
+            .calc-btn {
+                min-height: 52px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+            <span class="logo-icon">∑</span>
+            <span>Math<span class="logo-highlight">Genius</span></span>
+        </a>
+
+        <a href="index.html" class="btn btn-small">Home</a>
+
+    </nav>
+</header>
+
+<main class="calculator-page">
+
+    <a href="index.html#tools" class="back-link">
+        ← Back to Mathematics Tools
+    </a>
+
+    <div class="calculator-heading">
+
+        <span class="section-label">MATHGENIUS TOOL</span>
+
+        <h1>
+            Scientific <span class="gradient-text">Calculator</span>
+        </h1>
+
+        <p>
+            Perform mathematical calculations with accuracy and ease.
+        </p>
+
+    </div>
+
+    <div class="calculator-layout">
+
+        <section class="calculator-box">
+
+            <div class="calculator-screen">
+
+                <div class="screen-expression" id="expression">
+                    Ready for calculation
+                </div>
+
+                <div class="screen-result" id="result">
+                    0
+                </div>
+
+            </div>
+
+            <div class="calculator-buttons">
+
+                <button class="calc-btn clear" data-action="clear">AC</button>
+                <button class="calc-btn clear" data-action="delete">DEL</button>
+                <button class="calc-btn function" data-value="(">(</button>
+                <button class="calc-btn function" data-value=")">)</button>
+                <button class="calc-btn operator" data-value="/">÷</button>
+
+                <button class="calc-btn function" data-value="sin(">sin</button>
+                <button class="calc-btn function" data-value="cos(">cos</button>
+                <button class="calc-btn function" data-value="tan(">tan</button>
+                <button class="calc-btn function" data-value="sqrt(">√</button>
+                <button class="calc-btn operator" data-value="*">×</button>
+
+                <button class="calc-btn function" data-value="log(">log</button>
+                <button class="calc-btn function" data-value="log10(">ln</button>
+                <button class="calc-btn function" data-value="^2">x²</button>
+                <button class="calc-btn function" data-value="^">xʸ</button>
+                <button class="calc-btn operator" data-value="-">−</button>
+
+                <button class="calc-btn" data-value="7">7</button>
+                <button class="calc-btn" data-value="8">8</button>
+                <button class="calc-btn" data-value="9">9</button>
+                <button class="calc-btn function" data-value="pi">π</button>
+                <button class="calc-btn operator" data-value="+">+</button>
+
+                <button class="calc-btn" data-value="4">4</button>
+                <button class="calc-btn" data-value="5">5</button>
+                <button class="calc-btn" data-value="6">6</button>
+                <button class="calc-btn function" data-value="e">e</button>
+                <button class="calc-btn operator" data-value="%">%</button>
+
+                <button class="calc-btn" data-value="1">1</button>
+                <button class="calc-btn" data-value="2">2</button>
+                <button class="calc-btn" data-value="3">3</button>
+                <button class="calc-btn function" data-value="!">!</button>
+                <button class="calc-btn equals" data-action="calculate">=</button>
+
+                <button class="calc-btn zero" data-value="0">0</button>
+                <button class="calc-btn" data-value=".">.</button>
+                <button class="calc-btn function" data-value="Ans">Ans</button>
+                <button class="calc-btn function" data-value="abs(">abs</button>
+
+            </div>
+
+            <p class="calculator-help">
+                You can also use your phone or computer keyboard.
+            </p>
+
+        </section>
+
+        <aside class="history-box">
+
+            <div class="history-header">
+                <h3>History</h3>
+
+                <button class="clear-history" id="clearHistory">
+                    Clear all
+                </button>
+            </div>
+
+            <div class="history-list" id="historyList">
+
+                <p class="empty-history">
+                    Your calculations will appear here.
+                </p>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/14.0.1/math.min.js"></script>
+<script src="./calculator.js"></script>
+
+</body>
+</html>
