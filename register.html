@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d1c">
+    <title>Create Account | MathGenius</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+        .auth-container {
+            width: min(460px, 92%);
+            margin: 45px auto;
+        }
+
+        .auth-card {
+            background: #141d37;
+            border: 1px solid rgba(120, 130, 255, 0.25);
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        .auth-card h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .auth-card > p {
+            color: #b9c3dc;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #dce3f5;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px;
+            border-radius: 9px;
+            border: 1px solid #39466b;
+            background: #0b1328;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #7775ff;
+        }
+
+        .form-group select option {
+            background: #0b1328;
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #536dfe, #9333ea);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .auth-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .auth-message {
+            margin-top: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 22px;
+            color: #b9c3dc;
+            font-size: 14px;
+        }
+
+        .auth-footer a {
+            color: #a8a6ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-home {
+            display: inline-block;
+            color: #a8a6ff;
+            text-decoration: none;
+            margin-bottom: 18px;
+        }
+
+        .password-hint {
+            color: #929fbd;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        @media(max-width: 500px) {
+            .auth-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">MathGenius</a>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+
+    <main class="auth-container">
+
+        <a href="index.html" class="back-home">← Back to Home</a>
+
+        <section class="auth-card">
+
+            <h1>Create Your Account</h1>
+
+            <p>
+                Join MathGenius and access your personal mathematics
+                learning and research workspace.
+            </p>
+
+            <form id="registerForm">
+
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="accountType">Choose Your Category</label>
+
+                    <select id="accountType" required>
+                        <option value="">Select your category</option>
+                        <option value="student">Student</option>
+                        <option value="lecturer">Lecturer</option>
+                        <option value="researcher">Researcher</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="institution">School / Institution</label>
+                    <input
+                        type="text"
+                        id="institution"
+                        placeholder="Enter your institution"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Create a password"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                    >
+                    <p class="password-hint">
+                        Use at least 8 characters.
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Enter your password again"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="auth-button" id="registerButton">
+                    Create Free Account
+                </button>
+
+                <p
+                    id="authMessage"
+                    class="auth-message"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+
+            </form>
+
+            <div class="auth-footer">
+                Already have an account?
+                <a href="login.html">Log In</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="./firebase-config.js"></script>
+    <script src="./auth.js"></script>
+
+</body>
+</html>
