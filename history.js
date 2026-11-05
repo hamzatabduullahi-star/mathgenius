@@ -1,21 +1,20 @@
-// =====================================
-// MATHGENIUS - SAVED CALCULATIONS
-// =====================================
+// ========================================
+// MATHGENIUS - HISTORY SYSTEM
+// Search, filter, delete and clear history
+// ========================================
 
 const HISTORY_KEY = "mathgenius_history";
 
-
 // Get the currently logged-in user
 function getHistoryUser() {
-    if (typeof getCurrentUser !== "function") {
-        return null;
+    if (typeof getCurrentUser === "function") {
+        return getCurrentUser();
     }
 
-    return getCurrentUser();
+    return null;
 }
 
-
-// Create a separate history for each account
+// Create a separate history key for each user
 function getUserHistoryKey() {
     const user = getHistoryUser();
 
@@ -26,36 +25,34 @@ function getUserHistoryKey() {
     return HISTORY_KEY + "_" + user.email.toLowerCase();
 }
 
-
-// Get saved calculations
+// Get saved history
 function getMathHistory() {
     const key = getUserHistoryKey();
 
-    if (!key) return [];
+    if (!key) {
+        return [];
+    }
 
     try {
         return JSON.parse(localStorage.getItem(key)) || [];
     } catch (error) {
-        console.error("Could not load history:", error);
+        console.error("Could not read history:", error);
         return [];
     }
 }
 
-
-// Save a calculation to history
-// Other maths tools will use this function.
+// Save history
 function saveMathHistory(type, expression, result) {
     const key = getUserHistoryKey();
 
     if (!key) {
-        console.error("No logged-in user found.");
-        return false;
+        return;
     }
 
     const history = getMathHistory();
 
     const newEntry = {
-        id: Date.now().toString() + Math.random().toString(16).slice(2),
+        id: Date.now().toString() + Math.random().toString(36).slice(2),
         type: String(type),
         expression: String(expression),
         result: String(result),
@@ -64,111 +61,163 @@ function saveMathHistory(type, expression, result) {
 
     history.unshift(newEntry);
 
-    // Keep the latest 200 calculations
+    // Keep a maximum of 200 records
     const limitedHistory = history.slice(0, 200);
 
     localStorage.setItem(key, JSON.stringify(limitedHistory));
-
-    return true;
 }
 
+// Format history date
+function formatHistoryDate(dateValue) {
+    const date = new Date(dateValue);
 
-// Format dates
-function formatHistoryDate(date) {
-    const parsedDate = new Date(date);
-
-    if (isNaN(parsedDate.getTime())) {
-        return "Unknown date";
+    if (isNaN(date.getTime())) {
+        return "Date unavailable";
     }
 
-    return parsedDate.toLocaleString();
+    return date.toLocaleString();
 }
 
+// Update history summary
+function updateHistorySummary(history) {
+    const totalElement = document.getElementById("totalCalculations");
+    const lastActivityElement = document.getElementById("lastActivity");
+
+    if (totalElement) {
+        totalElement.textContent = history.length;
+    }
+
+    if (lastActivityElement) {
+        lastActivityElement.textContent = history.length
+            ? formatHistoryDate(history[0].date)
+            : "No activity yet";
+    }
+}
+
+// Check whether an entry matches the selected category
+function matchesHistoryFilter(entry, filter) {
+    if (filter === "all") {
+        return true;
+    }
+
+    const type = String(entry.type || "").toLowerCase();
+
+    if (filter === "Matrix Calculator") {
+        return (
+            type.startsWith("matrix calculator") ||
+            type.startsWith("matrix determinant")
+        );
+    }
+
+    return type === filter.toLowerCase() ||
+           type.startsWith(filter.toLowerCase() + " -");
+}
 
 // Display history
 function displayMathHistory() {
     const historyList = document.getElementById("historyList");
-    const totalCalculations = document.getElementById("totalCalculations");
-    const lastActivity = document.getElementById("lastActivity");
 
-    if (!historyList) return;
+    if (!historyList) {
+        return;
+    }
 
     const history = getMathHistory();
 
-    totalCalculations.textContent = history.length;
+    updateHistorySummary(history);
 
-    if (history.length > 0) {
-        lastActivity.textContent = new Date(
-            history[0].date
-        ).toLocaleDateString();
-    } else {
-        lastActivity.textContent = "None";
-    }
+    const searchInput = document.getElementById("historySearch");
+    const filterInput = document.getElementById("historyFilter");
+
+    const searchTerm = searchInput
+        ? searchInput.value.trim().toLowerCase()
+        : "";
+
+    const selectedFilter = filterInput
+        ? filterInput.value
+        : "all";
+
+    const filteredHistory = history.filter(function(entry) {
+        const matchesFilter = matchesHistoryFilter(entry, selectedFilter);
+
+        const searchableText = [
+            entry.type,
+            entry.expression,
+            entry.result,
+            formatHistoryDate(entry.date)
+        ].join(" ").toLowerCase();
+
+        const matchesSearch = searchableText.includes(searchTerm);
+
+        return matchesFilter && matchesSearch;
+    });
 
     historyList.innerHTML = "";
 
     if (history.length === 0) {
         historyList.innerHTML = `
             <div class="empty-history">
-                <h2>No history yet</h2>
+                <h3>No calculations yet</h3>
                 <p>Your saved calculations will appear here.</p>
             </div>
         `;
         return;
     }
 
-    history.forEach(function(entry) {
-        const item = document.createElement("article");
-        item.className = "history-item";
+    if (filteredHistory.length === 0) {
+        historyList.innerHTML = `
+            <div class="empty-history">
+                <h3>No matching results</h3>
+                <p>Try another search term or change the filter.</p>
+            </div>
+        `;
+        return;
+    }
 
-        const top = document.createElement("div");
-        top.className = "history-item-top";
+    filteredHistory.forEach(function(entry) {
+        const card = document.createElement("div");
+        card.className = "history-card";
 
-        const type = document.createElement("span");
-        type.className = "history-type";
-        type.textContent = entry.type || "Calculation";
-
-        const date = document.createElement("span");
-        date.className = "history-date";
-        date.textContent = formatHistoryDate(entry.date);
-
-        top.appendChild(type);
-        top.appendChild(date);
+        const heading = document.createElement("h3");
+        heading.textContent = entry.type || "Calculation";
 
         const expression = document.createElement("p");
-        expression.className = "history-expression";
-        expression.textContent = entry.expression || "";
+        expression.textContent = "Expression: " + (entry.expression || "");
 
-        const answer = document.createElement("p");
-        answer.className = "history-answer";
-        answer.textContent = "Result: " + (entry.result || "");
+        const result = document.createElement("p");
+        result.textContent = "Result: " + (entry.result || "");
+
+        const date = document.createElement("small");
+        date.textContent = formatHistoryDate(entry.date);
 
         const deleteButton = document.createElement("button");
-        deleteButton.className = "delete-entry";
+        deleteButton.type = "button";
         deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-history-button";
 
         deleteButton.addEventListener("click", function() {
             deleteHistoryEntry(entry.id);
         });
 
-        item.appendChild(top);
-        item.appendChild(expression);
-        item.appendChild(answer);
-        item.appendChild(deleteButton);
+        card.appendChild(heading);
+        card.appendChild(expression);
+        card.appendChild(result);
+        card.appendChild(date);
+        card.appendChild(deleteButton);
 
-        historyList.appendChild(item);
+        historyList.appendChild(card);
     });
 }
 
-
-// Delete one calculation
+// Delete one history entry
 function deleteHistoryEntry(id) {
     const key = getUserHistoryKey();
 
-    if (!key) return;
+    if (!key) {
+        return;
+    }
 
     const updatedHistory = getMathHistory().filter(function(entry) {
-        return entry.id !== id;
+        return String(entry.id) !== String(id);
     });
 
     localStorage.setItem(key, JSON.stringify(updatedHistory));
@@ -176,35 +225,34 @@ function deleteHistoryEntry(id) {
     displayMathHistory();
 }
 
-
-// Clear all calculations
+// Clear all history
 function clearMathHistory() {
     const key = getUserHistoryKey();
 
-    if (!key) return;
+    if (!key) {
+        return;
+    }
 
     const history = getMathHistory();
 
     if (history.length === 0) {
-        alert("Your history is already empty.");
         return;
     }
 
-    const confirmClear = confirm(
-        "Are you sure you want to delete all your saved calculations?"
+    const confirmed = confirm(
+        "Are you sure you want to delete all your calculation history?"
     );
 
-    if (!confirmClear) return;
+    if (!confirmed) {
+        return;
+    }
 
     localStorage.removeItem(key);
 
     displayMathHistory();
-
-    alert("Your calculation history has been cleared.");
 }
 
-
-// Start the history page
+// Set up search and filter
 document.addEventListener("DOMContentLoaded", function() {
     const user = getHistoryUser();
 
@@ -213,13 +261,21 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
     }
 
-    displayMathHistory();
+    const searchInput = document.getElementById("historySearch");
+    const filterInput = document.getElementById("historyFilter");
+    const clearButton = document.getElementById("clearHistoryButton");
 
-    const clearButton = document.getElementById(
-        "clearHistoryButton"
-    );
+    if (searchInput) {
+        searchInput.addEventListener("input", displayMathHistory);
+    }
+
+    if (filterInput) {
+        filterInput.addEventListener("change", displayMathHistory);
+    }
 
     if (clearButton) {
         clearButton.addEventListener("click", clearMathHistory);
     }
+
+    displayMathHistory();
 });
