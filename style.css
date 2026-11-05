@@ -1,18 +1,23 @@
-/* =====================================
-   MATHGENIUS - RESPONSIVE DESIGN
-===================================== */
+/* ==========================================
+   MATHGENIUS - ORIGINAL DESIGN RESTORATION
+   Solve Smarter. Learn Better.
+========================================== */
 
 :root {
-    --background: #080d1c;
-    --surface: #111a30;
-    --surface-light: #192540;
+    --bg: #080d1c;
+    --bg-secondary: #0d1428;
+    --card: #111b33;
+    --card-hover: #172442;
     --primary: #547cff;
-    --secondary: #925cff;
-    --text: #f4f6ff;
+    --primary-light: #7898ff;
+    --purple: #925cff;
+    --white: #f5f6ff;
     --muted: #a6b1ca;
-    --border: rgba(255, 255, 255, 0.09);
-    --danger: #ff5c70;
-    --success: #37d99a;
+    --border: rgba(255,255,255,0.09);
+    --success: #35d49a;
+    --danger: #ff6478;
+    --radius: 18px;
+    --shadow: 0 15px 45px rgba(0,0,0,0.25);
 }
 
 * {
@@ -31,11 +36,10 @@ body {
     width: 100%;
     min-height: 100vh;
     overflow-x: hidden;
-    background: var(--background);
-    color: var(--text);
+    background: var(--bg);
+    color: var(--white);
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.6;
-    font-size: 16px;
 }
 
 a {
@@ -56,67 +60,398 @@ button {
 
 img {
     max-width: 100%;
-    height: auto;
 }
 
-/* =====================================
-   NAVIGATION
-===================================== */
+/* ==========================================
+   HEADER AND NAVIGATION
+========================================== */
 
-.navbar {
+header,
+.site-header {
     width: 100%;
-    min-height: 80px;
-    padding: 18px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(8,13,28,0.96);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(15px);
+}
+
+.navbar,
+.nav-container {
+    width: min(1200px, 92%);
+    min-height: 85px;
+    margin: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 25px;
-    background: #0d1427;
-    border-bottom: 1px solid var(--border);
 }
 
-.logo {
-    font-size: 27px;
+.logo,
+.nav-logo {
+    font-size: 30px;
     font-weight: 800;
+    color: var(--primary);
     white-space: nowrap;
     letter-spacing: -1px;
 }
 
-.logo span {
-    color: var(--primary);
+.logo span,
+.nav-logo span {
+    color: var(--primary-light);
 }
 
-.navbar nav {
+.navbar nav,
+.nav-links {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 8px;
+    gap: 25px;
 }
 
-.navbar nav a {
-    font-size: 14px;
+.navbar nav a,
+.nav-links a {
     color: var(--muted);
-    padding: 9px 12px;
-    border-radius: 8px;
+    font-size: 15px;
     transition: 0.3s;
 }
 
 .navbar nav a:hover,
+.nav-links a:hover,
 .navbar nav a.active {
-    background: rgba(84, 124, 255, 0.14);
-    color: #ffffff;
+    color: var(--primary-light);
 }
 
-/* =====================================
-   GENERAL PAGE LAYOUT
-===================================== */
+/* Hamburger menu */
 
-.page-container {
+.menu-toggle,
+.hamburger,
+#menuToggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: white;
+    font-size: 25px;
+    padding: 7px 12px;
+    border-radius: 9px;
+}
+
+/* ==========================================
+   GENERAL CONTAINERS
+========================================== */
+
+.container,
+.page-container,
+.section-container {
     width: min(1150px, 90%);
-    margin: 0 auto;
-    padding: 55px 0;
+    margin: auto;
 }
+
+section {
+    position: relative;
+}
+
+.section {
+    padding: 85px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.section-title h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    margin-bottom: 12px;
+}
+
+.section-title p {
+    color: var(--muted);
+}
+
+/* ==========================================
+   HERO SECTION
+========================================== */
+
+.hero {
+    width: 100%;
+    min-height: 650px;
+    padding: 90px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(84,124,255,0.17),
+            transparent 35%
+        ),
+        var(--bg);
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 650px;
+}
+
+.hero-content h1,
+.hero h1 {
+    font-size: clamp(38px, 6vw, 65px);
+    line-height: 1.15;
+    margin: 18px 0;
+    letter-spacing: -2px;
+}
+
+.hero-content h1 span,
+.hero h1 span {
+    color: var(--primary-light);
+}
+
+.hero-content p,
+.hero > p {
+    color: var(--muted);
+    font-size: 18px;
+    margin-bottom: 25px;
+    max-width: 650px;
+}
+
+.hero-label {
+    color: var(--primary-light);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Hero buttons */
+
+.hero-buttons,
+.button-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.primary-btn,
+.btn-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary), var(--purple));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 25px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.primary-btn:hover,
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(84,124,255,0.25);
+}
+
+.secondary-btn,
+.btn-secondary {
+    display: inline-block;
+    background: var(--card);
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 25px;
+    transition: 0.3s;
+}
+
+.secondary-btn:hover,
+.btn-secondary:hover {
+    border-color: var(--primary);
+}
+
+/* ==========================================
+   MATH PREVIEW CARD
+========================================== */
+
+.hero-preview,
+.math-preview,
+.preview-card {
+    width: 100%;
+    max-width: 430px;
+    padding: 30px;
+    background: linear-gradient(145deg, #142344, #10172b);
+    border: 1px solid rgba(120,152,255,0.2);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+}
+
+.preview-card h3,
+.hero-preview h3 {
+    margin-bottom: 20px;
+    font-size: 21px;
+}
+
+.equation-display {
+    background: #080f20;
+    padding: 22px;
+    border-radius: 12px;
+    font-size: 25px;
+    margin: 18px 0;
+    text-align: center;
+}
+
+.solution-display {
+    color: var(--success);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ==========================================
+   STATISTICS
+========================================== */
+
+.stats,
+.stats-grid,
+.statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.stat-card,
+.stat-item,
+.stat-result {
+    padding: 23px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+}
+
+.stat-card h3,
+.stat-item h3 {
+    color: var(--primary-light);
+    font-size: 27px;
+}
+
+.stat-card p,
+.stat-item p {
+    color: var(--muted);
+}
+
+/* ==========================================
+   TOOLS AND DASHBOARD CARDS
+========================================== */
+
+.tools-grid,
+.dashboard-grid,
+.features-grid,
+.audience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.tool-card,
+.dashboard-card,
+.feature-card,
+.audience-card {
+    min-width: 0;
+    padding: 28px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: 0.3s;
+}
+
+.tool-card:hover,
+.dashboard-card:hover,
+.feature-card:hover,
+.audience-card:hover {
+    transform: translateY(-5px);
+    background: var(--card-hover);
+    border-color: rgba(84,124,255,0.5);
+}
+
+.card-icon {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.tool-card h3,
+.dashboard-card h3,
+.feature-card h3,
+.audience-card h3 {
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.tool-card p,
+.dashboard-card p,
+.feature-card p,
+.audience-card p {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.dashboard-card span {
+    color: var(--primary-light);
+    font-weight: bold;
+}
+
+/* ==========================================
+   DASHBOARD
+========================================== */
+
+.dashboard-welcome {
+    padding: 45px;
+    margin: 40px 0;
+    border-radius: 22px;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(84,124,255,0.2),
+            transparent 45%
+        ),
+        linear-gradient(135deg, #142344, #10172b);
+    border: 1px solid var(--border);
+}
+
+.dashboard-welcome h1 {
+    font-size: clamp(28px, 5vw, 43px);
+    line-height: 1.3;
+    margin: 15px 0;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-welcome h1 span {
+    color: var(--primary-light);
+}
+
+.dashboard-welcome p {
+    color: var(--muted);
+}
+
+.dashboard-section {
+    margin: 55px 0;
+}
+
+.section-heading {
+    margin-bottom: 25px;
+}
+
+.section-heading h2 {
+    font-size: 27px;
+}
+
+.section-heading p {
+    color: var(--muted);
+}
+
+/* ==========================================
+   PAGE HEADINGS
+========================================== */
 
 .page-heading {
     text-align: center;
@@ -124,159 +459,24 @@ img {
 }
 
 .page-heading h1 {
-    font-size: clamp(30px, 5vw, 46px);
-    line-height: 1.2;
+    font-size: clamp(30px, 5vw, 45px);
     margin: 12px 0;
 }
 
 .page-heading p {
     color: var(--muted);
-    font-size: 16px;
 }
 
 .section-label {
-    color: #7898ff;
+    color: var(--primary-light);
     font-size: 12px;
     font-weight: bold;
     letter-spacing: 3px;
-    text-transform: uppercase;
 }
 
-/* =====================================
-   DASHBOARD WELCOME
-===================================== */
-
-.dashboard-welcome {
-    padding: 45px;
-    margin-bottom: 55px;
-    border-radius: 22px;
-    background:
-        radial-gradient(
-            circle at top right,
-            rgba(84, 124, 255, 0.23),
-            transparent 45%
-        ),
-        linear-gradient(135deg, #142344, #10172c);
-    border: 1px solid var(--border);
-}
-
-.dashboard-welcome h1 {
-    font-size: clamp(28px, 5vw, 43px);
-    line-height: 1.25;
-    margin: 15px 0;
-    overflow-wrap: anywhere;
-}
-
-.dashboard-welcome h1 span {
-    color: #7898ff;
-}
-
-.dashboard-welcome p:last-child {
-    color: var(--muted);
-    font-size: 16px;
-}
-
-/* =====================================
-   DASHBOARD SECTIONS
-===================================== */
-
-.dashboard-section {
-    margin-bottom: 55px;
-}
-
-.section-heading {
-    margin-bottom: 22px;
-}
-
-.section-heading h2 {
-    font-size: 27px;
-    margin-bottom: 5px;
-}
-
-.section-heading p {
-    color: var(--muted);
-}
-
-/* =====================================
-   DASHBOARD CARDS
-===================================== */
-
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px;
-}
-
-.dashboard-card {
-    display: block;
-    min-width: 0;
-    padding: 28px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    transition: transform 0.25s, border-color 0.25s;
-}
-
-.dashboard-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary);
-    background: var(--surface-light);
-}
-
-.card-icon {
-    font-size: 34px;
-    margin-bottom: 15px;
-}
-
-.dashboard-card h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-.dashboard-card p {
-    color: var(--muted);
-    font-size: 14px;
-    margin-bottom: 18px;
-}
-
-.dashboard-card span {
-    color: #829cff;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-/* =====================================
-   TOOL CARDS
-===================================== */
-
-.tool-card,
-.information-card {
-    background: var(--surface);
-    padding: 30px;
-    margin-bottom: 25px;
-    border: 1px solid var(--border);
-    border-radius: 18px;
-}
-
-.tool-card h2,
-.information-card h2 {
-    font-size: 23px;
-    margin-bottom: 12px;
-}
-
-.tool-introduction {
-    margin-bottom: 22px;
-}
-
-.tool-introduction p,
-.information-card p {
-    color: var(--muted);
-    margin-bottom: 12px;
-}
-
-/* =====================================
-   FORMS AND INPUTS
-===================================== */
+/* ==========================================
+   FORMS
+========================================== */
 
 .input-group {
     margin: 18px 0;
@@ -294,10 +494,10 @@ select {
     width: 100%;
     min-width: 0;
     padding: 14px 16px;
-    border-radius: 10px;
+    color: white;
+    background: #0b1428;
     border: 1px solid var(--border);
-    background: #0b1326;
-    color: var(--text);
+    border-radius: 10px;
     outline: none;
 }
 
@@ -305,76 +505,62 @@ input:focus,
 textarea:focus,
 select:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(84, 124, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(84,124,255,0.12);
 }
 
 textarea {
     resize: vertical;
-    min-height: 130px;
 }
 
 input::placeholder,
 textarea::placeholder {
-    color: #71809f;
+    color: #7885a0;
 }
 
-/* =====================================
-   BUTTONS
-===================================== */
+/* ==========================================
+   CALCULATOR
+========================================== */
 
-.primary-btn,
-.secondary-btn {
-    display: inline-block;
-    padding: 13px 22px;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    transition: 0.3s;
+.calculator-container {
+    max-width: 650px;
+    margin: auto;
 }
 
-.primary-btn {
-    color: white;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+.calculator-display {
+    width: 100%;
+    padding: 25px;
+    background: #080f20;
+    border-radius: 14px;
+    font-size: 25px;
+    text-align: right;
+    margin-bottom: 18px;
 }
 
-.primary-btn:hover {
-    opacity: 0.85;
-    transform: translateY(-2px);
-}
-
-.secondary-btn {
-    color: white;
-    background: #26334f;
-    border: 1px solid var(--border);
-}
-
-.secondary-btn:hover {
-    background: #354565;
-}
-
-.button-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 20px;
-}
-
-/* =====================================
-   STATISTICS RESULTS
-===================================== */
-
-.statistics-grid {
+.calculator-buttons {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
 }
 
-.stat-result {
-    min-width: 0;
-    padding: 20px;
-    background: #0b1429;
+.calc-btn {
+    min-height: 60px;
     border: 1px solid var(--border);
     border-radius: 12px;
+    background: var(--card);
+    color: white;
+    font-size: 18px;
+}
+
+.calc-btn:hover {
+    background: var(--primary);
+}
+
+/* ==========================================
+   STATISTICS RESULTS
+========================================== */
+
+.statistics-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .stat-result span {
@@ -383,27 +569,26 @@ textarea::placeholder {
 }
 
 .stat-result h3 {
-    font-size: 21px;
     margin-top: 8px;
+    color: var(--primary-light);
     overflow-wrap: anywhere;
 }
 
-/* =====================================
+/* ==========================================
    HISTORY
-===================================== */
+========================================== */
 
 .history-card {
-    background: #0b1429;
+    padding: 22px;
+    margin: 15px 0;
+    background: var(--card);
     border: 1px solid var(--border);
     border-radius: 13px;
-    padding: 20px;
-    margin: 15px 0;
     overflow-wrap: anywhere;
 }
 
 .history-card h3 {
-    color: #829cff;
-    margin-bottom: 10px;
+    color: var(--primary-light);
 }
 
 .history-card p {
@@ -413,46 +598,27 @@ textarea::placeholder {
 .history-card small {
     display: block;
     color: var(--muted);
-    margin-top: 12px;
+    margin-top: 10px;
 }
 
 .delete-history-button {
-    background: rgba(255, 92, 112, 0.15);
-    color: var(--danger);
+    margin-top: 15px;
+    padding: 9px 15px;
     border: none;
     border-radius: 8px;
-    padding: 9px 14px;
-    margin-top: 15px;
+    background: rgba(255,100,120,0.15);
+    color: var(--danger);
 }
 
 .empty-history {
     text-align: center;
-    padding: 35px 15px;
+    padding: 35px;
     color: var(--muted);
 }
 
-/* =====================================
-   MESSAGES AND RESULTS
-===================================== */
-
-.error-message {
-    color: var(--danger);
-    margin-top: 12px;
-}
-
-#resultBox,
-#stepsBox {
-    overflow-wrap: anywhere;
-}
-
-#resultContent,
-#stepsContent {
-    margin-top: 15px;
-}
-
-/* =====================================
+/* ==========================================
    MATRIX
-===================================== */
+========================================== */
 
 .matrix-grid {
     display: grid;
@@ -461,23 +627,24 @@ textarea::placeholder {
 }
 
 .matrix-grid input {
+    min-width: 0;
     text-align: center;
     padding: 10px 5px;
-    min-width: 0;
 }
 
-/* =====================================
-   PROFILE AND AUTHENTICATION
-===================================== */
+/* ==========================================
+   AUTHENTICATION
+========================================== */
 
 .auth-container {
     width: min(450px, 90%);
-    margin: 55px auto;
+    margin: 60px auto;
 }
 
-.auth-card {
-    padding: 30px;
-    background: var(--surface);
+.auth-card,
+.profile-card {
+    padding: 32px;
+    background: var(--card);
     border: 1px solid var(--border);
     border-radius: 18px;
 }
@@ -486,19 +653,8 @@ textarea::placeholder {
     margin-bottom: 20px;
 }
 
-.auth-card .input-group {
-    margin-bottom: 18px;
-}
-
 .auth-card button {
     width: 100%;
-}
-
-.profile-card {
-    background: var(--surface);
-    padding: 30px;
-    border-radius: 18px;
-    border: 1px solid var(--border);
 }
 
 .profile-avatar {
@@ -507,97 +663,194 @@ textarea::placeholder {
     display: grid;
     place-items: center;
     border-radius: 50%;
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--purple));
     font-size: 30px;
     margin-bottom: 20px;
 }
 
-/* =====================================
-   LOGOUT
-===================================== */
+/* ==========================================
+   INFORMATION AND CTA
+========================================== */
 
-.dashboard-logout {
-    margin-top: 35px;
-    text-align: center;
+.information-card,
+.about-card,
+.cta-section {
+    padding: 35px;
+    margin: 35px 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
 }
 
-/* =====================================
-   FOOTER
-===================================== */
+.information-card h2,
+.about-card h2,
+.cta-section h2 {
+    margin-bottom: 15px;
+}
 
+.information-card p,
+.about-card p,
+.cta-section p {
+    color: var(--muted);
+    margin-bottom: 12px;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer,
 .site-footer {
     width: 100%;
-    padding: 25px 15px;
-    text-align: center;
-    color: var(--muted);
+    padding: 35px 5%;
+    margin-top: 60px;
     background: #0d1427;
     border-top: 1px solid var(--border);
-    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
 }
 
-/* =====================================
-   TABLET RESPONSIVENESS
-===================================== */
+/* ==========================================
+   ERROR AND SUCCESS MESSAGES
+========================================== */
+
+.error-message {
+    color: var(--danger);
+    margin-top: 12px;
+}
+
+.success-message {
+    color: var(--success);
+    margin-top: 12px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* ==========================================
+   RESPONSIVE TABLET
+========================================== */
 
 @media (max-width: 900px) {
 
-    .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
+    .navbar,
+    .nav-container {
+        width: 92%;
     }
 
-    .navbar nav {
-        width: 100%;
-        justify-content: flex-start;
+    .navbar nav,
+    .nav-links {
+        gap: 13px;
     }
 
-    .dashboard-grid {
+    .navbar nav a,
+    .nav-links a {
+        font-size: 13px;
+    }
+
+    .hero {
+        gap: 25px;
+    }
+
+    .stats,
+    .stats-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
 }
 
-/* =====================================
-   MOBILE RESPONSIVENESS
-===================================== */
+/* ==========================================
+   RESPONSIVE MOBILE
+========================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 
-    body {
-        font-size: 15px;
+    .navbar,
+    .nav-container {
+        min-height: auto;
+        padding: 18px 0;
+        flex-wrap: wrap;
+        gap: 15px;
     }
 
-    .navbar {
-        padding: 16px 5%;
-        gap: 12px;
+    .logo,
+    .nav-logo {
+        font-size: 27px;
     }
 
-    .logo {
-        font-size: 25px;
+    .menu-toggle,
+    .hamburger,
+    #menuToggle {
+        display: block;
     }
 
-    .navbar nav {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
+    .navbar nav,
+    .nav-links {
         width: 100%;
-        gap: 5px;
-        padding-bottom: 7px;
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 10px 0;
     }
 
-    .navbar nav::-webkit-scrollbar {
+    .navbar nav a,
+    .nav-links a {
+        width: 100%;
+        padding: 12px 5px;
+        font-size: 15px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    /* Supports common hamburger menu classes */
+    .navbar nav.hidden,
+    .nav-links.hidden {
         display: none;
     }
 
-    .navbar nav a {
-        flex: 0 0 auto;
-        font-size: 13px;
-        padding: 8px 11px;
-        white-space: nowrap;
+    .navbar nav.active,
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 65px 5%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero-content h1,
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .hero-content p,
+    .hero > p {
+        font-size: 16px;
+    }
+
+    .hero-preview,
+    .math-preview,
+    .preview-card {
+        max-width: 100%;
+    }
+
+    .tools-grid,
+    .dashboard-grid,
+    .features-grid,
+    .audience-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-welcome {
+        padding: 27px 21px;
+        margin: 25px 0;
+    }
+
+    .dashboard-welcome h1 {
+        font-size: 30px;
     }
 
     .page-container {
@@ -605,86 +858,93 @@ textarea::placeholder {
         padding: 35px 0;
     }
 
-    .page-heading {
-        margin-bottom: 28px;
-    }
-
-    .dashboard-welcome {
-        padding: 25px 20px;
-        margin-bottom: 38px;
-        border-radius: 16px;
-    }
-
-    .dashboard-welcome h1 {
-        font-size: 30px;
-    }
-
-    .dashboard-welcome p:last-child {
-        font-size: 14px;
-    }
-
-    .section-heading h2 {
-        font-size: 23px;
-    }
-
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .dashboard-card {
-        padding: 23px;
-    }
-
-    .tool-card,
-    .information-card {
-        padding: 21px;
+    .section {
+        padding: 55px 0;
     }
 
     .statistics-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
     }
 
-    .stat-result {
-        padding: 14px;
+    .tool-card,
+    .dashboard-card,
+    .feature-card,
+    .audience-card {
+        padding: 23px;
     }
 
-    .stat-result h3 {
-        font-size: 18px;
+    .calculator-buttons {
+        gap: 7px;
+    }
+
+    .calc-btn {
+        min-height: 52px;
+        font-size: 16px;
     }
 
     .button-group {
         flex-direction: column;
+        align-items: stretch;
     }
 
-    .button-group button,
-    .tool-card > .primary-btn {
+    .button-group button {
         width: 100%;
-    }
-
-    .auth-card {
-        padding: 22px;
     }
 
 }
 
-/* =====================================
+/* ==========================================
    SMALL PHONES
-===================================== */
+========================================== */
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
 
-    .dashboard-welcome h1 {
-        font-size: 26px;
+    .hero-content h1,
+    .hero h1 {
+        font-size: 34px;
     }
 
-    .statistics-grid {
+    .dashboard-welcome h1 {
+        font-size: 27px;
+    }
+
+    .statistics-grid,
+    .stats,
+    .stats-grid {
         grid-template-columns: 1fr;
     }
 
-    .page-container {
-        width: 92%;
+    .calculator-display {
+        font-size: 19px;
+        padding: 18px;
     }
 
+    .tool-card,
+    .dashboard-card {
+        padding: 19px;
+    }
+
+}
+
+/* ==========================================
+   ACCESSIBILITY
+========================================== */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
 }
