@@ -1,186 +1,309 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const dataInput = document.getElementById("dataInput");
-    const calculateButton = document.getElementById("calculateButton");
-    const clearButton = document.getElementById("clearButton");
+// ==========================================
+// MATHGENIUS - STATISTICS CALCULATOR
+// ==========================================
 
-    const errorMessage = document.getElementById("errorMessage");
-    const resultsSection = document.getElementById("resultsSection");
+const dataInput = document.getElementById("dataInput");
+const calculateButton = document.getElementById("calculateButton");
+const clearButton = document.getElementById("clearButton");
 
-    // Format numbers neatly
-    function formatNumber(number) {
-        if (!Number.isFinite(number)) return "N/A";
+const errorMessage = document.getElementById("errorMessage");
+const resultsSection = document.getElementById("resultsSection");
 
-        if (Math.abs(number) < 1e-10) {
-            return "0";
-        }
 
-        return Number(number.toFixed(8)).toString();
+// Display a result safely
+function setResult(id, value) {
+    const element = document.getElementById(id);
+
+    if (element) {
+        element.textContent = value;
     }
+}
 
-    // Display a result
-    function displayResult(id, value) {
-        document.getElementById(id).textContent = value;
+
+// Display errors
+function showStatisticsError(message) {
+    if (errorMessage) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = "block";
     }
+}
 
-    // Calculate mode
-    function calculateMode(numbers) {
-        const frequency = new Map();
 
-        numbers.forEach(number => {
-            frequency.set(number, (frequency.get(number) || 0) + 1);
-        });
-
-        const highestFrequency = Math.max(...frequency.values());
-
-        // If every number appears once, there is no mode
-        if (highestFrequency === 1) {
-            return "No mode";
-        }
-
-        const modes = [];
-
-        frequency.forEach((count, number) => {
-            if (count === highestFrequency) {
-                modes.push(number);
-            }
-        });
-
-        return modes
-            .sort((a, b) => a - b)
-            .map(formatNumber)
-            .join(", ");
-    }
-
-    // Calculate statistics
-    function calculateStatistics() {
+// Hide errors
+function clearStatisticsError() {
+    if (errorMessage) {
         errorMessage.textContent = "";
-        resultsSection.hidden = true;
+        errorMessage.style.display = "none";
+    }
+}
 
-        const rawData = dataInput.value.trim();
 
-        if (!rawData) {
-            errorMessage.textContent = "Please enter some numbers.";
-            return;
-        }
+// Format numbers
+function formatNumber(number) {
+    if (!Number.isFinite(number)) {
+        return "N/A";
+    }
 
-        // Accept commas, spaces and new lines
-        const values = rawData.split(/[\s,]+/).filter(Boolean);
+    return Number(number.toPrecision(12)).toString();
+}
 
-        const numbers = values.map(value => Number(value));
 
-        if (numbers.some(number => !Number.isFinite(number))) {
-            errorMessage.textContent =
-                "Invalid data. Please enter numbers only.";
-            return;
-        }
+// Parse user input
+function parseData(input) {
+    const values = input
+        .trim()
+        .split(/[\s,;]+/)
+        .filter(value => value !== "")
+        .map(Number);
 
-        if (numbers.length > 10000) {
-            errorMessage.textContent =
-                "Please enter no more than 10,000 numbers.";
-            return;
-        }
+    if (values.length === 0) {
+        throw new Error("Please enter some numbers.");
+    }
 
-        const sorted = [...numbers].sort((a, b) => a - b);
+    if (values.some(value => !Number.isFinite(value))) {
+        throw new Error("Please enter valid numbers only.");
+    }
 
-        const count = numbers.length;
-        const sum = numbers.reduce((total, number) => total + number, 0);
+    return values;
+}
 
-        if (!Number.isFinite(sum)) {
-            errorMessage.textContent =
-                "The numbers are too large to calculate safely.";
-            return;
-        }
 
-        // Mean
-        const mean = sum / count;
+// Calculate sum
+function calculateSum(values) {
+    return values.reduce((total, value) => total + value, 0);
+}
 
-        // Median
-        let median;
 
-        if (count % 2 === 0) {
-            median = (
-                sorted[count / 2 - 1] +
-                sorted[count / 2]
-            ) / 2;
-        } else {
-            median = sorted[Math.floor(count / 2)];
-        }
+// Calculate mean
+function calculateMean(values) {
+    return calculateSum(values) / values.length;
+}
 
-        // Mode
-        const mode = calculateMode(numbers);
 
-        // Minimum and maximum
-        const minimum = sorted[0];
-        const maximum = sorted[count - 1];
+// Calculate median
+function calculateMedian(values) {
+    const sorted = [...values].sort((a, b) => a - b);
 
-        // Range
+    const middle = Math.floor(sorted.length / 2);
+
+    if (sorted.length % 2 === 0) {
+        return (sorted[middle - 1] + sorted[middle]) / 2;
+    }
+
+    return sorted[middle];
+}
+
+
+// Calculate mode
+function calculateMode(values) {
+    const frequencies = new Map();
+
+    values.forEach(value => {
+        frequencies.set(
+            value,
+            (frequencies.get(value) || 0) + 1
+        );
+    });
+
+    const highestFrequency = Math.max(
+        ...frequencies.values()
+    );
+
+    if (highestFrequency === 1) {
+        return "No mode";
+    }
+
+    const modes = [...frequencies.entries()]
+        .filter(entry => entry[1] === highestFrequency)
+        .map(entry => entry[0]);
+
+    return modes.map(formatNumber).join(", ");
+}
+
+
+// Calculate population variance
+function calculatePopulationVariance(values, mean) {
+    const squaredDifferences = values.map(
+        value => Math.pow(value - mean, 2)
+    );
+
+    return calculateSum(squaredDifferences) / values.length;
+}
+
+
+// Calculate sample variance
+function calculateSampleVariance(values, mean) {
+    if (values.length < 2) {
+        return null;
+    }
+
+    const squaredDifferences = values.map(
+        value => Math.pow(value - mean, 2)
+    );
+
+    return calculateSum(squaredDifferences) / (values.length - 1);
+}
+
+
+// Main statistics calculation
+function calculateStatistics() {
+    clearStatisticsError();
+
+    try {
+        const values = parseData(dataInput.value);
+
+        const count = values.length;
+        const sum = calculateSum(values);
+        const mean = calculateMean(values);
+        const median = calculateMedian(values);
+        const mode = calculateMode(values);
+
+        const minimum = Math.min(...values);
+        const maximum = Math.max(...values);
         const range = maximum - minimum;
 
-        // Population variance
-        const squaredDifferences = numbers.map(number =>
-            (number - mean) ** 2
-        );
-
         const populationVariance =
-            squaredDifferences.reduce((total, value) => total + value, 0) / count;
+            calculatePopulationVariance(values, mean);
 
-        const populationStdDev = Math.sqrt(populationVariance);
+        const populationStandardDeviation =
+            Math.sqrt(populationVariance);
 
-        // Sample variance and standard deviation
-        let sampleVariance = "N/A";
-        let sampleStdDev = "N/A";
+        const sampleVariance =
+            calculateSampleVariance(values, mean);
 
-        if (count > 1) {
-            const calculatedSampleVariance =
-                squaredDifferences.reduce(
-                    (total, value) => total + value,
-                    0
-                ) / (count - 1);
+        const sampleStandardDeviation =
+            sampleVariance === null
+                ? null
+                : Math.sqrt(sampleVariance);
 
-            sampleVariance = formatNumber(calculatedSampleVariance);
-            sampleStdDev = formatNumber(Math.sqrt(calculatedSampleVariance));
-        }
 
-        // Display all results
-        displayResult("countResult", count);
-        displayResult("sumResult", formatNumber(sum));
-        displayResult("meanResult", formatNumber(mean));
-        displayResult("medianResult", formatNumber(median));
-        displayResult("modeResult", mode);
-        displayResult("minResult", formatNumber(minimum));
-        displayResult("maxResult", formatNumber(maximum));
-        displayResult("rangeResult", formatNumber(range));
+        // Display results
+        setResult("countResult", count);
+        setResult("sumResult", formatNumber(sum));
+        setResult("meanResult", formatNumber(mean));
+        setResult("medianResult", formatNumber(median));
+        setResult("modeResult", mode);
+        setResult("minResult", formatNumber(minimum));
+        setResult("maxResult", formatNumber(maximum));
+        setResult("rangeResult", formatNumber(range));
 
-        displayResult(
+        setResult(
             "varianceResult",
             formatNumber(populationVariance)
         );
 
-        displayResult(
+        setResult(
             "stdDevResult",
-            formatNumber(populationStdDev)
+            formatNumber(populationStandardDeviation)
         );
 
-        displayResult("sampleVarianceResult", sampleVariance);
-        displayResult("sampleStdDevResult", sampleStdDev);
+        setResult(
+            "sampleVarianceResult",
+            sampleVariance === null
+                ? "N/A"
+                : formatNumber(sampleVariance)
+        );
 
-        resultsSection.hidden = false;
-    }
+        setResult(
+            "sampleStdDevResult",
+            sampleStandardDeviation === null
+                ? "N/A"
+                : formatNumber(sampleStandardDeviation)
+        );
 
-    // Clear everything
-    function clearCalculator() {
-        dataInput.value = "";
-        errorMessage.textContent = "";
-        resultsSection.hidden = true;
-    }
 
-    calculateButton.addEventListener("click", calculateStatistics);
-    clearButton.addEventListener("click", clearCalculator);
-
-    // Allow Ctrl + Enter to calculate
-    dataInput.addEventListener("keydown", event => {
-        if (event.ctrlKey && event.key === "Enter") {
-            calculateStatistics();
+        if (resultsSection) {
+            resultsSection.style.display = "block";
         }
-    });
-});
+
+
+        // Save calculation to MathGenius history
+        const expression =
+            "Statistics for: " + values.join(", ");
+
+        const result = [
+            "Count: " + count,
+            "Sum: " + formatNumber(sum),
+            "Mean: " + formatNumber(mean),
+            "Median: " + formatNumber(median),
+            "Mode: " + mode,
+            "Minimum: " + formatNumber(minimum),
+            "Maximum: " + formatNumber(maximum),
+            "Range: " + formatNumber(range),
+            "Population variance: " +
+                formatNumber(populationVariance),
+            "Population standard deviation: " +
+                formatNumber(populationStandardDeviation),
+            "Sample variance: " +
+                (sampleVariance === null
+                    ? "N/A"
+                    : formatNumber(sampleVariance)),
+            "Sample standard deviation: " +
+                (sampleStandardDeviation === null
+                    ? "N/A"
+                    : formatNumber(sampleStandardDeviation))
+        ].join(" | ");
+
+        if (typeof saveMathHistory === "function") {
+            saveMathHistory(
+                "Statistics Calculator",
+                expression,
+                result
+            );
+        }
+
+    } catch (error) {
+        showStatisticsError(error.message);
+
+        if (resultsSection) {
+            resultsSection.style.display = "none";
+        }
+    }
+}
+
+
+// Clear calculator
+function clearStatistics() {
+    if (dataInput) {
+        dataInput.value = "";
+    }
+
+    clearStatisticsError();
+
+    if (resultsSection) {
+        resultsSection.style.display = "none";
+    }
+
+    const resultIds = [
+        "countResult",
+        "sumResult",
+        "meanResult",
+        "medianResult",
+        "modeResult",
+        "minResult",
+        "maxResult",
+        "rangeResult",
+        "varianceResult",
+        "stdDevResult",
+        "sampleVarianceResult",
+        "sampleStdDevResult"
+    ];
+
+    resultIds.forEach(id => setResult(id, "0"));
+}
+
+
+// Event listeners
+if (calculateButton) {
+    calculateButton.addEventListener(
+        "click",
+        calculateStatistics
+    );
+}
+
+if (clearButton) {
+    clearButton.addEventListener(
+        "click",
+        clearStatistics
+    );
+}
