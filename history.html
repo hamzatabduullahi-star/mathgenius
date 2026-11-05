@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math History | MathGenius</title>
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+        .history-container {
+            width: min(100% - 32px, 1000px);
+            margin: 40px auto;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .history-header h1 {
+            margin-bottom: 8px;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .history-actions button {
+            padding: 11px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .back-button {
+            background: #263653;
+            color: white;
+        }
+
+        .clear-button {
+            background: #b83245;
+            color: white;
+        }
+
+        .history-summary {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            flex: 1;
+            min-width: 150px;
+            padding: 20px;
+            border-radius: 12px;
+            background: rgba(35, 53, 85, 0.75);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .summary-card h3 {
+            font-size: 14px;
+            opacity: 0.75;
+            margin-bottom: 10px;
+        }
+
+        .summary-card p {
+            font-size: 25px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .history-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .history-item {
+            padding: 20px;
+            border-radius: 12px;
+            background: rgba(35, 53, 85, 0.75);
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow-wrap: anywhere;
+        }
+
+        .history-item-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .history-type {
+            color: #91aaff;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .history-date {
+            font-size: 12px;
+            opacity: 0.65;
+        }
+
+        .history-expression {
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .history-answer {
+            color: #75e0b0;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .empty-history {
+            text-align: center;
+            padding: 50px 20px;
+            border-radius: 12px;
+            background: rgba(35, 53, 85, 0.5);
+        }
+
+        .empty-history h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty-history p {
+            opacity: 0.7;
+        }
+
+        .delete-entry {
+            margin-top: 15px;
+            padding: 8px 12px;
+            border: 1px solid #b83245;
+            background: transparent;
+            color: #ff8d9b;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .history-container {
+                margin-top: 25px;
+            }
+
+            .history-header {
+                align-items: flex-start;
+            }
+
+            .history-actions {
+                width: 100%;
+            }
+
+            .history-actions button {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="history-container">
+
+        <header class="history-header">
+            <div>
+                <h1>Mathematics History</h1>
+                <p>View your previously saved calculations.</p>
+            </div>
+
+            <div class="history-actions">
+                <button class="back-button" onclick="location.href='dashboard.html'">
+                    Dashboard
+                </button>
+
+                <button class="clear-button" id="clearHistoryButton">
+                    Clear History
+                </button>
+            </div>
+        </header>
+
+        <section class="history-summary">
+            <div class="summary-card">
+                <h3>Total Calculations</h3>
+                <p id="totalCalculations">0</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Last Activity</h3>
+                <p id="lastActivity" style="font-size:16px;">None</p>
+            </div>
+        </section>
+
+        <section>
+            <h2 style="margin-bottom:18px;">Your Recent Activity</h2>
+
+            <div class="history-list" id="historyList">
+                <div class="empty-history">
+                    <h2>No history yet</h2>
+                    <p>Your saved calculations will appear here.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="./auth.js"></script>
+    <script src="./history.js"></script>
+
+</body>
+</html>
