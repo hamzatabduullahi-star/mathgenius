@@ -1,9 +1,6 @@
 /* =========================================
    MATHGENIUS — COMPLETE STYLESHEET
-   Solve Smarter. Learn Better.
 ========================================= */
-
-/* ROOT VARIABLES */
 
 :root {
     --background: #080d1c;
@@ -28,7 +25,7 @@
 }
 
 
-/* GLOBAL RESET */
+/* GLOBAL */
 
 * {
     margin: 0;
@@ -231,7 +228,7 @@ a {
 }
 
 
-/* HERO SECTION */
+/* HERO */
 
 .hero {
     width: min(1200px, 92%);
@@ -324,7 +321,7 @@ a {
 }
 
 
-/* HERO MATHEMATICS CARD */
+/* HERO CARD */
 
 .hero-visual {
     position: relative;
@@ -511,7 +508,7 @@ a {
 }
 
 
-/* STATS SECTION */
+/* STATS */
 
 .stats-section {
     width: min(1200px, 92%);
@@ -587,7 +584,7 @@ a {
 }
 
 
-/* TOOLS GRID */
+/* TOOLS */
 
 .tools-grid {
     display: grid;
@@ -708,7 +705,7 @@ a {
 }
 
 
-/* AUDIENCE SECTION */
+/* AUDIENCE */
 
 .audience-section {
     padding-top: 70px;
@@ -773,7 +770,7 @@ a {
 }
 
 
-/* ABOUT SECTION */
+/* ABOUT */
 
 .about-section {
     display: grid;
@@ -854,7 +851,7 @@ a {
 }
 
 
-/* CALL TO ACTION */
+/* CTA */
 
 .cta-section {
     width: min(1200px, 92%);
@@ -959,7 +956,7 @@ a {
 }
 
 
-/* MOBILE RESPONSIVENESS */
+/* TABLET */
 
 @media (max-width: 900px) {
 
@@ -989,6 +986,8 @@ a {
 
 }
 
+
+/* MOBILE */
 
 @media (max-width: 700px) {
 
@@ -1155,6 +1154,8 @@ a {
 }
 
 
+/* SMALL PHONES */
+
 @media (max-width: 380px) {
 
     .hero h1 {
@@ -1180,7 +1181,7 @@ a {
 }
 
 
-/* JAVASCRIPT REVEAL ANIMATIONS */
+/* REVEAL ANIMATIONS */
 
 .reveal {
     opacity: 0;
