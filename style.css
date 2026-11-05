@@ -1,9 +1,9 @@
 /* =========================================
-   MATHGENIUS — MAIN STYLESHEET
+   MATHGENIUS — COMPLETE STYLESHEET
    Solve Smarter. Learn Better.
 ========================================= */
 
-/* GLOBAL SETTINGS */
+/* ROOT VARIABLES */
 
 :root {
     --background: #080d1c;
@@ -26,6 +26,9 @@
     --font-main: 'DM Sans', sans-serif;
     --font-heading: 'Space Grotesk', sans-serif;
 }
+
+
+/* GLOBAL RESET */
 
 * {
     margin: 0;
@@ -544,7 +547,7 @@ a {
 }
 
 
-/* GENERAL SECTION */
+/* GENERAL SECTIONS */
 
 .section {
     width: min(1200px, 92%);
@@ -594,7 +597,6 @@ a {
 
 .tool-card {
     position: relative;
-
     display: block;
 
     padding: 28px;
@@ -1178,13 +1180,6 @@ a {
 }
 
 
-/* ACCESSIBILITY */
-
-a:focus-visible,
-button:focus-visible {
-    outline: 2px solid var(--cyan);
-    outline-offset: 4px;
-}
 /* JAVASCRIPT REVEAL ANIMATIONS */
 
 .reveal {
@@ -1196,4 +1191,13 @@ button:focus-visible {
 .reveal.revealed {
     opacity: 1;
     transform: translateY(0);
+}
+
+
+/* ACCESSIBILITY */
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 4px;
 }
