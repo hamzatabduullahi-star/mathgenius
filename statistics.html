@@ -8,12 +8,457 @@
     <title>Statistics Calculator | MathGenius</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =================================
+           STATISTICS PAGE - PRIVATE STYLES
+        ================================= */
+
+        body.statistics-page {
+            background: #080d1c;
+            color: #f1f5ff;
+            overflow-x: hidden;
+        }
+
+        .statistics-page *,
+        .statistics-page *::before,
+        .statistics-page *::after {
+            box-sizing: border-box;
+        }
+
+        /* NAVIGATION */
+
+        .statistics-page .navbar {
+            width: 100%;
+            min-height: 75px;
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            background: #0b1225;
+            border-bottom: 1px solid rgba(100, 130, 255, 0.15);
+        }
+
+        .statistics-page .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .statistics-page .logo span {
+            color: #8b7aff;
+        }
+
+        .statistics-page .navbar nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .statistics-page .navbar nav a {
+            color: #aebbd6;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+            transition: 0.2s ease;
+        }
+
+        .statistics-page .navbar nav a:hover,
+        .statistics-page .navbar nav a.active {
+            color: #ffffff;
+            background: rgba(105, 92, 255, 0.18);
+        }
+
+        /* MAIN CONTAINER */
+
+        .statistics-page .page-container {
+            width: min(1100px, 92%);
+            margin: 45px auto;
+        }
+
+        /* PAGE HEADING */
+
+        .statistics-page .page-heading {
+            margin-bottom: 32px;
+        }
+
+        .statistics-page .section-label {
+            color: #8295ff;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin-bottom: 14px;
+        }
+
+        .statistics-page .page-heading h1 {
+            font-size: clamp(30px, 5vw, 48px);
+            line-height: 1.2;
+            color: #ffffff;
+            margin: 0 0 15px;
+            overflow-wrap: anywhere;
+        }
+
+        .statistics-page .page-heading > p:last-child {
+            color: #aebbd6;
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0;
+        }
+
+        /* TOOL CARDS */
+
+        .statistics-page .tool-card {
+            background: linear-gradient(
+                145deg,
+                #131e3a,
+                #10182f
+            );
+            border: 1px solid rgba(111, 130, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .statistics-page .tool-introduction {
+            margin-bottom: 22px;
+        }
+
+        .statistics-page .tool-introduction h2 {
+            font-size: clamp(22px, 4vw, 30px);
+            color: #ffffff;
+            margin: 0 0 10px;
+        }
+
+        .statistics-page .tool-introduction p {
+            color: #aab6d1;
+            font-size: 15px;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* DATA INPUT */
+
+        .statistics-page #dataInput {
+            display: block;
+            width: 100%;
+            min-height: 150px;
+            padding: 18px;
+            resize: vertical;
+            border-radius: 13px;
+            border: 1px solid #354c83;
+            background: #080f24;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 16px;
+            line-height: 1.6;
+            outline: none;
+            transition: 0.25s ease;
+        }
+
+        .statistics-page #dataInput::placeholder {
+            color: #72809f;
+        }
+
+        .statistics-page #dataInput:focus {
+            border-color: #8b65ff;
+            box-shadow: 0 0 0 3px rgba(139, 101, 255, 0.12);
+        }
+
+        /* BUTTONS */
+
+        .statistics-page .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .statistics-page .button-group button {
+            min-height: 52px;
+            padding: 13px 22px;
+            border-radius: 12px;
+            border: none;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .statistics-page .button-group button:active {
+            transform: scale(0.97);
+        }
+
+        .statistics-page .primary-btn {
+            flex: 1;
+            background: linear-gradient(110deg, #397dff, #8535ed);
+            color: #ffffff;
+            box-shadow: 0 5px 18px rgba(91, 83, 255, 0.2);
+        }
+
+        .statistics-page .secondary-btn {
+            min-width: 105px;
+            background: #202d4c;
+            border: 1px solid #45577f !important;
+            color: #dce5ff;
+        }
+
+        .statistics-page .button-group button:hover {
+            opacity: 0.88;
+        }
+
+        .statistics-page .error-message {
+            color: #ff7777;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        /* RESULTS */
+
+        .statistics-page #resultsSection[hidden] {
+            display: none !important;
+        }
+
+        .statistics-page .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .statistics-page .stat-result {
+            background: #0b142c;
+            border: 1px solid rgba(91, 125, 255, 0.25);
+            border-radius: 14px;
+            padding: 19px;
+            min-width: 0;
+            transition: 0.2s ease;
+        }
+
+        .statistics-page .stat-result:hover {
+            border-color: #8465ff;
+            transform: translateY(-3px);
+        }
+
+        .statistics-page .stat-result span {
+            display: block;
+            color: #aab8d7;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 9px;
+        }
+
+        .statistics-page .stat-result h3 {
+            color: #ffffff;
+            font-size: clamp(20px, 3vw, 27px);
+            margin: 0;
+            overflow-wrap: anywhere;
+        }
+
+        /* INFORMATION SECTION */
+
+        .statistics-page .information-card {
+            background: #111b35;
+            border: 1px solid rgba(111, 130, 255, 0.18);
+            border-radius: 18px;
+            padding: 28px;
+            margin-top: 28px;
+        }
+
+        .statistics-page .information-card h2 {
+            font-size: 24px;
+            color: #ffffff;
+            margin: 0 0 20px;
+        }
+
+        .statistics-page .information-card p {
+            color: #b5c1dc;
+            font-size: 15px;
+            line-height: 1.8;
+            margin: 12px 0;
+        }
+
+        .statistics-page .information-card strong {
+            color: #9a8aff;
+        }
+
+        /* FOOTER */
+
+        .statistics-page .site-footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #7f8ca9;
+            font-size: 13px;
+            border-top: 1px solid rgba(100, 130, 255, 0.12);
+        }
+
+        /* TABLET */
+
+        @media (max-width: 850px) {
+
+            .statistics-page .navbar {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .statistics-page .navbar nav {
+                width: 100%;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 8px;
+                scrollbar-width: none;
+            }
+
+            .statistics-page .navbar nav::-webkit-scrollbar {
+                display: none;
+            }
+
+            .statistics-page .navbar nav a {
+                flex-shrink: 0;
+            }
+
+            .statistics-page .statistics-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .statistics-page .navbar {
+                padding: 16px 5%;
+            }
+
+            .statistics-page .logo {
+                font-size: 23px;
+            }
+
+            .statistics-page .navbar nav {
+                gap: 5px;
+            }
+
+            .statistics-page .navbar nav a {
+                font-size: 12px;
+                padding: 9px 11px;
+            }
+
+            .statistics-page .page-container {
+                width: 92%;
+                margin: 30px auto;
+            }
+
+            .statistics-page .page-heading {
+                margin-bottom: 25px;
+            }
+
+            .statistics-page .page-heading h1 {
+                font-size: 32px;
+            }
+
+            .statistics-page .page-heading > p:last-child {
+                font-size: 14px;
+            }
+
+            .statistics-page .section-label {
+                font-size: 11px;
+                letter-spacing: 3px;
+            }
+
+            .statistics-page .tool-card {
+                padding: 20px 16px;
+                border-radius: 16px;
+                margin-bottom: 18px;
+            }
+
+            .statistics-page .tool-introduction h2 {
+                font-size: 23px;
+            }
+
+            .statistics-page .tool-introduction p {
+                font-size: 13px;
+            }
+
+            .statistics-page #dataInput {
+                min-height: 130px;
+                padding: 14px;
+                font-size: 15px;
+            }
+
+            .statistics-page .button-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .statistics-page .button-group button {
+                width: 100%;
+                min-height: 49px;
+            }
+
+            .statistics-page .statistics-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .statistics-page .stat-result {
+                padding: 15px 12px;
+                border-radius: 12px;
+            }
+
+            .statistics-page .stat-result span {
+                font-size: 12px;
+            }
+
+            .statistics-page .stat-result h3 {
+                font-size: 21px;
+            }
+
+            .statistics-page .information-card {
+                padding: 20px 17px;
+            }
+
+            .statistics-page .information-card h2 {
+                font-size: 21px;
+            }
+
+            .statistics-page .information-card p {
+                font-size: 13px;
+            }
+        }
+
+        /* VERY SMALL PHONES */
+
+        @media (max-width: 360px) {
+
+            .statistics-page .page-heading h1 {
+                font-size: 28px;
+            }
+
+            .statistics-page .statistics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .statistics-page .stat-result {
+                padding: 17px;
+            }
+        }
+    </style>
 </head>
 
-<body>
+<body class="statistics-page">
 
     <header class="navbar">
-        <a href="dashboard.html" class="logo">Math<span>Genius</span></a>
+
+        <a href="dashboard.html" class="logo">
+            Math<span>Genius</span>
+        </a>
 
         <nav>
             <a href="dashboard.html">Dashboard</a>
@@ -23,26 +468,37 @@
             <a href="matrix.html">Matrix</a>
             <a href="history.html">History</a>
         </nav>
+
     </header>
 
     <main class="page-container">
 
         <section class="page-heading">
+
             <p class="section-label">MATH TOOLS</p>
+
             <h1>Statistics Calculator</h1>
+
             <p>
                 Enter your numbers and calculate important statistical
                 measurements instantly.
             </p>
+
         </section>
+
+
+        <!-- DATA INPUT -->
 
         <section class="tool-card">
 
             <div class="tool-introduction">
+
                 <h2>Enter Your Data</h2>
+
                 <p>
                     Separate your numbers using commas, spaces or new lines.
                 </p>
+
             </div>
 
             <textarea
@@ -52,6 +508,7 @@
             ></textarea>
 
             <div class="button-group">
+
                 <button id="calculateButton" class="primary-btn">
                     Calculate Statistics
                 </button>
@@ -59,17 +516,30 @@
                 <button id="clearButton" class="secondary-btn">
                     Clear
                 </button>
+
             </div>
 
-            <p id="errorMessage" class="error-message"></p>
+            <p
+                id="errorMessage"
+                class="error-message"
+                role="alert"
+            ></p>
 
         </section>
+
+
+        <!-- CALCULATION RESULTS -->
 
         <section id="resultsSection" class="tool-card" hidden>
 
             <div class="tool-introduction">
+
                 <h2>Calculation Results</h2>
-                <p>Here are the statistical results for your data.</p>
+
+                <p>
+                    Here are the statistical results for your data.
+                </p>
+
             </div>
 
             <div class="statistics-grid">
@@ -138,39 +608,56 @@
 
         </section>
 
+
+        <!-- INFORMATION -->
+
         <section class="information-card">
+
             <h2>What Can You Calculate?</h2>
 
             <p>
-                <strong>Mean:</strong> The average of your numbers.
+                <strong>Mean:</strong>
+                The average of your numbers.
             </p>
 
             <p>
-                <strong>Median:</strong> The middle value when numbers are arranged in order.
+                <strong>Median:</strong>
+                The middle value when numbers are arranged in order.
             </p>
 
             <p>
-                <strong>Mode:</strong> The number that appears most frequently.
+                <strong>Mode:</strong>
+                The number that appears most frequently.
             </p>
 
             <p>
-                <strong>Range:</strong> The difference between the largest and smallest values.
+                <strong>Range:</strong>
+                The difference between the largest and smallest values.
             </p>
 
             <p>
-                <strong>Variance:</strong> A measurement of how spread out your numbers are.
+                <strong>Variance:</strong>
+                A measurement of how spread out your numbers are.
             </p>
 
             <p>
-                <strong>Standard Deviation:</strong> Measures how far values typically vary from the mean.
+                <strong>Standard Deviation:</strong>
+                Measures how far values typically vary from the mean.
             </p>
+
         </section>
 
     </main>
 
+
     <footer class="site-footer">
-        <p>© 2026 MathGenius. Solve Smarter. Learn Better.</p>
+
+        <p>
+            © 2026 MathGenius. Solve Smarter. Learn Better.
+        </p>
+
     </footer>
+
 
     <script src="auth.js"></script>
     <script src="history.js"></script>
