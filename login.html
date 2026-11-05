@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d1c">
+
+    <title>Login | MathGenius</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+        .auth-container {
+            width: min(460px, 92%);
+            margin: 55px auto;
+        }
+
+        .auth-card {
+            background: #141d37;
+            border: 1px solid rgba(120, 130, 255, 0.25);
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        .auth-card h1 {
+            font-size: 29px;
+            margin-bottom: 10px;
+        }
+
+        .auth-card > p {
+            color: #b9c3dc;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #dce3f5;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 9px;
+            border: 1px solid #39466b;
+            background: #0b1328;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #7775ff;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 65px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #a8a6ff;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: right;
+            margin-top: -8px;
+            margin-bottom: 20px;
+            color: #a8a6ff;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #536dfe, #9333ea);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .auth-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .auth-message {
+            margin-top: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 22px;
+            color: #b9c3dc;
+            font-size: 14px;
+        }
+
+        .auth-footer a,
+        .back-home {
+            color: #a8a6ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-bottom: 18px;
+        }
+
+        @media(max-width: 500px) {
+            .auth-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">MathGenius</a>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+
+    <main class="auth-container">
+
+        <a href="index.html" class="back-home">← Back to Home</a>
+
+        <section class="auth-card">
+
+            <h1>Welcome Back!</h1>
+
+            <p>
+                Log in to your MathGenius account and continue
+                your mathematics journey.
+            </p>
+
+            <form id="loginForm">
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+
+                    <label for="password">Password</label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="togglePassword"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <a href="#" id="forgotPassword" class="forgot-password">
+                    Forgot Password?
+                </a>
+
+                <button
+                    type="submit"
+                    class="auth-button"
+                    id="loginButton"
+                >
+                    Log In
+                </button>
+
+                <p
+                    id="authMessage"
+                    class="auth-message"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+
+            </form>
+
+            <div class="auth-footer">
+                Don't have an account?
+                <a href="register.html">Create Account</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="./firebase-config.js"></script>
+    <script src="./auth.js"></script>
+
+    <script>
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+
+        togglePassword.addEventListener("click", () => {
+            const isPassword = passwordInput.type === "password";
+
+            passwordInput.type = isPassword ? "text" : "password";
+            togglePassword.textContent = isPassword ? "Hide" : "Show";
+        });
+    </script>
+
+</body>
+</html>
