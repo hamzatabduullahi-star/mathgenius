@@ -26,6 +26,7 @@
         .auth-card h1 {
             font-size: 29px;
             margin-bottom: 10px;
+            color: #ffffff;
         }
 
         .auth-card > p {
@@ -47,6 +48,7 @@
 
         .form-group input {
             width: 100%;
+            box-sizing: border-box;
             padding: 14px;
             border-radius: 9px;
             border: 1px solid #39466b;
@@ -121,7 +123,8 @@
         }
 
         .auth-footer a,
-        .back-home {
+        .back-home,
+        .back-to-login {
             color: #a8a6ff;
             text-decoration: none;
             font-weight: bold;
@@ -132,9 +135,39 @@
             margin-bottom: 18px;
         }
 
+        .recovery-info {
+            background: rgba(83, 109, 254, 0.10);
+            border: 1px solid rgba(120, 130, 255, 0.25);
+            border-radius: 10px;
+            padding: 13px;
+            color: #c6d0eb;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .back-to-login {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
         @media(max-width: 500px) {
             .auth-card {
                 padding: 22px;
+            }
+
+            .auth-card h1 {
+                font-size: 25px;
+            }
+
+            .auth-container {
+                margin: 35px auto;
             }
         }
     </style>
@@ -155,94 +188,265 @@
 
         <section class="auth-card">
 
-            <h1>Welcome Back!</h1>
+            <!-- LOGIN SECTION -->
+            <div id="loginSection">
 
-            <p>
-                Log in to your MathGenius account and continue
-                your mathematics journey.
-            </p>
+                <h1>Welcome Back!</h1>
 
-            <form id="loginForm">
+                <p>
+                    Log in to your MathGenius account and continue
+                    your mathematics journey.
+                </p>
 
-                <div class="form-group">
-                    <label for="email">Email Address</label>
+                <form id="loginForm">
 
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email address"
-                        autocomplete="email"
-                        required
-                    >
-                </div>
-
-                <div class="form-group">
-
-                    <label for="password">Password</label>
-
-                    <div class="password-wrapper">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
 
                         <input
-                            type="password"
-                            id="password"
-                            placeholder="Enter your password"
-                            autocomplete="current-password"
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email address"
+                            autocomplete="email"
                             required
                         >
+                    </div>
 
-                        <button
-                            type="button"
-                            class="toggle-password"
-                            id="togglePassword"
-                        >
-                            Show
-                        </button>
+                    <div class="form-group">
+
+                        <label for="password">Password</label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                id="togglePassword"
+                            >
+                                Show
+                            </button>
+
+                        </div>
 
                     </div>
 
+                    <a href="#" id="forgotPassword" class="forgot-password">
+                        Forgot Password?
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="auth-button"
+                        id="loginButton"
+                    >
+                        Log In
+                    </button>
+
+                    <p
+                        id="authMessage"
+                        class="auth-message"
+                        role="status"
+                        aria-live="polite"
+                    ></p>
+
+                </form>
+
+                <div class="auth-footer">
+                    Don't have an account?
+                    <a href="register.html">Create Account</a>
                 </div>
 
-                <a href="#" id="forgotPassword" class="forgot-password">
-                    Forgot Password?
+            </div>
+
+
+            <!-- PASSWORD RECOVERY SECTION -->
+            <div id="recoverySection" class="hidden">
+
+                <h1>Reset Password</h1>
+
+                <p>
+                    Recover access to your MathGenius account
+                    using your recovery code.
+                </p>
+
+                <div class="recovery-info">
+                    Enter the email address you registered with
+                    and the recovery code you received when
+                    creating your account.
+                </div>
+
+                <form id="resetPasswordForm">
+
+                    <div class="form-group">
+                        <label for="resetEmail">
+                            Registered Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="resetEmail"
+                            placeholder="Enter your registered email"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resetRecoveryCode">
+                            Recovery Code
+                        </label>
+
+                        <input
+                            type="text"
+                            id="resetRecoveryCode"
+                            placeholder="Enter your recovery code"
+                            autocomplete="off"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="newPassword">
+                            New Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="newPassword"
+                                placeholder="Create a new password"
+                                autocomplete="new-password"
+                                minlength="6"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                id="toggleNewPassword"
+                            >
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="confirmNewPassword">
+                            Confirm New Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="confirmNewPassword"
+                                placeholder="Confirm your new password"
+                                autocomplete="new-password"
+                                minlength="6"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                id="toggleConfirmPassword"
+                            >
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="auth-button"
+                        id="resetPasswordButton"
+                    >
+                        Reset Password
+                    </button>
+
+                    <p
+                        id="resetMessage"
+                        class="auth-message"
+                        role="status"
+                        aria-live="polite"
+                    ></p>
+
+                </form>
+
+                <a href="#" id="backToLogin" class="back-to-login">
+                    ← Back to Login
                 </a>
 
-                <button
-                    type="submit"
-                    class="auth-button"
-                    id="loginButton"
-                >
-                    Log In
-                </button>
-
-                <p
-                    id="authMessage"
-                    class="auth-message"
-                    role="status"
-                    aria-live="polite"
-                ></p>
-
-            </form>
-
-            <div class="auth-footer">
-                Don't have an account?
-                <a href="register.html">Create Account</a>
             </div>
 
         </section>
 
     </main>
 
+
     <script src="./auth.js"></script>
 
     <script>
-        const passwordInput = document.getElementById("password");
-        const togglePassword = document.getElementById("togglePassword");
+        // Password visibility controls
+        function setupPasswordToggle(inputId, buttonId) {
+            const input = document.getElementById(inputId);
+            const button = document.getElementById(buttonId);
 
-        togglePassword.addEventListener("click", () => {
-            const isPassword = passwordInput.type === "password";
+            if (!input || !button) return;
 
-            passwordInput.type = isPassword ? "text" : "password";
-            togglePassword.textContent = isPassword ? "Hide" : "Show";
+            button.addEventListener("click", () => {
+                const isPassword = input.type === "password";
+
+                input.type = isPassword ? "text" : "password";
+                button.textContent = isPassword ? "Hide" : "Show";
+            });
+        }
+
+        setupPasswordToggle("password", "togglePassword");
+        setupPasswordToggle("newPassword", "toggleNewPassword");
+        setupPasswordToggle("confirmNewPassword", "toggleConfirmPassword");
+
+        // Switch between login and recovery sections
+        const loginSection = document.getElementById("loginSection");
+        const recoverySection = document.getElementById("recoverySection");
+
+        const forgotPassword = document.getElementById("forgotPassword");
+        const backToLogin = document.getElementById("backToLogin");
+
+        forgotPassword.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            loginSection.classList.add("hidden");
+            recoverySection.classList.remove("hidden");
+
+            document.getElementById("resetEmail").value =
+                document.getElementById("email").value.trim();
+
+            document.getElementById("resetMessage").textContent = "";
+        });
+
+        backToLogin.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            recoverySection.classList.add("hidden");
+            loginSection.classList.remove("hidden");
+
+            document.getElementById("authMessage").textContent = "";
         });
     </script>
 
