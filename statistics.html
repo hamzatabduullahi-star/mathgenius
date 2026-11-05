@@ -4,243 +4,177 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#080d1c">
+
     <title>Statistics Calculator | MathGenius</title>
-    <link rel="stylesheet" href="./style.css">
 
-    <style>
-        .statistics-container {
-            width: min(900px, 92%);
-            margin: 40px auto;
-        }
-
-        .statistics-card {
-            background: rgba(20, 29, 55, 0.95);
-            border: 1px solid rgba(120, 130, 255, 0.2);
-            border-radius: 18px;
-            padding: 25px;
-            margin-top: 25px;
-        }
-
-        .statistics-card h2 {
-            margin-bottom: 12px;
-        }
-
-        .statistics-card p {
-            color: #b9c3dc;
-            line-height: 1.6;
-        }
-
-        .statistics-card textarea {
-            width: 100%;
-            min-height: 130px;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 10px;
-            border: 1px solid #39466b;
-            background: #0b1328;
-            color: white;
-            font-size: 16px;
-            resize: vertical;
-            outline: none;
-        }
-
-        .statistics-card textarea:focus {
-            border-color: #7775ff;
-        }
-
-        .statistics-card button {
-            padding: 13px 22px;
-            border: none;
-            border-radius: 9px;
-            background: linear-gradient(135deg, #536dfe, #9333ea);
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 5px 5px 5px 0;
-        }
-
-        .statistics-card button:hover {
-            opacity: 0.85;
-        }
-
-        .statistics-results {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .result-item {
-            background: #0b1328;
-            border: 1px solid #303d60;
-            padding: 17px;
-            border-radius: 12px;
-        }
-
-        .result-item span {
-            display: block;
-            color: #aebbd8;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-        .result-item strong {
-            color: #ffffff;
-            font-size: 20px;
-            overflow-wrap: anywhere;
-        }
-
-        .statistics-error {
-            color: #ff8585;
-            margin-top: 15px;
-        }
-
-        .statistics-note {
-            font-size: 13px;
-            margin-top: 15px;
-            color: #aebbd8;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-bottom: 15px;
-            color: #a8a6ff;
-            text-decoration: none;
-        }
-
-        @media (max-width: 600px) {
-            .statistics-card {
-                padding: 18px;
-            }
-
-            .statistics-card button {
-                width: 100%;
-                margin: 5px 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <header>
+    <header class="navbar">
+        <a href="dashboard.html" class="logo">Math<span>Genius</span></a>
+
         <nav>
-            <a href="index.html" class="logo">MathGenius</a>
-            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="calculator.html">Calculator</a>
+            <a href="solver.html">Equation Solver</a>
+            <a href="statistics.html" class="active">Statistics</a>
+            <a href="matrix.html">Matrix</a>
+            <a href="history.html">History</a>
         </nav>
     </header>
 
-    <main class="statistics-container">
+    <main class="page-container">
 
-        <a href="index.html" class="back-link">← Back to Home</a>
-
-        <h1>Statistics Calculator</h1>
-
-        <p>
-            Calculate statistical values quickly and accurately.
-            Enter your numbers to find the mean, median, mode,
-            range, variance and standard deviation.
-        </p>
-
-        <section class="statistics-card">
-
-            <h2>Enter Your Data</h2>
-
+        <section class="page-heading">
+            <p class="section-label">MATH TOOLS</p>
+            <h1>Statistics Calculator</h1>
             <p>
-                Separate your numbers using commas, spaces or new lines.
+                Enter your numbers and calculate important statistical
+                measurements instantly.
             </p>
+        </section>
+
+        <section class="tool-card">
+
+            <div class="tool-introduction">
+                <h2>Enter Your Data</h2>
+                <p>
+                    Separate your numbers using commas, spaces or new lines.
+                </p>
+            </div>
 
             <textarea
                 id="dataInput"
-                placeholder="Example: 10, 20, 20, 30, 40, 50"
+                placeholder="Example: 10, 20, 30, 40, 50"
+                rows="6"
             ></textarea>
 
-            <button id="calculateButton">Calculate Statistics</button>
-            <button id="clearButton" type="button">Clear</button>
+            <div class="button-group">
+                <button id="calculateButton" class="primary-btn">
+                    Calculate Statistics
+                </button>
 
-            <p id="errorMessage" class="statistics-error"></p>
+                <button id="clearButton" class="secondary-btn">
+                    Clear
+                </button>
+            </div>
 
-            <div id="resultsSection" hidden>
+            <p id="errorMessage" class="error-message"></p>
 
-                <h2 style="margin-top: 25px;">Your Results</h2>
+        </section>
 
-                <div class="statistics-results">
+        <section id="resultsSection" class="tool-card" hidden>
 
-                    <div class="result-item">
-                        <span>Count</span>
-                        <strong id="countResult">-</strong>
-                    </div>
+            <div class="tool-introduction">
+                <h2>Calculation Results</h2>
+                <p>Here are the statistical results for your data.</p>
+            </div>
 
-                    <div class="result-item">
-                        <span>Sum</span>
-                        <strong id="sumResult">-</strong>
-                    </div>
+            <div class="statistics-grid">
 
-                    <div class="result-item">
-                        <span>Mean (Average)</span>
-                        <strong id="meanResult">-</strong>
-                    </div>
-
-                    <div class="result-item">
-                        <span>Median</span>
-                        <strong id="medianResult">-</strong>
-                    </div>
-
-                    <div class="result-item">
-                        <span>Mode</span>
-                        <strong id="modeResult">-</strong>
-                    </div>
-
-                    <div class="result-item">
-                        <span>Minimum</span>
-                        <strong id="minResult">-</strong>
-                    </div>
-
-                    <div class="result-item">
-                        <span>Maximum</span>
-                        <strong id="maxResult">-</strong>
-                    </div>
-
-                    <div class="result-item">
-                        <span>Range</span>
-                        <strong id="rangeResult">-</strong>
-                    </div>
-
-                    <div class="result-item">
-                        <span>Population Variance</span>
-                        <strong id="varianceResult">-</strong>
-                    </div>
-
-                    <div class="result-item">
-                        <span>Population Standard Deviation</span>
-                        <strong id="stdDevResult">-</strong>
-                    </div>
-
-                    <div class="result-item">
-                        <span>Sample Variance</span>
-                        <strong id="sampleVarianceResult">-</strong>
-                    </div>
-
-                    <div class="result-item">
-                        <span>Sample Standard Deviation</span>
-                        <strong id="sampleStdDevResult">-</strong>
-                    </div>
-
+                <div class="stat-result">
+                    <span>Count</span>
+                    <h3 id="countResult">0</h3>
                 </div>
 
-                <p class="statistics-note">
-                    Variance and standard deviation are shown using both
-                    population and sample formulas.
-                </p>
+                <div class="stat-result">
+                    <span>Sum</span>
+                    <h3 id="sumResult">0</h3>
+                </div>
+
+                <div class="stat-result">
+                    <span>Mean</span>
+                    <h3 id="meanResult">0</h3>
+                </div>
+
+                <div class="stat-result">
+                    <span>Median</span>
+                    <h3 id="medianResult">0</h3>
+                </div>
+
+                <div class="stat-result">
+                    <span>Mode</span>
+                    <h3 id="modeResult">0</h3>
+                </div>
+
+                <div class="stat-result">
+                    <span>Minimum</span>
+                    <h3 id="minResult">0</h3>
+                </div>
+
+                <div class="stat-result">
+                    <span>Maximum</span>
+                    <h3 id="maxResult">0</h3>
+                </div>
+
+                <div class="stat-result">
+                    <span>Range</span>
+                    <h3 id="rangeResult">0</h3>
+                </div>
+
+                <div class="stat-result">
+                    <span>Population Variance</span>
+                    <h3 id="varianceResult">0</h3>
+                </div>
+
+                <div class="stat-result">
+                    <span>Population Standard Deviation</span>
+                    <h3 id="stdDevResult">0</h3>
+                </div>
+
+                <div class="stat-result">
+                    <span>Sample Variance</span>
+                    <h3 id="sampleVarianceResult">0</h3>
+                </div>
+
+                <div class="stat-result">
+                    <span>Sample Standard Deviation</span>
+                    <h3 id="sampleStdDevResult">0</h3>
+                </div>
 
             </div>
 
         </section>
 
+        <section class="information-card">
+            <h2>What Can You Calculate?</h2>
+
+            <p>
+                <strong>Mean:</strong> The average of your numbers.
+            </p>
+
+            <p>
+                <strong>Median:</strong> The middle value when numbers are arranged in order.
+            </p>
+
+            <p>
+                <strong>Mode:</strong> The number that appears most frequently.
+            </p>
+
+            <p>
+                <strong>Range:</strong> The difference between the largest and smallest values.
+            </p>
+
+            <p>
+                <strong>Variance:</strong> A measurement of how spread out your numbers are.
+            </p>
+
+            <p>
+                <strong>Standard Deviation:</strong> Measures how far values typically vary from the mean.
+            </p>
+        </section>
+
     </main>
 
-    <script src="./statistics.js"></script>
+    <footer class="site-footer">
+        <p>© 2026 MathGenius. Solve Smarter. Learn Better.</p>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script src="history.js"></script>
+    <script src="statistics.js"></script>
 
 </body>
 </html>
