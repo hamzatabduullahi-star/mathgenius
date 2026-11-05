@@ -1,10 +1,13 @@
 // ==========================================
 // MATHGENIUS - EQUATION SOLVER
+// Fixed calculation and display system
 // ==========================================
 
 
-// Get page elements
+// GET PAGE ELEMENTS
+
 const equationType = document.getElementById("equationType");
+
 const linearInputs = document.getElementById("linearInputs");
 const quadraticInputs = document.getElementById("quadraticInputs");
 
@@ -16,87 +19,184 @@ const quadraticB = document.getElementById("quadraticB");
 const quadraticC = document.getElementById("quadraticC");
 
 const solveButton = document.getElementById("solveButton");
+
 const resultBox = document.getElementById("resultBox");
+const resultContent = document.getElementById("resultContent");
+
 const stepsBox = document.getElementById("stepsBox");
+const stepsContent = document.getElementById("stepsContent");
 
 
-// Display messages safely
+// ==========================================
+// FORMAT NUMBERS
+// ==========================================
+
+function formatNumber(number) {
+
+    if (!Number.isFinite(number)) {
+        return String(number);
+    }
+
+    if (Object.is(number, -0)) {
+        number = 0;
+    }
+
+    return Number(number.toPrecision(12)).toString();
+}
+
+
+// ==========================================
+// DISPLAY SOLUTION
+// ==========================================
+
 function showSolverMessage(message) {
+
+    if (resultContent) {
+        resultContent.textContent = message;
+    }
+
     if (resultBox) {
-        resultBox.textContent = message;
+        resultBox.hidden = false;
     }
 }
 
 
-// Save solved equation to MathGenius history
+// ==========================================
+// DISPLAY STEP-BY-STEP SOLUTION
+// ==========================================
+
+function displaySteps(steps) {
+
+    if (!stepsContent || !stepsBox) return;
+
+    stepsContent.innerHTML = "";
+
+    steps.forEach(function(step, index) {
+
+        const paragraph = document.createElement("p");
+
+        paragraph.style.marginBottom = "14px";
+        paragraph.style.padding = "12px";
+        paragraph.style.background = "#0b142c";
+        paragraph.style.borderRadius = "10px";
+        paragraph.style.border = "1px solid rgba(111,130,255,0.15)";
+
+        paragraph.textContent =
+            "Step " + (index + 1) + ": " + step;
+
+        stepsContent.appendChild(paragraph);
+
+    });
+
+    stepsBox.hidden = false;
+}
+
+
+// ==========================================
+// CLEAR PREVIOUS RESULTS
+// ==========================================
+
+function clearSolverResults() {
+
+    if (resultContent) {
+        resultContent.textContent = "";
+    }
+
+    if (stepsContent) {
+        stepsContent.innerHTML = "";
+    }
+
+    if (resultBox) {
+        resultBox.hidden = true;
+    }
+
+    if (stepsBox) {
+        stepsBox.hidden = true;
+    }
+
+}
+
+
+// ==========================================
+// SAVE EQUATION TO HISTORY
+// ==========================================
+
 function saveSolvedEquation(equation, answer) {
+
     if (typeof saveMathHistory === "function") {
-        saveMathHistory(
-            "Equation Solver",
-            equation,
-            answer
-        );
+
+        try {
+
+            saveMathHistory(
+                "Equation Solver",
+                equation,
+                answer
+            );
+
+        } catch (error) {
+
+            console.error("History saving failed:", error);
+
+        }
+
     }
+
 }
 
 
-// Change equation type
-function updateEquationInputs() {
-    if (!equationType) return;
+// ==========================================
+// VALIDATE NUMBERS
+// ==========================================
 
-    const selectedType = equationType.value;
-
-    if (linearInputs) {
-        linearInputs.style.display =
-            selectedType === "linear" ? "block" : "none";
-    }
-
-    if (quadraticInputs) {
-        quadraticInputs.style.display =
-            selectedType === "quadratic" ? "block" : "none";
-    }
-
-    if (resultBox) resultBox.textContent = "";
-
-    if (stepsBox) stepsBox.innerHTML = "";
-}
-
-
-// Validate numerical input
 function readNumber(element) {
+
     if (!element || element.value.trim() === "") {
-        throw new Error("Please fill in all required values.");
+
+        throw new Error(
+            "Please fill in all required values."
+        );
+
     }
 
     const value = Number(element.value);
 
     if (!Number.isFinite(value)) {
-        throw new Error("Please enter valid numbers.");
+
+        throw new Error(
+            "Please enter valid numbers."
+        );
+
     }
 
     return value;
+
 }
 
 
-// Display solution steps
-function displaySteps(steps) {
-    if (!stepsBox) return;
+// ==========================================
+// UPDATE EQUATION INPUTS
+// ==========================================
 
-    stepsBox.innerHTML = "";
+function updateEquationInputs() {
 
-    const heading = document.createElement("h3");
-    heading.textContent = "Step-by-Step Solution";
+    if (!equationType) return;
 
-    stepsBox.appendChild(heading);
+    const selectedType = equationType.value;
 
-    steps.forEach(function(step, index) {
-        const paragraph = document.createElement("p");
+    if (linearInputs) {
 
-        paragraph.textContent =
-            "Step " + (index + 1) + ": " + step;
+        linearInputs.hidden = selectedType !== "linear";
 
-        stepsBox.appendChild(paragraph);
-    });
+    }
+
+    if (quadraticInputs) {
+
+        quadraticInputs.hidden = selectedType !== "quadratic";
+
+    }
+
+    clearSolverResults();
+
 }
 
 
@@ -106,21 +206,41 @@ function displaySteps(steps) {
 // ==========================================
 
 function solveLinearEquation() {
+
     const a = readNumber(linearA);
     const b = readNumber(linearB);
 
     const equation = `${a}x + (${b}) = 0`;
 
+    const steps = [];
+
+    steps.push(
+        "Start with the equation: " + equation
+    );
+
+    steps.push(
+        "Identify the coefficient of x as a = " + a +
+        " and the constant as b = " + b + "."
+    );
+
+
+    // INFINITELY MANY SOLUTIONS
+
     if (a === 0 && b === 0) {
-        showSolverMessage(
-            "Every real number is a solution."
+
+        steps.push(
+            "The equation becomes 0x + 0 = 0."
         );
 
-        displaySteps([
-            "The equation is 0x + 0 = 0.",
-            "This simplifies to 0 = 0.",
-            "The statement is always true."
-        ]);
+        steps.push(
+            "This simplifies to 0 = 0, which is always true."
+        );
+
+        showSolverMessage(
+            "Infinitely many solutions. Every real number is a solution."
+        );
+
+        displaySteps(steps);
 
         saveSolvedEquation(
             equation,
@@ -128,18 +248,27 @@ function solveLinearEquation() {
         );
 
         return;
+
     }
 
+
+    // NO SOLUTION
+
     if (a === 0) {
-        showSolverMessage(
-            "No solution exists."
+
+        steps.push(
+            "The equation becomes " + b + " = 0."
         );
 
-        displaySteps([
-            "The equation is 0x + " + b + " = 0.",
-            "This becomes " + b + " = 0.",
-            "Since " + b + " is not zero, there is no solution."
-        ]);
+        steps.push(
+            "Since " + b + " is not zero, the equation is impossible."
+        );
+
+        showSolverMessage(
+            "No solution exists because the coefficient of x is zero."
+        );
+
+        displaySteps(steps);
 
         saveSolvedEquation(
             equation,
@@ -147,25 +276,47 @@ function solveLinearEquation() {
         );
 
         return;
+
     }
 
-    const x = -b / a;
 
-    const answer = Number(x.toPrecision(12));
+    // NORMAL LINEAR EQUATION
 
-    showSolverMessage("x = " + answer);
+    const negativeB = -b;
 
-    displaySteps([
-        "Start with " + equation + ".",
-        "Move the constant to the right: " + a + "x = " + (-b) + ".",
-        "Divide both sides by " + a + ".",
+    const x = negativeB / a;
+
+    const answer = formatNumber(x);
+
+    steps.push(
+        "Move the constant to the right side: " +
+        a + "x = " + negativeB + "."
+    );
+
+    steps.push(
+        "Divide both sides by " + a + "."
+    );
+
+    steps.push(
+        "x = " + negativeB + " ÷ " + a + "."
+    );
+
+    steps.push(
         "Therefore, x = " + answer + "."
-    ]);
+    );
+
+
+    showSolverMessage(
+        "Final Answer: x = " + answer
+    );
+
+    displaySteps(steps);
 
     saveSolvedEquation(
         equation,
         "x = " + answer
     );
+
 }
 
 
@@ -175,143 +326,263 @@ function solveLinearEquation() {
 // ==========================================
 
 function solveQuadraticEquation() {
+
     const a = readNumber(quadraticA);
     const b = readNumber(quadraticB);
     const c = readNumber(quadraticC);
 
+
     if (a === 0) {
+
         throw new Error(
-            "The coefficient of x² cannot be zero for a quadratic equation."
+            "The value of a cannot be zero in a quadratic equation."
         );
+
     }
+
 
     const equation =
         `${a}x² + (${b})x + (${c}) = 0`;
 
-    const discriminant = b * b - 4 * a * c;
 
-    const steps = [
-        "Start with " + equation + ".",
-        "Identify a = " + a + ", b = " + b + ", c = " + c + ".",
-        "Calculate the discriminant: D = b² - 4ac.",
-        "D = " + discriminant + "."
-    ];
+    // DISCRIMINANT
 
-    let answer;
+    const discriminant =
+        b * b - 4 * a * c;
+
+
+    const steps = [];
+
+    steps.push(
+        "Start with the equation: " + equation
+    );
+
+    steps.push(
+        "Identify a = " + a +
+        ", b = " + b +
+        ", and c = " + c + "."
+    );
+
+    steps.push(
+        "Use the discriminant formula: D = b² - 4ac."
+    );
+
+    steps.push(
+        "Substitute the values: D = (" + b +
+        ")² - 4(" + a + ")(" + c + ")."
+    );
+
+    steps.push(
+        "The discriminant is D = " +
+        formatNumber(discriminant) + "."
+    );
+
+
+    let answer = "";
+
+
+    // TWO DISTINCT REAL ROOTS
 
     if (discriminant > 0) {
-        const x1 =
-            (-b + Math.sqrt(discriminant)) / (2 * a);
 
-        const x2 =
-            (-b - Math.sqrt(discriminant)) / (2 * a);
+        const sqrtD = Math.sqrt(discriminant);
 
-        const root1 = Number(x1.toPrecision(12));
-        const root2 = Number(x2.toPrecision(12));
+        const x1 = (-b + sqrtD) / (2 * a);
 
-        answer = `x₁ = ${root1}, x₂ = ${root2}`;
+        const x2 = (-b - sqrtD) / (2 * a);
+
+        const root1 = formatNumber(x1);
+
+        const root2 = formatNumber(x2);
+
+
+        answer =
+            "x₁ = " + root1 +
+            " and x₂ = " + root2;
+
 
         steps.push(
-            "Since D > 0, there are two distinct real roots."
+            "Since D is greater than zero, there are two distinct real roots."
         );
 
         steps.push(
-            "Apply the quadratic formula."
+            "Use the quadratic formula: x = (-b ± √D) / 2a."
         );
 
         steps.push(
-            "The solutions are x₁ = " + root1 +
-            " and x₂ = " + root2 + "."
+            "Substitute the values into the formula."
         );
+
+        steps.push(
+            "The first root is x₁ = " + root1 + "."
+        );
+
+        steps.push(
+            "The second root is x₂ = " + root2 + "."
+        );
+
     }
+
+
+    // ONE REPEATED REAL ROOT
 
     else if (discriminant === 0) {
+
         const x = -b / (2 * a);
 
-        const root = Number(x.toPrecision(12));
+        const root = formatNumber(x);
 
-        answer = `x = ${root}`;
+
+        answer = "x = " + root;
+
 
         steps.push(
-            "Since D = 0, there is one repeated real root."
+            "Since D equals zero, the equation has one repeated real root."
         );
 
         steps.push(
-            "Apply x = -b / 2a."
+            "Use x = -b / 2a."
         );
 
         steps.push(
-            "The solution is x = " + root + "."
+            "Substitute the values: x = " + (-b) +
+            " / (" + (2 * a) + ")."
         );
+
+        steps.push(
+            "Therefore, x = " + root + "."
+        );
+
     }
 
+
+    // COMPLEX ROOTS
+
     else {
+
         const realPart = -b / (2 * a);
 
         const imaginaryPart =
             Math.sqrt(-discriminant) / Math.abs(2 * a);
 
-        const real = Number(realPart.toPrecision(12));
-        const imaginary = Number(imaginaryPart.toPrecision(12));
 
-        answer =
-            `x₁ = ${real} + ${imaginary}i, ` +
-            `x₂ = ${real} - ${imaginary}i`;
+        const real = formatNumber(realPart);
+
+        const imaginary = formatNumber(imaginaryPart);
+
+
+        const sign1 = realPart === 0 ? "" :
+            realPart + " + ";
+
+        const sign2 = realPart === 0 ? "" :
+            realPart + " - ";
+
+
+        if (realPart === 0) {
+
+            answer =
+                "x₁ = " + imaginary + "i, " +
+                "x₂ = -" + imaginary + "i";
+
+        } else {
+
+            answer =
+                "x₁ = " + sign1 + imaginary + "i, " +
+                "x₂ = " + sign2 + imaginary + "i";
+
+        }
+
 
         steps.push(
-            "Since D < 0, there are two complex roots."
+            "Since D is negative, there are no real roots."
         );
 
         steps.push(
-            "Apply the quadratic formula using the imaginary unit i."
+            "The equation has two complex conjugate roots."
+        );
+
+        steps.push(
+            "The real part is " + real + "."
+        );
+
+        steps.push(
+            "The imaginary part is " + imaginary + "i."
         );
 
         steps.push(
             "The solutions are " + answer + "."
         );
+
     }
 
-    showSolverMessage(answer);
+
+    showSolverMessage(
+        "Final Answer: " + answer
+    );
 
     displaySteps(steps);
 
-    saveSolvedEquation(equation, answer);
+    saveSolvedEquation(
+        equation,
+        answer
+    );
+
 }
 
 
 // ==========================================
-// SOLVE BUTTON
+// MAIN SOLVE FUNCTION
 // ==========================================
 
 function solveEquation() {
-    try {
-        if (resultBox) resultBox.textContent = "";
 
-        if (stepsBox) stepsBox.innerHTML = "";
+    clearSolverResults();
+
+    try {
 
         if (!equationType) {
-            throw new Error("Equation selector was not found.");
+
+            throw new Error(
+                "Equation selector could not be found."
+            );
+
         }
 
+
         if (equationType.value === "linear") {
+
             solveLinearEquation();
+
         }
 
         else if (equationType.value === "quadratic") {
+
             solveQuadraticEquation();
+
         }
 
         else {
-            throw new Error("Please select an equation type.");
+
+            throw new Error(
+                "Please select a valid equation type."
+            );
+
         }
+
 
     } catch (error) {
-        showSolverMessage(error.message);
 
-        if (stepsBox) {
-            stepsBox.innerHTML = "";
-        }
+        showSolverMessage(
+            "Error: " + error.message
+        );
+
+        console.error(
+            "MathGenius Solver Error:",
+            error
+        );
+
     }
+
 }
 
 
@@ -320,19 +591,27 @@ function solveEquation() {
 // ==========================================
 
 if (equationType) {
+
     equationType.addEventListener(
         "change",
         updateEquationInputs
     );
+
 }
 
+
 if (solveButton) {
+
     solveButton.addEventListener(
         "click",
         solveEquation
     );
+
 }
 
 
-// Initialize solver
+// ==========================================
+// INITIALIZE SOLVER
+// ==========================================
+
 updateEquationInputs();
