@@ -1,353 +1,241 @@
-// ==========================================
+// =====================================
 // MATHGENIUS SCIENTIFIC CALCULATOR
-// ==========================================
-
-// DISPLAY ELEMENTS
-
-const expressionDisplay = document.getElementById("expression");
-const resultDisplay = document.getElementById("result");
-const historyList = document.getElementById("historyList");
-
-
-// CALCULATOR VARIABLES
+// =====================================
 
 let currentExpression = "";
-let lastAnswer = 0;
-
+let lastAnswer = "";
 let calculationHistory = [];
 
 
-// ==========================================
-// UPDATE DISPLAY
-// ==========================================
+// Get page elements
+const expressionDisplay = document.getElementById("expression");
+const resultDisplay = document.getElementById("result");
+const historyContainer = document.getElementById("historyList");
+const clearHistoryButton = document.getElementById("clearHistory");
 
+
+// Update calculator display
 function updateDisplay() {
-
-    expressionDisplay.textContent =
-        currentExpression || "Ready for calculation";
-
-}
-
-
-// ==========================================
-// ADD VALUE TO CALCULATOR
-// ==========================================
-
-function addValue(value) {
-
-    if (value === "Ans") {
-
-        currentExpression += String(lastAnswer);
-
-    } else {
-
-        currentExpression += value;
-
-    }
-
-    updateDisplay();
-
-}
-
-
-// ==========================================
-// CLEAR CALCULATOR
-// ==========================================
-
-function clearCalculator() {
-
-    currentExpression = "";
-
-    expressionDisplay.textContent = "Ready for calculation";
-
-    resultDisplay.textContent = "0";
-
-}
-
-
-// ==========================================
-// DELETE LAST CHARACTER
-// ==========================================
-
-function deleteCharacter() {
-
-    currentExpression = currentExpression.slice(0, -1);
-
-    updateDisplay();
-
-}
-
-
-// ==========================================
-// PERFORM CALCULATION
-// ==========================================
-
-function calculate() {
-
-    if (!currentExpression.trim()) {
-        return;
-    }
-
-    if (typeof math === "undefined") {
-
-        resultDisplay.textContent = "Error";
-
+    if (expressionDisplay) {
         expressionDisplay.textContent =
-            "Calculation library unavailable.";
-
-        return;
-
+            currentExpression || "0";
     }
 
-    try {
+    if (resultDisplay) {
+        resultDisplay.textContent =
+            lastAnswer || "0";
+    }
+}
 
-        const result = math.evaluate(currentExpression);
 
-        if (
-            typeof result !== "number" ||
-            !Number.isFinite(result)
-        ) {
+// Add a value to the expression
+function appendValue(value) {
+    currentExpression += value;
+    updateDisplay();
+}
 
-            throw new Error("Invalid calculation");
 
+// Clear calculator
+function clearCalculator() {
+    currentExpression = "";
+    lastAnswer = "";
+    updateDisplay();
+}
+
+
+// Delete the last character
+function deleteLast() {
+    currentExpression = currentExpression.slice(0, -1);
+    updateDisplay();
+}
+
+
+// Format calculation results
+function formatResult(value) {
+    if (typeof value === "number") {
+        if (!Number.isFinite(value)) {
+            throw new Error("Invalid mathematical result.");
         }
 
-        const formattedResult = Number(
-            result.toPrecision(12)
-        );
-
-        // DISPLAY ANSWER
-
-        resultDisplay.textContent = formattedResult;
-
-        // SAVE ANSWER
-
-        lastAnswer = formattedResult;
-
-        // ADD TO HISTORY
-
-        addToHistory(
-            currentExpression,
-            formattedResult
-        );
-
-        // KEEP ANSWER FOR NEXT CALCULATION
-
-        currentExpression = String(formattedResult);
-
-        expressionDisplay.textContent =
-            "Calculation successful";
-
-    } catch (error) {
-
-        resultDisplay.textContent = "Error";
-
-        expressionDisplay.textContent =
-            "Please check your mathematical expression.";
-
+        return Number(value.toPrecision(12)).toString();
     }
 
+    return String(value);
 }
 
 
-// ==========================================
-// ADD CALCULATION TO HISTORY
-// ==========================================
-
-function addToHistory(expression, result) {
-
-    calculationHistory.unshift({
-
+// Save successful calculation to local history
+function addToHistory(expression, answer) {
+    const entry = {
         expression: expression,
+        result: answer,
+        date: new Date().toLocaleString()
+    };
 
-        result: result
+    calculationHistory.unshift(entry);
 
-    });
-
-    // KEEP ONLY THE LATEST 20 CALCULATIONS
-
-    calculationHistory =
-        calculationHistory.slice(0, 20);
+    // Keep only the latest 20 calculations
+    calculationHistory = calculationHistory.slice(0, 20);
 
     renderHistory();
-
 }
 
 
-// ==========================================
-// DISPLAY CALCULATION HISTORY
-// ==========================================
-
+// Render calculator history
 function renderHistory() {
+    if (!historyContainer) return;
 
-    historyList.innerHTML = "";
+    historyContainer.innerHTML = "";
 
     if (calculationHistory.length === 0) {
-
-        historyList.innerHTML = `
-            <p class="empty-history">
-                Your calculations will appear here.
-            </p>
-        `;
-
+        historyContainer.innerHTML =
+            "<p>No calculations yet.</p>";
         return;
-
     }
 
     calculationHistory.forEach(function(item) {
-
         const historyItem = document.createElement("div");
 
         historyItem.className = "history-item";
 
         const expression = document.createElement("p");
-
         expression.textContent = item.expression;
 
         const answer = document.createElement("strong");
-
         answer.textContent = "= " + item.result;
 
+        const date = document.createElement("small");
+        date.textContent = item.date;
+
         historyItem.appendChild(expression);
-
         historyItem.appendChild(answer);
-
-        // CLICK HISTORY TO REUSE ANSWER
+        historyItem.appendChild(date);
 
         historyItem.addEventListener("click", function() {
-
-            currentExpression = String(item.result);
-
-            resultDisplay.textContent = item.result;
-
-            expressionDisplay.textContent =
-                "Previous result selected";
-
+            currentExpression = item.expression;
+            lastAnswer = item.result;
+            updateDisplay();
         });
 
-        historyList.appendChild(historyItem);
-
+        historyContainer.appendChild(historyItem);
     });
-
 }
 
 
-// ==========================================
-// CALCULATOR BUTTON EVENTS
-// ==========================================
+// Clear calculator's visible history
+function clearCalculatorHistory() {
+    calculationHistory = [];
+    renderHistory();
+}
 
+
+// Calculate expression
+function calculate() {
+    if (!currentExpression.trim()) {
+        return;
+    }
+
+    if (typeof math === "undefined") {
+        alert("Math.js could not load. Please refresh the page.");
+        return;
+    }
+
+    const expressionToSave = currentExpression;
+
+    try {
+        const result = math.evaluate(expressionToSave);
+
+        const formattedResult = formatResult(result);
+
+        lastAnswer = formattedResult;
+
+        // Add to calculator's recent history
+        addToHistory(expressionToSave, formattedResult);
+
+        // Save to the user's MathGenius account history
+        if (typeof saveMathHistory === "function") {
+            saveMathHistory(
+                "Scientific Calculator",
+                expressionToSave,
+                formattedResult
+            );
+        }
+
+        currentExpression = formattedResult;
+
+        updateDisplay();
+
+    } catch (error) {
+        lastAnswer = "Error";
+
+        if (resultDisplay) {
+            resultDisplay.textContent = "Invalid expression";
+        }
+
+        console.error("Calculation error:", error);
+    }
+}
+
+
+// Handle calculator buttons
 document.querySelectorAll(".calc-btn").forEach(function(button) {
-
     button.addEventListener("click", function() {
-
-        const action = this.dataset.action;
-
-        const value = this.dataset.value;
-
+        const action = button.dataset.action;
+        const value = button.dataset.value;
 
         if (action === "clear") {
-
             clearCalculator();
-
         }
 
         else if (action === "delete") {
-
-            deleteCharacter();
-
+            deleteLast();
         }
 
         else if (action === "calculate") {
-
             calculate();
-
         }
 
         else if (value !== undefined) {
-
-            addValue(value);
-
+            appendValue(value);
         }
-
     });
-
 });
 
 
-// ==========================================
-// CLEAR HISTORY
-// ==========================================
-
-document.getElementById("clearHistory")
-    .addEventListener("click", function() {
-
-        calculationHistory = [];
-
-        renderHistory();
-
-    });
-
-
-// ==========================================
-// KEYBOARD SUPPORT
-// ==========================================
-
+// Keyboard support
 document.addEventListener("keydown", function(event) {
-
     const key = event.key;
 
-
-    // NUMBERS AND DECIMALS
-
-    if (/^[0-9.]$/.test(key)) {
-
-        addValue(key);
-
-    }
-
-    // MATHEMATICAL OPERATORS
-
-    else if (
-        ["+", "-", "*", "/", "^", "%", "(", ")", "!"].includes(key)
+    if (
+        /^[0-9+\-*/().%^]$/.test(key)
     ) {
-
-        addValue(key);
-
+        appendValue(key);
     }
 
-    // CALCULATE
-
-    else if (key === "Enter" || key === "=") {
-
+    else if (key === "Enter") {
         event.preventDefault();
-
         calculate();
-
     }
-
-    // DELETE
 
     else if (key === "Backspace") {
-
-        deleteCharacter();
-
+        deleteLast();
     }
-
-    // CLEAR
 
     else if (key === "Escape") {
-
         clearCalculator();
-
     }
-
 });
 
 
-// ==========================================
-// INITIALIZE CALCULATOR
-// ==========================================
+// Clear calculator history button
+if (clearHistoryButton) {
+    clearHistoryButton.addEventListener(
+        "click",
+        clearCalculatorHistory
+    );
+}
 
-renderHistory();
 
+// Initialize calculator
 updateDisplay();
+renderHistory();
