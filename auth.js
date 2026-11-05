@@ -1,11 +1,15 @@
 // ======================================
 // MATHGENIUS LOCAL ACCOUNT SYSTEM
+// WITH RECOVERY CODE
 // ======================================
 
 const USERS_KEY = "mathgenius_users";
 const SESSION_KEY = "mathgenius_session";
 
-// Get registered users
+// ======================================
+// GET AND SAVE USERS
+// ======================================
+
 function getUsers() {
     try {
         return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
@@ -14,12 +18,14 @@ function getUsers() {
     }
 }
 
-// Save registered users
 function saveUsers(users) {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
 
-// Display messages
+// ======================================
+// DISPLAY MESSAGES
+// ======================================
+
 function showMessage(message, success = false) {
     const messageBox = document.getElementById("authMessage");
 
@@ -29,7 +35,10 @@ function showMessage(message, success = false) {
     messageBox.style.color = success ? "#4ade80" : "#ff8585";
 }
 
-// Hash passwords before storing them
+// ======================================
+// PASSWORD HASHING
+// ======================================
+
 async function hashPassword(password, salt) {
     const encoder = new TextEncoder();
 
@@ -57,7 +66,10 @@ async function hashPassword(password, salt) {
         .join("");
 }
 
-// Create a random password salt
+// ======================================
+// CREATE RANDOM SALT
+// ======================================
+
 function createSalt() {
     const bytes = crypto.getRandomValues(new Uint8Array(16));
 
@@ -67,24 +79,202 @@ function createSalt() {
 }
 
 // ======================================
+// GENERATE RECOVERY CODE
+// ======================================
+
+function generateRecoveryCode() {
+
+    const characters = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    const randomValues = crypto.getRandomValues(
+        new Uint8Array(16)
+    );
+
+    let code = "";
+
+    randomValues.forEach(value => {
+        code += characters[value % characters.length];
+    });
+
+    return code.match(/.{1,4}/g).join("-");
+}
+
+// ======================================
+// NORMALIZE RECOVERY CODE
+// ======================================
+
+function normalizeRecoveryCode(code) {
+    return code
+        .toUpperCase()
+        .replace(/[^A-Z0-9]/g, "");
+}
+
+// ======================================
+// SHOW RECOVERY CODE
+// ======================================
+
+function showRecoveryCode(code, message) {
+
+    const messageBox = document.getElementById("authMessage");
+
+    if (!messageBox) {
+        alert("Your MathGenius recovery code is: " + code);
+        return;
+    }
+
+    messageBox.innerHTML = "";
+
+    const container = document.createElement("div");
+
+    container.style.cssText = `
+        margin-top: 20px;
+        padding: 22px;
+        background: #111a30;
+        border: 1px solid #4776ff;
+        border-radius: 14px;
+        color: #ffffff;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    `;
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Your Recovery Code";
+
+    heading.style.cssText = `
+        color: #8ba8ff;
+        margin-bottom: 12px;
+        font-size: 20px;
+    `;
+
+    const description = document.createElement("p");
+    description.textContent = message;
+
+    description.style.cssText = `
+        color: #aab6ce;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    `;
+
+    const codeBox = document.createElement("div");
+
+    codeBox.textContent = code;
+
+    codeBox.style.cssText = `
+        padding: 16px 10px;
+        background: #080d1c;
+        color: #45d7ff;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        overflow-wrap: anywhere;
+        margin-bottom: 15px;
+        user-select: all;
+    `;
+
+    const copyButton = document.createElement("button");
+
+    copyButton.type = "button";
+    copyButton.textContent = "Copy Recovery Code";
+
+    copyButton.style.cssText = `
+        padding: 12px 18px;
+        background: linear-gradient(110deg, #4776ff, #9b6dff);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 12px;
+    `;
+
+    copyButton.addEventListener("click", async function () {
+
+        try {
+            await navigator.clipboard.writeText(code);
+
+            copyButton.textContent = "Copied Successfully!";
+
+        } catch {
+            codeBox.focus?.();
+
+            alert("Please copy your recovery code manually.");
+        }
+
+    });
+
+    const warning = document.createElement("p");
+
+    warning.textContent =
+        "Keep this code somewhere safe. Anyone with access to it may be able to reset your password.";
+
+    warning.style.cssText = `
+        color: #ffb4b4;
+        font-size: 12px;
+        line-height: 1.6;
+        margin: 10px 0 18px;
+    `;
+
+    const continueButton = document.createElement("button");
+
+    continueButton.type = "button";
+    continueButton.textContent = "I've Saved My Code - Continue";
+
+    continueButton.style.cssText = `
+        padding: 13px 15px;
+        width: 100%;
+        background: #1c9b68;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+    `;
+
+    continueButton.addEventListener("click", function () {
+        window.location.href = "dashboard.html";
+    });
+
+    container.appendChild(heading);
+    container.appendChild(description);
+    container.appendChild(codeBox);
+    container.appendChild(copyButton);
+    container.appendChild(warning);
+    container.appendChild(continueButton);
+
+    messageBox.appendChild(container);
+}
+
+// ======================================
 // REGISTRATION
 // ======================================
 
 const registerForm = document.getElementById("registerForm");
 
 if (registerForm) {
+
     registerForm.addEventListener("submit", async event => {
+
         event.preventDefault();
 
         const button = document.getElementById("registerButton");
 
         const fullName = document.getElementById("fullName").value.trim();
-        const email = document.getElementById("email").value.trim().toLowerCase();
+
+        const email = document.getElementById("email")
+            .value.trim().toLowerCase();
+
         const accountType = document.getElementById("accountType").value;
+
         const institution = document.getElementById("institution").value.trim();
 
         const password = document.getElementById("password").value;
-        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
 
         if (!fullName || !email || !accountType || !password) {
             showMessage("Please complete all required fields.");
@@ -102,7 +292,7 @@ if (registerForm) {
         }
 
         if (!crypto.subtle) {
-            showMessage("Secure password processing is unavailable in this browser.");
+            showMessage("Secure password processing is unavailable.");
             return;
         }
 
@@ -119,39 +309,76 @@ if (registerForm) {
         button.textContent = "Creating Account...";
 
         try {
+
             const salt = createSalt();
+
             const passwordHash = await hashPassword(password, salt);
 
+            const recoveryCode = generateRecoveryCode();
+
+            const recoverySalt = createSalt();
+
+            const recoveryHash = await hashPassword(
+                normalizeRecoveryCode(recoveryCode),
+                recoverySalt
+            );
+
             const newUser = {
+
                 id: crypto.randomUUID(),
+
                 fullName,
+
                 email,
+
                 accountType,
+
                 institution,
+
                 salt,
+
                 passwordHash,
+
+                recoverySalt,
+
+                recoveryHash,
+
                 createdAt: new Date().toISOString()
+
             };
 
             users.push(newUser);
+
             saveUsers(users);
 
-            sessionStorage.setItem(SESSION_KEY, JSON.stringify({
-                userId: newUser.id
-            }));
+            sessionStorage.setItem(
+                SESSION_KEY,
+                JSON.stringify({
+                    userId: newUser.id
+                })
+            );
 
-            showMessage("Account created successfully!", true);
-
-            setTimeout(() => {
-                window.location.href = "dashboard.html";
-            }, 1000);
-
-        } catch (error) {
-            showMessage("Something went wrong. Please try again.");
             button.disabled = false;
             button.textContent = "Create Free Account";
+
+            showRecoveryCode(
+                recoveryCode,
+                "Your account has been created successfully. Save this recovery code before entering your dashboard."
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            showMessage("Something went wrong. Please try again.");
+
+            button.disabled = false;
+            button.textContent = "Create Free Account";
+
         }
+
     });
+
 }
 
 // ======================================
@@ -161,12 +388,16 @@ if (registerForm) {
 const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
+
     loginForm.addEventListener("submit", async event => {
+
         event.preventDefault();
 
         const button = document.getElementById("loginButton");
 
-        const email = document.getElementById("email").value.trim().toLowerCase();
+        const email = document.getElementById("email")
+            .value.trim().toLowerCase();
+
         const password = document.getElementById("password").value;
 
         if (!email || !password) {
@@ -178,42 +409,94 @@ if (loginForm) {
         button.textContent = "Logging in...";
 
         try {
+
             const users = getUsers();
 
             const user = users.find(item => item.email === email);
 
             if (!user) {
+
                 showMessage("Incorrect email or password.");
+
                 button.disabled = false;
                 button.textContent = "Log In";
+
                 return;
             }
 
-            const enteredHash = await hashPassword(password, user.salt);
+            const enteredHash = await hashPassword(
+                password,
+                user.salt
+            );
 
             if (enteredHash !== user.passwordHash) {
+
                 showMessage("Incorrect email or password.");
+
                 button.disabled = false;
                 button.textContent = "Log In";
+
                 return;
             }
 
-            sessionStorage.setItem(SESSION_KEY, JSON.stringify({
-                userId: user.id
-            }));
+            sessionStorage.setItem(
+                SESSION_KEY,
+                JSON.stringify({
+                    userId: user.id
+                })
+            );
+
+            // Give existing accounts a recovery code
+
+            if (!user.recoveryHash || !user.recoverySalt) {
+
+                const recoveryCode = generateRecoveryCode();
+
+                const recoverySalt = createSalt();
+
+                const recoveryHash = await hashPassword(
+                    normalizeRecoveryCode(recoveryCode),
+                    recoverySalt
+                );
+
+                user.recoverySalt = recoverySalt;
+
+                user.recoveryHash = recoveryHash;
+
+                saveUsers(users);
+
+                button.disabled = false;
+                button.textContent = "Log In";
+
+                showRecoveryCode(
+                    recoveryCode,
+                    "Your account has been upgraded with password recovery. Save this new recovery code somewhere safe."
+                );
+
+                return;
+            }
 
             showMessage("Login successful!", true);
 
             setTimeout(() => {
+
                 window.location.href = "dashboard.html";
+
             }, 800);
 
         } catch (error) {
+
+            console.error(error);
+
             showMessage("Unable to log in. Please try again.");
+
             button.disabled = false;
             button.textContent = "Log In";
+
         }
+
     });
+
 }
 
 // ======================================
@@ -223,13 +506,115 @@ if (loginForm) {
 const forgotPassword = document.getElementById("forgotPassword");
 
 if (forgotPassword) {
-    forgotPassword.addEventListener("click", event => {
+
+    forgotPassword.addEventListener("click", async event => {
+
         event.preventDefault();
 
-        showMessage(
-            "Password recovery isn't available in local mode. Your account has no email recovery service."
+        const email = prompt(
+            "Enter the email address registered with MathGenius:"
         );
+
+        if (!email) return;
+
+        const normalizedEmail = email.trim().toLowerCase();
+
+        const users = getUsers();
+
+        const user = users.find(
+            item => item.email === normalizedEmail
+        );
+
+        if (!user) {
+
+            showMessage("Account not found. Check your registered email.");
+
+            return;
+        }
+
+        if (!user.recoveryHash || !user.recoverySalt) {
+
+            showMessage(
+                "This account does not have a recovery code yet. Log in successfully to generate one."
+            );
+
+            return;
+        }
+
+        const recoveryCode = prompt(
+            "Enter your MathGenius recovery code:"
+        );
+
+        if (!recoveryCode) return;
+
+        try {
+
+            const enteredRecoveryHash = await hashPassword(
+                normalizeRecoveryCode(recoveryCode),
+                user.recoverySalt
+            );
+
+            if (enteredRecoveryHash !== user.recoveryHash) {
+
+                showMessage("Invalid recovery code. Please try again.");
+
+                return;
+            }
+
+            const newPassword = prompt(
+                "Enter your new password (at least 8 characters):"
+            );
+
+            if (!newPassword) return;
+
+            if (newPassword.length < 8) {
+
+                showMessage(
+                    "Your new password must contain at least 8 characters."
+                );
+
+                return;
+            }
+
+            const confirmNewPassword = prompt(
+                "Confirm your new password:"
+            );
+
+            if (newPassword !== confirmNewPassword) {
+
+                showMessage("Your passwords do not match.");
+
+                return;
+            }
+
+            const newSalt = createSalt();
+
+            const newPasswordHash = await hashPassword(
+                newPassword,
+                newSalt
+            );
+
+            user.salt = newSalt;
+
+            user.passwordHash = newPasswordHash;
+
+            saveUsers(users);
+
+            showMessage(
+                "Password reset successful! You can now log in with your new password.",
+                true
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            showMessage("Password reset failed. Please try again.");
+
+        }
+
     });
+
 }
 
 // ======================================
@@ -237,18 +622,25 @@ if (forgotPassword) {
 // ======================================
 
 function getCurrentUser() {
+
     try {
+
         const session = JSON.parse(
             sessionStorage.getItem(SESSION_KEY)
         );
 
         if (!session) return null;
 
-        return getUsers().find(user => user.id === session.userId) || null;
+        return getUsers().find(
+            user => user.id === session.userId
+        ) || null;
 
     } catch {
+
         return null;
+
     }
+
 }
 
 // ======================================
@@ -256,8 +648,11 @@ function getCurrentUser() {
 // ======================================
 
 function logout() {
+
     sessionStorage.removeItem(SESSION_KEY);
+
     window.location.href = "login.html";
+
 }
 
 // ======================================
@@ -265,9 +660,13 @@ function logout() {
 // ======================================
 
 function requireLogin() {
+
     if (!getCurrentUser()) {
+
         window.location.href = "login.html";
+
     }
+
 }
 
 // ======================================
@@ -275,12 +674,15 @@ function requireLogin() {
 // ======================================
 
 function displayCurrentUser() {
+
     const user = getCurrentUser();
 
     if (!user) return;
 
     const nameElement = document.getElementById("userName");
+
     const emailElement = document.getElementById("userEmail");
+
     const roleElement = document.getElementById("userRole");
 
     if (nameElement) {
@@ -294,4 +696,5 @@ function displayCurrentUser() {
     if (roleElement) {
         roleElement.textContent = user.accountType;
     }
+
 }
