@@ -15,11 +15,15 @@ if (menuToggle && navLinks) {
         navLinks.classList.toggle("active");
 
         if (navLinks.classList.contains("active")) {
+
             menuToggle.innerHTML = "&times;";
             menuToggle.setAttribute("aria-expanded", "true");
+
         } else {
+
             menuToggle.innerHTML = "☰";
             menuToggle.setAttribute("aria-expanded", "false");
+
         }
 
     });
@@ -40,8 +44,14 @@ if (navLinks) {
             navLinks.classList.remove("active");
 
             if (menuToggle) {
+
                 menuToggle.innerHTML = "☰";
-                menuToggle.setAttribute("aria-expanded", "false");
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
             }
 
         });
@@ -56,7 +66,9 @@ if (navLinks) {
 const currentYear = document.getElementById("currentYear");
 
 if (currentYear) {
+
     currentYear.textContent = new Date().getFullYear();
+
 }
 
 
@@ -77,8 +89,11 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
             event.preventDefault();
 
             target.scrollIntoView({
+
                 behavior: "smooth",
+
                 block: "start"
+
             });
 
         }
@@ -99,11 +114,14 @@ window.addEventListener("scroll", function () {
     if (window.scrollY > 30) {
 
         header.style.background = "rgba(8, 13, 28, 0.97)";
-        header.style.boxShadow = "0 5px 25px rgba(0,0,0,0.15)";
+
+        header.style.boxShadow =
+            "0 5px 25px rgba(0,0,0,0.15)";
 
     } else {
 
         header.style.background = "rgba(8, 13, 28, 0.88)";
+
         header.style.boxShadow = "none";
 
     }
@@ -152,17 +170,6 @@ if ("IntersectionObserver" in window) {
     });
 
 }
-
-
-/* PREVENT EMPTY LINK JUMPS */
-
-document.querySelectorAll('a[href="#"]').forEach(function (link) {
-
-    link.addEventListener("click", function (event) {
-        event.preventDefault();
-    });
-
-});
 
 
 /* CONSOLE MESSAGE */
