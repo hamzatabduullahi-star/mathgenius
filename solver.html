@@ -8,11 +8,440 @@
     <title>Equation Solver | MathGenius</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =====================================
+           EQUATION SOLVER - PAGE SPECIFIC STYLE
+        ===================================== */
+
+        body.solver-page {
+            background: #080d1c;
+            color: #f1f5ff;
+            overflow-x: hidden;
+        }
+
+        .solver-page *,
+        .solver-page *::before,
+        .solver-page *::after {
+            box-sizing: border-box;
+        }
+
+        /* NAVIGATION */
+
+        .solver-page .navbar {
+            width: 100%;
+            min-height: 75px;
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            background: #0b1225;
+            border-bottom: 1px solid rgba(100, 130, 255, 0.15);
+        }
+
+        .solver-page .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .solver-page .logo span {
+            color: #8b7aff;
+        }
+
+        .solver-page .navbar nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .solver-page .navbar nav a {
+            color: #aebbd6;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+            transition: 0.2s ease;
+        }
+
+        .solver-page .navbar nav a:hover,
+        .solver-page .navbar nav a.active {
+            color: #ffffff;
+            background: rgba(105, 92, 255, 0.18);
+        }
+
+        /* MAIN CONTAINER */
+
+        .solver-page .page-container {
+            width: min(950px, 92%);
+            margin: 45px auto;
+        }
+
+        /* PAGE HEADING */
+
+        .solver-page .page-heading {
+            margin-bottom: 32px;
+        }
+
+        .solver-page .section-label {
+            color: #8295ff;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin-bottom: 14px;
+        }
+
+        .solver-page .page-heading h1 {
+            font-size: clamp(30px, 5vw, 48px);
+            line-height: 1.2;
+            color: #ffffff;
+            margin: 0 0 15px;
+            overflow-wrap: anywhere;
+        }
+
+        .solver-page .page-heading > p:last-child {
+            color: #aebbd6;
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0;
+        }
+
+        /* TOOL CARDS */
+
+        .solver-page .tool-card {
+            background: linear-gradient(145deg, #131e3a, #10182f);
+            border: 1px solid rgba(111, 130, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .solver-page .tool-card h2 {
+            color: #ffffff;
+            font-size: 24px;
+            margin: 0 0 16px;
+        }
+
+        .solver-page .tool-card > p {
+            color: #aebbd6;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* EQUATION TYPE SELECTOR */
+
+        .solver-page #equationType {
+            display: block;
+            width: 100%;
+            min-height: 54px;
+            padding: 14px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            border: 1px solid #455b91;
+            background: #0a132b;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .solver-page #equationType:focus {
+            border-color: #8b65ff;
+            box-shadow: 0 0 0 3px rgba(139, 101, 255, 0.12);
+        }
+
+        .solver-page #equationType option {
+            background: #10182f;
+            color: #ffffff;
+        }
+
+        /* EQUATION INPUT SECTIONS */
+
+        .solver-page #linearInputs,
+        .solver-page #quadraticInputs {
+            background: #0c162f;
+            border: 1px solid rgba(93, 120, 200, 0.22);
+            border-radius: 15px;
+            padding: 23px;
+            margin-bottom: 25px;
+        }
+
+        .solver-page #linearInputs[hidden],
+        .solver-page #quadraticInputs[hidden],
+        .solver-page #resultBox[hidden],
+        .solver-page #stepsBox[hidden] {
+            display: none !important;
+        }
+
+        .solver-page #linearInputs h2,
+        .solver-page #quadraticInputs h2 {
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .solver-page #linearInputs > p,
+        .solver-page #quadraticInputs > p {
+            color: #9daed0;
+            font-size: 14px;
+            margin: 0 0 22px;
+            line-height: 1.6;
+        }
+
+        /* INPUT GROUPS */
+
+        .solver-page .input-group {
+            margin-bottom: 19px;
+        }
+
+        .solver-page .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .solver-page .input-group label {
+            display: block;
+            color: #dce5ff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .solver-page .input-group input {
+            width: 100%;
+            min-height: 52px;
+            padding: 14px 16px;
+            border-radius: 11px;
+            border: 1px solid #354c83;
+            background: #080f24;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 16px;
+            outline: none;
+            transition: 0.25s ease;
+        }
+
+        .solver-page .input-group input::placeholder {
+            color: #71809e;
+        }
+
+        .solver-page .input-group input:focus {
+            border-color: #8b65ff;
+            box-shadow: 0 0 0 3px rgba(139, 101, 255, 0.12);
+        }
+
+        /* SOLVE BUTTON */
+
+        .solver-page #solveButton {
+            display: block;
+            width: 100%;
+            min-height: 55px;
+            padding: 15px 22px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(110deg, #397dff, #8535ed);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 7px 22px rgba(91, 83, 255, 0.22);
+            transition: 0.2s ease;
+        }
+
+        .solver-page #solveButton:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .solver-page #solveButton:active {
+            transform: scale(0.98);
+        }
+
+        /* RESULT SECTIONS */
+
+        .solver-page #resultBox,
+        .solver-page #stepsBox {
+            background: linear-gradient(145deg, #131e3a, #10182f);
+        }
+
+        .solver-page #resultBox h2,
+        .solver-page #stepsBox h2 {
+            font-size: 24px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(111, 130, 255, 0.18);
+        }
+
+        .solver-page #resultContent,
+        .solver-page #stepsContent {
+            color: #d5def4;
+            font-size: 15px;
+            line-height: 1.9;
+            overflow-wrap: anywhere;
+        }
+
+        .solver-page #resultContent strong,
+        .solver-page #stepsContent strong {
+            color: #a997ff;
+        }
+
+        .solver-page #resultContent > *,
+        .solver-page #stepsContent > * {
+            max-width: 100%;
+        }
+
+        /* FOOTER */
+
+        .solver-page .site-footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #7f8ca9;
+            font-size: 13px;
+            border-top: 1px solid rgba(100, 130, 255, 0.12);
+        }
+
+        /* TABLET */
+
+        @media (max-width: 850px) {
+
+            .solver-page .navbar {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .solver-page .navbar nav {
+                width: 100%;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 8px;
+                scrollbar-width: none;
+            }
+
+            .solver-page .navbar nav::-webkit-scrollbar {
+                display: none;
+            }
+
+            .solver-page .navbar nav a {
+                flex-shrink: 0;
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .solver-page .navbar {
+                padding: 16px 5%;
+            }
+
+            .solver-page .logo {
+                font-size: 23px;
+            }
+
+            .solver-page .navbar nav {
+                gap: 5px;
+            }
+
+            .solver-page .navbar nav a {
+                font-size: 12px;
+                padding: 9px 11px;
+            }
+
+            .solver-page .page-container {
+                width: 92%;
+                margin: 30px auto;
+            }
+
+            .solver-page .page-heading {
+                margin-bottom: 25px;
+            }
+
+            .solver-page .page-heading h1 {
+                font-size: 32px;
+            }
+
+            .solver-page .page-heading > p:last-child {
+                font-size: 14px;
+            }
+
+            .solver-page .section-label {
+                font-size: 11px;
+                letter-spacing: 3px;
+            }
+
+            .solver-page .tool-card {
+                padding: 20px 16px;
+                border-radius: 16px;
+                margin-bottom: 18px;
+            }
+
+            .solver-page .tool-card h2 {
+                font-size: 21px;
+            }
+
+            .solver-page #equationType {
+                font-size: 14px;
+            }
+
+            .solver-page #linearInputs,
+            .solver-page #quadraticInputs {
+                padding: 17px 14px;
+            }
+
+            .solver-page #linearInputs h2,
+            .solver-page #quadraticInputs h2 {
+                font-size: 19px;
+            }
+
+            .solver-page .input-group input {
+                min-height: 50px;
+                font-size: 16px;
+            }
+
+            .solver-page #solveButton {
+                min-height: 52px;
+                font-size: 15px;
+            }
+
+            .solver-page #resultBox h2,
+            .solver-page #stepsBox h2 {
+                font-size: 21px;
+            }
+
+            .solver-page #resultContent,
+            .solver-page #stepsContent {
+                font-size: 14px;
+            }
+        }
+
+        /* SMALL PHONES */
+
+        @media (max-width: 360px) {
+
+            .solver-page .page-heading h1 {
+                font-size: 28px;
+            }
+
+            .solver-page .tool-card {
+                padding: 17px 13px;
+            }
+        }
+    </style>
 </head>
 
-<body>
+<body class="solver-page">
+
+    <!-- NAVIGATION -->
 
     <header class="navbar">
+
         <a href="dashboard.html" class="logo">
             Math<span>Genius</span>
         </a>
@@ -25,11 +454,16 @@
             <a href="matrix.html">Matrix</a>
             <a href="history.html">History</a>
         </nav>
+
     </header>
+
 
     <main class="page-container">
 
+        <!-- PAGE HEADING -->
+
         <section class="page-heading">
+
             <p class="section-label">MATH TOOLS</p>
 
             <h1>Equation Solver</h1>
@@ -38,16 +472,24 @@
                 Solve linear and quadratic equations with clear,
                 step-by-step solutions.
             </p>
+
         </section>
+
+
+        <!-- EQUATION SOLVER -->
 
         <section class="tool-card">
 
             <h2>Choose Equation Type</h2>
 
             <select id="equationType">
+
                 <option value="linear">Linear Equation</option>
+
                 <option value="quadratic">Quadratic Equation</option>
+
             </select>
+
 
             <!-- LINEAR EQUATION -->
 
@@ -60,6 +502,7 @@
                 </p>
 
                 <div class="input-group">
+
                     <label for="linearA">Value of a</label>
 
                     <input
@@ -68,9 +511,11 @@
                         placeholder="Enter a"
                         step="any"
                     >
+
                 </div>
 
                 <div class="input-group">
+
                     <label for="linearB">Value of b</label>
 
                     <input
@@ -79,9 +524,11 @@
                         placeholder="Enter b"
                         step="any"
                     >
+
                 </div>
 
             </div>
+
 
             <!-- QUADRATIC EQUATION -->
 
@@ -94,6 +541,7 @@
                 </p>
 
                 <div class="input-group">
+
                     <label for="quadraticA">Value of a</label>
 
                     <input
@@ -102,9 +550,11 @@
                         placeholder="Enter a"
                         step="any"
                     >
+
                 </div>
 
                 <div class="input-group">
+
                     <label for="quadraticB">Value of b</label>
 
                     <input
@@ -113,9 +563,11 @@
                         placeholder="Enter b"
                         step="any"
                     >
+
                 </div>
 
                 <div class="input-group">
+
                     <label for="quadraticC">Value of c</label>
 
                     <input
@@ -124,15 +576,18 @@
                         placeholder="Enter c"
                         step="any"
                     >
+
                 </div>
 
             </div>
+
 
             <button id="solveButton" class="primary-btn">
                 Solve Equation
             </button>
 
         </section>
+
 
         <!-- SOLUTION -->
 
@@ -144,7 +599,8 @@
 
         </section>
 
-        <!-- SOLUTION STEPS -->
+
+        <!-- STEP-BY-STEP EXPLANATION -->
 
         <section id="stepsBox" class="tool-card" hidden>
 
@@ -156,9 +612,19 @@
 
     </main>
 
+
+    <!-- FOOTER -->
+
     <footer class="site-footer">
-        <p>© 2026 MathGenius. Solve Smarter. Learn Better.</p>
+
+        <p>
+            © 2026 MathGenius. Solve Smarter. Learn Better.
+        </p>
+
     </footer>
+
+
+    <!-- JAVASCRIPT -->
 
     <script src="auth.js"></script>
     <script src="history.js"></script>
@@ -166,20 +632,31 @@
 
     <script>
         const equationType = document.getElementById("equationType");
+
         const linearInputs = document.getElementById("linearInputs");
+
         const quadraticInputs = document.getElementById("quadraticInputs");
 
         equationType.addEventListener("change", function () {
+
             if (this.value === "linear") {
+
                 linearInputs.hidden = false;
+
                 quadraticInputs.hidden = true;
+
             } else {
+
                 linearInputs.hidden = true;
+
                 quadraticInputs.hidden = false;
+
             }
 
             document.getElementById("resultBox").hidden = true;
+
             document.getElementById("stepsBox").hidden = true;
+
         });
     </script>
 
