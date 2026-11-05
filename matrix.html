@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d1c">
+    <title>Matrix Calculator | MathGenius</title>
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+        .matrix-container {
+            width: min(1000px, 92%);
+            margin: 40px auto;
+        }
+
+        .matrix-card {
+            background: rgba(20, 29, 55, 0.95);
+            border: 1px solid rgba(120, 130, 255, 0.2);
+            border-radius: 18px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .matrix-card p {
+            color: #b9c3dc;
+            line-height: 1.6;
+        }
+
+        .matrix-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .matrix-controls label {
+            color: #cbd5e1;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .matrix-controls select,
+        .matrix-controls input {
+            background: #0b1328;
+            color: white;
+            border: 1px solid #39466b;
+            border-radius: 8px;
+            padding: 10px;
+            min-width: 85px;
+        }
+
+        .matrices-wrapper {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .matrix-editor {
+            background: #0b1328;
+            border: 1px solid #303d60;
+            border-radius: 12px;
+            padding: 18px;
+            overflow-x: auto;
+        }
+
+        .matrix-editor h3 {
+            margin-bottom: 15px;
+        }
+
+        .matrix-grid {
+            display: grid;
+            gap: 7px;
+            width: max-content;
+            max-width: 100%;
+        }
+
+        .matrix-grid input {
+            width: 65px;
+            padding: 10px 5px;
+            text-align: center;
+            background: #17213d;
+            color: white;
+            border: 1px solid #46547a;
+            border-radius: 7px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .matrix-grid input:focus {
+            border-color: #7775ff;
+        }
+
+        .matrix-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .matrix-buttons button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #536dfe, #9333ea);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .matrix-buttons button:hover {
+            opacity: 0.85;
+        }
+
+        .matrix-result {
+            margin-top: 25px;
+            background: #0b1328;
+            border: 1px solid #39466b;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .matrix-result table {
+            border-collapse: separate;
+            border-spacing: 8px;
+            margin-top: 15px;
+        }
+
+        .matrix-result td {
+            background: #17213d;
+            color: white;
+            padding: 12px 16px;
+            text-align: center;
+            border-radius: 6px;
+            min-width: 45px;
+        }
+
+        .matrix-error {
+            color: #ff8585;
+            margin-top: 15px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #a8a6ff;
+            text-decoration: none;
+        }
+
+        @media (max-width: 650px) {
+            .matrices-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .matrix-card {
+                padding: 17px;
+            }
+
+            .matrix-buttons button {
+                flex: 1 1 40%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">MathGenius</a>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+
+    <main class="matrix-container">
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+
+        <h1>Matrix Calculator</h1>
+
+        <p>
+            Perform matrix addition, subtraction, multiplication,
+            transpose, determinant and inverse calculations.
+        </p>
+
+        <section class="matrix-card">
+
+            <h2>Matrix Dimensions</h2>
+
+            <div class="matrix-controls">
+
+                <label>
+                    Rows
+                    <select id="rowsA">
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </label>
+
+                <label>
+                    Columns
+                    <select id="colsA">
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </label>
+
+                <label>
+                    Matrix B Rows
+                    <select id="rowsB">
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </label>
+
+                <label>
+                    Matrix B Columns
+                    <select id="colsB">
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </label>
+
+            </div>
+
+            <div class="matrices-wrapper">
+
+                <div class="matrix-editor">
+                    <h3>Matrix A</h3>
+                    <div id="matrixAGrid" class="matrix-grid"></div>
+                </div>
+
+                <div class="matrix-editor">
+                    <h3>Matrix B</h3>
+                    <div id="matrixBGrid" class="matrix-grid"></div>
+                </div>
+
+            </div>
+
+            <div class="matrix-buttons">
+                <button id="addButton">A + B</button>
+                <button id="subtractButton">A − B</button>
+                <button id="multiplyButton">A × B</button>
+                <button id="transposeAButton">Transpose A</button>
+                <button id="transposeBButton">Transpose B</button>
+                <button id="determinantAButton">Determinant A</button>
+                <button id="determinantBButton">Determinant B</button>
+                <button id="inverseAButton">Inverse A</button>
+                <button id="inverseBButton">Inverse B</button>
+            </div>
+
+            <p id="matrixError" class="matrix-error"></p>
+
+            <div id="matrixResult" class="matrix-result" aria-live="polite">
+                <h3>Result</h3>
+                <p>Your matrix result will appear here.</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="./matrix.js"></script>
+
+</body>
+</html>
