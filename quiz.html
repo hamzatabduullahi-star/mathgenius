@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d1c">
+    <title>Quiz Centre | MathGenius</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #080d1c;
+            color: #f4f6ff;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 6%;
+            background: #0d1427;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #6d91ff;
+        }
+
+        .back-link {
+            color: #91aaff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: auto;
+            padding: 35px 20px 60px;
+        }
+
+        .hero {
+            padding: 35px;
+            border-radius: 20px;
+            background:
+                radial-gradient(circle at top right, rgba(0,200,255,0.13), transparent 40%),
+                linear-gradient(120deg, #142747, #191c40);
+            border: 1px solid rgba(109,145,255,0.2);
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            margin: 0 0 12px;
+        }
+
+        .hero p {
+            color: #aab6ce;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .panel {
+            background: #111a30;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 17px;
+            padding: 25px;
+            margin-bottom: 22px;
+        }
+
+        .panel h2 {
+            font-size: 21px;
+            margin: 0 0 18px;
+        }
+
+        label {
+            display: block;
+            color: #b5c1d9;
+            font-size: 13px;
+            margin-bottom: 9px;
+        }
+
+        select {
+            width: 100%;
+            padding: 14px;
+            background: #080f21;
+            color: white;
+            border: 1px solid #293957;
+            border-radius: 9px;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 9px;
+            padding: 13px 20px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .primary-btn {
+            background: #557cff;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #4168e8;
+        }
+
+        .secondary-btn {
+            background: #26344f;
+            color: white;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-header span {
+            color: #91aaff;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .progress-track {
+            height: 8px;
+            background: #26344f;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #557cff, #47d8e8);
+            transition: width 0.3s;
+        }
+
+        .question {
+            font-size: 20px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: #0b1429;
+            border: 1px solid #293957;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #d9e1f3;
+            line-height: 1.5;
+        }
+
+        .option:hover {
+            border-color: #6d91ff;
+        }
+
+        .option input {
+            accent-color: #557cff;
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0;
+        }
+
+        .quiz-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .result {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 145px;
+            height: 145px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 25px auto;
+            border-radius: 50%;
+            background: #142747;
+            border: 7px solid #557cff;
+        }
+
+        .score-circle strong {
+            font-size: 35px;
+        }
+
+        .score-circle span {
+            color: #aab6ce;
+            font-size: 12px;
+        }
+
+        .result h2 {
+            margin-bottom: 10px;
+        }
+
+        .result p {
+            color: #aab6ce;
+            line-height: 1.7;
+        }
+
+        .review-item {
+            text-align: left;
+            padding: 18px;
+            background: #0b1429;
+            border-radius: 12px;
+            margin-top: 13px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .review-item h3 {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .correct {
+            color: #69e6a9;
+        }
+
+        .incorrect {
+            color: #ff9999;
+        }
+
+        .explanation {
+            color: #aab6ce;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-top: 10px;
+        }
+
+        .history-item {
+            padding: 15px;
+            background: #0b1429;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .history-item span {
+            color: #91aaff;
+        }
+
+        .empty {
+            color: #8995ad;
+            text-align: center;
+            padding: 25px 10px;
+            line-height: 1.7;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #8995ad;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            font-size: 13px;
+        }
+
+        @media(max-width: 600px) {
+            header {
+                padding: 16px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            main {
+                padding: 25px 15px 45px;
+            }
+
+            .hero {
+                padding: 25px 20px;
+            }
+
+            .hero h1 {
+                font-size: 26px;
+            }
+
+            .panel {
+                padding: 20px;
+            }
+
+            .question {
+                font-size: 17px;
+            }
+
+            .quiz-actions button {
+                padding: 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a href="dashboard.html" class="logo">
+        Math<span>Genius</span>
+    </a>
+
+    <a href="learning.html" class="back-link">
+        ← Learning Centre
+    </a>
+</header>
+
+<main>
+
+    <section class="hero">
+        <h1>🧠 Quiz & Assessment Centre</h1>
+
+        <p>
+            Challenge yourself, test your understanding and
+            discover how much you have learned.
+            Every question is an opportunity to improve.
+        </p>
+    </section>
+
+    <!-- QUIZ SELECTION -->
+
+    <section class="panel" id="selectionPanel">
+
+        <h2>Choose Your Assessment</h2>
+
+        <label for="subject">Select a subject</label>
+
+        <select id="subject">
+            <option value="mathematics">Mathematics</option>
+            <option value="computer">Computer Science</option>
+            <option value="statistics">Statistics</option>
+        </select>
+
+        <label for="difficulty">Difficulty level</label>
+
+        <select id="difficulty">
+            <option value="all">All Levels</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+        </select>
+
+        <button class="primary-btn" id="startButton">
+            Start Quiz →
+        </button>
+
+    </section>
+
+    <!-- QUIZ AREA -->
+
+    <section class="panel" id="quizPanel" hidden>
+
+        <div class="quiz-header">
+            <span id="questionCounter">Question 1</span>
+            <span id="quizSubject">Mathematics</span>
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <h2 class="question" id="questionText"></h2>
+
+        <div class="options" id="optionsContainer"></div>
+
+        <div class="quiz-actions">
+
+            <button class="secondary-btn" id="quitButton">
+                Exit Quiz
+            </button>
+
+            <button class="primary-btn" id="nextButton">
+                Next Question →
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- RESULT AREA -->
+
+    <section class="panel result" id="resultPanel" hidden>
+
+        <h2>Assessment Completed!</h2>
+
+        <p id="resultMessage"></p>
+
+        <div class="score-circle">
+            <strong id="scorePercentage">0%</strong>
+            <span>Your Score</span>
+        </div>
+
+        <p id="scoreDetails"></p>
+
+        <h2>Answer Review</h2>
+
+        <div id="reviewContainer"></div>
+
+        <br>
+
+        <button class="primary-btn" id="retakeButton">
+            Try Again
+        </button>
+
+        <button class="secondary-btn" id="homeButton">
+            Back to Quiz Centre
+        </button>
+
+    </section>
+
+    <!-- QUIZ HISTORY -->
+
+    <section class="panel" id="historyPanel">
+
+        <h2>📈 Your Previous Attempts</h2>
+
+        <div id="historyContainer"></div>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 MathGenius. Solve Smarter. Learn Better.
+</footer>
+
+<script>
+
+const questionBank = {
+
+    mathematics: [
+
+        {
+            difficulty: "easy",
+            question: "What is the value of 12 × 8?",
+            options: ["86", "96", "108", "88"],
+            answer: 1,
+            explanation: "12 multiplied by 8 equals 96."
+        },
+
+        {
+            difficulty: "easy",
+            question: "What is the square root of 144?",
+            options: ["10", "11", "12", "14"],
+            answer: 2,
+            explanation: "12 × 12 = 144."
+        },
+
+        {
+            difficulty: "easy",
+            question: "What is 25% of 200?",
+            options: ["25", "40", "50", "75"],
+            answer: 2,
+            explanation: "25/100 × 200 = 50."
+        },
+
+        {
+            difficulty: "medium",
+            question: "Solve: 2x + 6 = 16.",
+            options: ["3", "4", "5", "6"],
+            answer: 2,
+            explanation: "2x = 16 - 6 = 10. Therefore x = 5."
+        },
+
+        {
+            difficulty: "medium",
+            question: "What is the derivative of x²?",
+            options: ["x", "2x", "x³", "2"],
+            answer: 1,
+            explanation: "Using the power rule, d(x²)/dx = 2x."
+        },
+
+        {
+            difficulty: "medium",
+            question: "What is the value of 5!?",
+            options: ["25", "60", "100", "120"],
+            answer: 3,
+            explanation: "5! = 5 × 4 × 3 × 2 × 1 = 120."
+        }
+
+    ],
+
+    computer: [
+
+        {
+            difficulty: "easy",
+            question: "What does CPU stand for?",
+            options: [
+                "Central Processing Unit",
+                "Computer Personal Unit",
+                "Central Program Utility",
+                "Control Processing User"
+            ],
+            answer: 0,
+            explanation: "CPU means Central Processing Unit."
+        },
+
+        {
+            difficulty: "easy",
+            question: "Which of these is an input device?",
+            options: ["Monitor", "Printer", "Keyboard", "Speaker"],
+            answer: 2,
+            explanation: "A keyboard is used to enter data into a computer."
+        },
+
+        {
+            difficulty: "easy",
+            question: "Which language is mainly used to structure web pages?",
+            options: ["HTML", "Python", "SQL", "C++"],
+            answer: 0,
+            explanation: "HTML provides the structure of web pages."
+        },
+
+        {
+            difficulty: "medium",
+            question: "What does RAM stand for?",
+            options: [
+                "Read Access Memory",
+                "Random Access Memory",
+                "Run Active Memory",
+                "Remote Access Machine"
+            ],
+            answer: 1,
+            explanation: "RAM means Random Access Memory."
+        },
+
+        {
+            difficulty: "medium",
+            question: "Which data structure follows FIFO?",
+            options: ["Stack", "Tree", "Queue", "Graph"],
+            answer: 2,
+            explanation: "Queue follows First In, First Out (FIFO)."
+        },
+
+        {
+            difficulty: "medium",
+            question: "What is the purpose of an operating system?",
+            options: [
+                "Only to browse the internet",
+                "To manage computer hardware and software resources",
+                "Only to create documents",
+                "Only to play music"
+            ],
+            answer: 1,
+            explanation: "An operating system manages hardware, software and system resources."
+        }
+
+    ],
+
+    statistics: [
+
+        {
+            difficulty: "easy",
+            question: "What is the mean of 2, 4 and 6?",
+            options: ["3", "4", "5", "6"],
+            answer: 1,
+            explanation: "(2 + 4 + 6) / 3 = 4."
+        },
+
+        {
+            difficulty: "easy",
+            question: "What is the middle value of 3, 5 and 7?",
+            options: ["3", "5", "7", "15"],
+            answer: 1,
+            explanation: "The median is the middle value when the data is arranged in order."
+        },
+
+        {
+            difficulty: "easy",
+            question: "Which measure identifies the most frequent value?",
+            options: ["Mean", "Median", "Mode", "Range"],
+            answer: 2,
+            explanation: "Mode is the value that appears most frequently."
+        },
+
+        {
+            difficulty: "medium",
+            question: "What is the range of 4, 8, 10 and 15?",
+            options: ["7", "9", "11", "15"],
+            answer: 2,
+            explanation: "Range = highest value - lowest value = 15 - 4 = 11."
+        },
+
+        {
+            difficulty: "medium",
+            question: "What does standard deviation measure?",
+            options: [
+                "The middle value",
+                "The spread of data around the mean",
+                "The most frequent value",
+                "The total number of observations"
+            ],
+            answer: 1,
+            explanation: "Standard deviation measures how spread out values are around the mean."
+        },
+
+        {
+            difficulty: "medium",
+            question: "If all observations are identical, what is the variance?",
+            options: ["1", "0", "100", "Cannot be determined"],
+            answer: 1,
+            explanation: "There is no variation when all observations are identical, so variance is zero."
+        }
+
+    ]
+
+};
+
+const HISTORY_KEY = "mathgenius_quiz_history_v1";
+
+let questions = [];
+let currentQuestion = 0;
+let answers = [];
+let selectedSubject = "";
+let selectedDifficulty = "";
+
+const selectionPanel = document.getElementById("selectionPanel");
+const quizPanel = document.getElementById("quizPanel");
+const resultPanel = document.getElementById("resultPanel");
+
+const questionText = document.getElementById("questionText");
+const optionsContainer = document.getElementById("optionsContainer");
+
+function getSubjectName(subject) {
+
+    const names = {
+        mathematics: "Mathematics",
+        computer: "Computer Science",
+        statistics: "Statistics"
+    };
+
+    return names[subject] || subject;
+}
+
+function startQuiz() {
+
+    selectedSubject = document.getElementById("subject").value;
+
+    selectedDifficulty = document.getElementById("difficulty").value;
+
+    questions = questionBank[selectedSubject].filter(question => {
+
+        return selectedDifficulty === "all" ||
+            question.difficulty === selectedDifficulty;
+
+    });
+
+    if (questions.length === 0) {
+        alert("No questions are currently available.");
+        return;
+    }
+
+    questions = [...questions].sort(() => Math.random() - 0.5);
+
+    currentQuestion = 0;
+    answers = new Array(questions.length).fill(null);
+
+    selectionPanel.hidden = true;
+    resultPanel.hidden = true;
+    quizPanel.hidden = false;
+
+    document.getElementById("historyPanel").hidden = true;
+
+    document.getElementById("quizSubject").textContent =
+        getSubjectName(selectedSubject);
+
+    showQuestion();
+}
+
+function showQuestion() {
+
+    const question = questions[currentQuestion];
+
+    document.getElementById("questionCounter").textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    document.getElementById("progressBar").style.width =
+        ((currentQuestion + 1) / questions.length * 100) + "%";
+
+    questionText.textContent = question.question;
+
+    optionsContainer.innerHTML = "";
+
+    question.options.forEach((option, index) => {
+
+        const label = document.createElement("label");
+        label.className = "option";
+
+        const input = document.createElement("input");
+
+        input.type = "radio";
+        input.name = "answer";
+        input.value = index;
+        input.checked = answers[currentQuestion] === index;
+
+        input.addEventListener("change", function() {
+            answers[currentQuestion] = index;
+        });
+
+        const text = document.createElement("span");
+        text.textContent = option;
+
+        label.append(input, text);
+
+        optionsContainer.appendChild(label);
+
+    });
+
+    document.getElementById("nextButton").textContent =
+        currentQuestion === questions.length - 1
+            ? "Submit Quiz"
+            : "Next Question →";
+}
+
+function nextQuestion() {
+
+    if (answers[currentQuestion] === null) {
+        alert("Please select an answer before continuing.");
+        return;
+    }
+
+    if (currentQuestion < questions.length - 1) {
+
+        currentQuestion++;
+        showQuestion();
+
+    } else {
+
+        finishQuiz();
+
+    }
+}
+
+function finishQuiz() {
+
+    let score = 0;
+
+    questions.forEach((question, index) => {
+
+        if (answers[index] === question.answer) {
+            score++;
+        }
+
+    });
+
+    const percentage = Math.round((score / questions.length) * 100);
+
+    const subjectName = getSubjectName(selectedSubject);
+
+    document.getElementById("scorePercentage").textContent =
+        percentage + "%";
+
+    document.getElementById("scoreDetails").textContent =
+        `You answered ${score} out of ${questions.length} questions correctly.`;
+
+    let resultMessage = "Keep practising. Every attempt makes you better!";
+
+    if (percentage >= 80) {
+        resultMessage = "Excellent work! You have demonstrated strong understanding.";
+    } else if (percentage >= 60) {
+        resultMessage = "Good effort! You are making progress.";
+    } else if (percentage >= 40) {
+        resultMessage = "You're getting there. Review the explanations and try again.";
+    }
+
+    document.getElementById("resultMessage").textContent = resultMessage;
+
+    renderReview();
+
+    saveAttempt(subjectName, score, questions.length, percentage);
+
+    quizPanel.hidden = true;
+    resultPanel.hidden = false;
+    document.getElementById("historyPanel").hidden = false;
+
+    renderHistory();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function renderReview() {
+
+    const container = document.getElementById("reviewContainer");
+
+    container.innerHTML = "";
+
+    questions.forEach((question, index) => {
+
+        const isCorrect = answers[index] === question.answer;
+
+        const item = document.createElement("div");
+        item.className = "review-item";
+
+        const heading = document.createElement("h3");
+        heading.textContent = `${index + 1}. ${question.question}`;
+
+        const status = document.createElement("p");
+        status.className = isCorrect ? "correct" : "incorrect";
+
+        status.textContent = isCorrect
+            ? "✓ Correct answer"
+            : "✗ Incorrect answer";
+
+        const yourAnswer = document.createElement("p");
+        yourAnswer.textContent =
+            "Your answer: " + question.options[answers[index]];
+
+        const correctAnswer = document.createElement("p");
+        correctAnswer.className = "correct";
+        correctAnswer.textContent =
+            "Correct answer: " + question.options[question.answer];
+
+        const explanation = document.createElement("p");
+        explanation.className = "explanation";
+        explanation.textContent = "Explanation: " + question.explanation;
+
+        item.append(
+            heading,
+            status,
+            yourAnswer,
+            correctAnswer,
+            explanation
+        );
+
+        container.appendChild(item);
+
+    });
+}
+
+function saveAttempt(subject, score, total, percentage) {
+
+    let history = [];
+
+    try {
+        history = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+
+        if (!Array.isArray(history)) {
+            history = [];
+        }
+
+    } catch (error) {
+        history = [];
+    }
+
+    history.unshift({
+        subject: subject,
+        score: score,
+        total: total,
+        percentage: percentage,
+        date: new Date().toISOString()
+    });
+
+    history = history.slice(0, 50);
+
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+}
+
+function renderHistory() {
+
+    const container = document.getElementById("historyContainer");
+
+    let history = [];
+
+    try {
+        history = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+
+        if (!Array.isArray(history)) {
+            history = [];
+        }
+
+    } catch (error) {
+        history = [];
+    }
+
+    container.innerHTML = "";
+
+    if (history.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                You haven't completed any quizzes yet.
+                Your results will appear here.
+            </div>
+        `;
+
+        return;
+    }
+
+    history.forEach(attempt => {
+
+        const item = document.createElement("div");
+        item.className = "history-item";
+
+        const details = document.createElement("div");
+
+        details.textContent =
+            `${attempt.subject} — ${attempt.score}/${attempt.total}`;
+
+        const percentage = document.createElement("span");
+
+        percentage.textContent = attempt.percentage + "%";
+
+        item.append(details, percentage);
+
+        container.appendChild(item);
+
+    });
+}
+
+document.getElementById("startButton").addEventListener("click", startQuiz);
+
+document.getElementById("nextButton").addEventListener("click", nextQuestion);
+
+document.getElementById("quitButton").addEventListener("click", function() {
+
+    if (confirm("Are you sure you want to exit this quiz?")) {
+
+        quizPanel.hidden = true;
+        selectionPanel.hidden = false;
+        document.getElementById("historyPanel").hidden = false;
+
+    }
+
+});
+
+document.getElementById("retakeButton").addEventListener("click", function() {
+    startQuiz();
+});
+
+document.getElementById("homeButton").addEventListener("click", function() {
+
+    resultPanel.hidden = true;
+    selectionPanel.hidden = false;
+    document.getElementById("historyPanel").hidden = false;
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+});
+
+renderHistory();
+
+</script>
+
+</body>
+</html>
