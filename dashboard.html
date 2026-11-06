@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* DASHBOARD DESIGN */
-
         .dashboard-page {
             width: 100%;
             max-width: 1200px;
@@ -63,8 +61,6 @@
             background: rgba(71,118,255,0.17);
         }
 
-        /* WELCOME */
-
         .dashboard-welcome {
             padding: 45px 35px;
             margin-bottom: 35px;
@@ -102,8 +98,6 @@
             max-width: 600px;
         }
 
-        /* SECTIONS */
-
         .dashboard-section {
             margin-bottom: 45px;
         }
@@ -122,8 +116,6 @@
             color: #9ca9c2;
             font-size: 14px;
         }
-
-        /* CARDS */
 
         .dashboard-grid {
             display: grid;
@@ -183,7 +175,22 @@
             margin-top: auto;
         }
 
-        /* INFORMATION */
+        /* LEARNING CENTRE FEATURE CARD */
+
+        .learning-card {
+            background:
+                radial-gradient(circle at top right, rgba(0,220,255,0.12), transparent 45%),
+                linear-gradient(135deg, #142747, #191c40);
+            border: 1px solid rgba(91,163,255,0.35);
+        }
+
+        .learning-card .card-icon {
+            background: rgba(0,200,255,0.13);
+        }
+
+        .learning-card > span {
+            color: #62d9ff;
+        }
 
         .information-card {
             padding: 30px;
@@ -210,8 +217,6 @@
             color: #8ba8ff;
         }
 
-        /* LOGOUT */
-
         .dashboard-logout {
             display: flex;
             justify-content: center;
@@ -233,8 +238,6 @@
             background: rgba(255,70,70,0.18);
         }
 
-        /* FOOTER */
-
         .dashboard-footer {
             padding: 25px 15px;
             text-align: center;
@@ -242,8 +245,6 @@
             font-size: 13px;
             border-top: 1px solid rgba(255,255,255,0.07);
         }
-
-        /* TABLETS */
 
         @media (max-width: 850px) {
             .dashboard-nav {
@@ -257,8 +258,6 @@
                 width: 100%;
             }
         }
-
-        /* MOBILE */
 
         @media (max-width: 600px) {
             .dashboard-nav {
@@ -334,8 +333,6 @@
             }
         }
 
-        /* SMALL PHONES */
-
         @media (max-width: 360px) {
             .dashboard-nav nav a {
                 font-size: 11px;
@@ -360,6 +357,7 @@
 
         <nav>
             <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="learning.html">Learning Centre</a>
             <a href="calculator.html">Calculator</a>
             <a href="solver.html">Equation Solver</a>
             <a href="statistics.html">Statistics</a>
@@ -385,13 +383,13 @@
             </h1>
 
             <p>
-                Your mathematics workspace is ready.
-                What would you like to solve today?
+                Your mathematics and academic learning workspace is ready.
+                What would you like to explore today?
             </p>
 
         </section>
 
-        <!-- MATHEMATICS TOOLS -->
+        <!-- MATHEMATICS AND LEARNING TOOLS -->
 
         <section class="dashboard-section">
 
@@ -399,11 +397,24 @@
                 <h2>Your Workspace</h2>
 
                 <p>
-                    Choose a tool and get started with your calculations.
+                    Learn, practise and solve problems with MathGenius.
                 </p>
             </div>
 
             <div class="dashboard-grid">
+
+                <!-- LEARNING CENTRE -->
+
+                <a href="learning.html" class="dashboard-card learning-card">
+                    <div class="card-icon">🎓</div>
+                    <h3>Learning Centre</h3>
+                    <p>
+                        Explore academic programmes, discover courses,
+                        study chapters and topics, and practise with
+                        worked examples and questions.
+                    </p>
+                    <span>Explore Learning Centre →</span>
+                </a>
 
                 <a href="calculator.html" class="dashboard-card">
                     <div class="card-icon">🧮</div>
@@ -489,9 +500,10 @@
             <h2>Keep Learning. Keep Solving.</h2>
 
             <p>
-                MathGenius provides free mathematical tools for students,
-                lecturers and researchers. Use your workspace to practise,
-                explore problems and improve your understanding of mathematics.
+                MathGenius provides free mathematical tools and academic
+                learning resources for students, lecturers and researchers.
+                Explore programmes, study courses, practise problems and
+                improve your understanding.
             </p>
 
             <p>
