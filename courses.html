@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Course Catalogue | MathGenius</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #080e1d;
+    --card: #111c32;
+    --blue: #4388ff;
+    --purple: #9565ff;
+    --cyan: #32d4e7;
+    --text: #f3f6ff;
+    --muted: #9aaac5;
+    --border: rgba(255,255,255,.09);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar {
+    min-height: 70px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0b1426;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--blue);
+}
+
+.back-link {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.back-link:hover {
+    color: white;
+}
+
+.hero {
+    padding: 55px 7%;
+    background:
+    radial-gradient(circle at 85% 20%, rgba(67,136,255,.18), transparent 35%),
+    #0c172c;
+}
+
+.breadcrumb {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.breadcrumb a {
+    color: #76aaff;
+}
+
+.hero h1 {
+    font-size: clamp(27px, 5vw, 42px);
+    margin-bottom: 14px;
+    overflow-wrap: anywhere;
+}
+
+.hero p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 14px;
+    max-width: 650px;
+}
+
+.container {
+    padding: 45px 7%;
+}
+
+.programme-info {
+    background: linear-gradient(130deg, #152642, #111b30);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 23px;
+    margin-bottom: 35px;
+}
+
+.programme-info h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.programme-info p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.selection-area {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.selection-box label {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 9px;
+}
+
+.selection-box select {
+    width: 100%;
+    padding: 14px;
+    background: #14213a;
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: none;
+}
+
+.section-heading {
+    margin-bottom: 22px;
+}
+
+.section-heading h2 {
+    font-size: 23px;
+    margin-bottom: 9px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 17px;
+}
+
+.course-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 22px;
+    transition: .25s;
+}
+
+.course-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--blue);
+}
+
+.course-code {
+    display: inline-block;
+    background: rgba(67,136,255,.14);
+    color: #8bbaff;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.course-card h3 {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.course-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+    min-height: 65px;
+}
+
+.course-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 17px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.course-card a {
+    display: block;
+    margin-top: 18px;
+    padding: 12px;
+    text-align: center;
+    background: var(--blue);
+    color: white;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.course-card a:hover {
+    background: #286bd9;
+}
+
+.empty-state {
+    display: none;
+    padding: 45px 20px;
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+.empty-state h3 {
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.empty-state button {
+    margin-top: 17px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.notice {
+    margin-top: 35px;
+    background: rgba(50,212,231,.07);
+    border: 1px solid rgba(50,212,231,.18);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.notice h3 {
+    font-size: 14px;
+    margin-bottom: 9px;
+}
+
+.notice p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.footer {
+    text-align: center;
+    padding: 28px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media(max-width: 850px) {
+    .course-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 600px) {
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .hero {
+        padding: 40px 6%;
+    }
+
+    .container {
+        padding: 35px 6%;
+    }
+
+    .selection-area {
+        grid-template-columns: 1fr;
+    }
+
+    .course-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course-card p {
+        min-height: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+        Math<span>Genius</span>
+    </a>
+
+    <a href="learning.html" class="back-link">
+        ← Learning Centre
+    </a>
+
+</nav>
+
+
+<header class="hero">
+
+    <div class="breadcrumb">
+        <a href="learning.html">Learning Centre</a>
+        / Course Catalogue
+    </div>
+
+    <h1 id="programmeTitle">Academic Courses</h1>
+
+    <p>
+        Explore your academic courses, study important mathematical
+        concepts and develop the knowledge required for your programme.
+        Each course will contain structured chapters, detailed lessons,
+        worked examples and practice exercises.
+    </p>
+
+</header>
+
+
+<main class="container">
+
+    <section class="programme-info">
+
+        <h2>📚 Your Academic Programme</h2>
+
+        <p id="programmeDescription">
+            Select your academic level and semester to explore
+            available courses.
+        </p>
+
+    </section>
+
+
+    <section class="selection-area">
+
+        <div class="selection-box">
+
+            <label for="institution">Institution Type</label>
+
+            <select id="institution">
+                <option value="University">University</option>
+                <option value="Polytechnic">Polytechnic</option>
+                <option value="College of Education">College of Education</option>
+            </select>
+
+        </div>
+
+
+        <div class="selection-box">
+
+            <label for="academicLevel">Academic Level</label>
+
+            <select id="academicLevel"></select>
+
+        </div>
+
+
+        <div class="selection-box">
+
+            <label for="semester">Semester</label>
+
+            <select id="semester">
+                <option value="First Semester">First Semester</option>
+                <option value="Second Semester">Second Semester</option>
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <div class="section-heading">
+
+            <h2>Available Courses</h2>
+
+            <p id="courseDescription">
+                Select a level and semester to discover your courses.
+            </p>
+
+        </div>
+
+
+        <div class="course-grid" id="courseGrid"></div>
+
+
+        <div class="empty-state" id="emptyState">
+
+            <h3>📖 Course Catalogue Coming Soon</h3>
+
+            <p>
+                We haven't added the courses for this selection yet.
+                More academic courses will be introduced as MathGenius
+                expands its Learning Centre.
+            </p>
+
+            <button onclick="showAllCourses()">
+                View Available Courses
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section class="notice">
+
+        <h3>💡 How the Learning Centre Works</h3>
+
+        <p>
+            Choose your academic programme, level and semester.
+            Open a course to access its chapters and topics.
+            Lessons will include textbook-style definitions,
+            explanations, mathematical formulas, worked examples,
+            exercises and solutions.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    © 2026 MathGenius. Solve Smarter. Learn Better.
+
+</footer>
+
+
+<script>
+
+/*
+   SAMPLE COURSE CATALOGUE
+
+   Course structures are illustrative.
+   Actual course codes, levels and semesters
+   must be verified against each institution's curriculum.
+*/
+
+const courseDatabase = {
+
+    "Computer Science": {
+
+        description: "Computing, programming, algorithms and mathematical foundations.",
+
+        "100 Level": {
+
+            "First Semester": [
+                ["CSC 101", "Introduction to Computer Science", "Fundamentals of computing, computer systems and information processing.", 2],
+                ["MTH 101", "Elementary Mathematics I", "Algebra, functions, equations and basic mathematical principles.", 3],
+                ["STA 101", "Introduction to Statistics", "Data collection, presentation, descriptive statistics and probability.", 2],
+                ["PHY 101", "General Physics I", "Mechanics, measurements, vectors and physical quantities.", 2],
+                ["GST 101", "Communication in English", "Academic writing, communication and effective expression.", 2]
+            ],
+
+            "Second Semester": [
+                ["CSC 102", "Computer Programming I", "Introduction to programming concepts, algorithms and problem solving.", 3],
+                ["MTH 102", "Elementary Mathematics II", "Trigonometry, coordinate geometry and introductory calculus.", 3],
+                ["STA 102", "Statistical Methods", "Probability distributions and elementary statistical methods.", 2],
+                ["PHY 102", "General Physics II", "Electricity, magnetism, waves and optics.", 2]
+            ]
+
+        },
+
+        "200 Level": {
+
+            "First Semester": [
+                ["CSC 201", "Computer Programming II", "Advanced programming principles and data structures.", 3],
+                ["MTH 201", "Mathematical Methods I", "Calculus, matrices and mathematical techniques.", 3],
+                ["CSC 203", "Discrete Mathematics", "Logic, sets, relations, functions and combinatorics.", 3],
+                ["STA 201", "Probability Theory", "Probability concepts, random variables and distributions.", 2]
+            ],
+
+            "Second Semester": [
+                ["CSC 202", "Data Structures and Algorithms", "Algorithm design, complexity and data structures.", 3],
+                ["MTH 202", "Linear Algebra", "Matrices, vector spaces, determinants and linear transformations.", 3],
+                ["CSC 204", "Numerical Computing", "Numerical methods and computational mathematics.", 2]
+            ]
+
+        }
+
+    },
+
+
+    "Software Engineering": {
+
+        description: "Software development, algorithms, computing principles and mathematical foundations.",
+
+        "100 Level": {
+
+            "First Semester": [
+                ["SEN 101", "Introduction to Software Engineering", "Software concepts, development processes and problem solving.", 2],
+                ["MTH 101", "Elementary Mathematics I", "Algebra, functions and mathematical foundations.", 3],
+                ["CSC 101", "Introduction to Computing", "Computer systems and programming concepts.", 2]
+            ],
+
+            "Second Semester": [
+                ["SEN 102", "Programming Fundamentals", "Programming logic and introductory software development.", 3],
+                ["MTH 102", "Elementary Mathematics II", "Trigonometry, geometry and introductory calculus.", 3]
+            ]
+
+        },
+
+        "200 Level": {
+
+            "First Semester": [
+                ["SEN 201", "Object-Oriented Programming", "Classes, objects, abstraction and software design.", 3],
+                ["MTH 201", "Discrete Mathematics", "Logic, sets, relations and combinatorics.", 3],
+                ["CSC 201", "Data Structures", "Fundamental data structures and algorithms.", 3]
+            ],
+
+            "Second Semester": [
+                ["SEN 202", "Software Design", "Software architecture and design principles.", 3],
+                ["MTH 202", "Linear Algebra", "Vectors, matrices and linear transformations.", 3]
+            ]
+
+        }
+
+    },
+
+
+    "Civil Engineering": {
+
+        description: "Engineering mathematics, structures, mechanics and construction principles.",
+
+        "100 Level": {
+
+            "First Semester": [
+                ["MTH 101", "Engineering Mathematics I", "Algebra, functions, trigonometry and introductory calculus.", 3],
+                ["PHY 101", "General Physics I", "Mechanics, forces and physical measurements.", 3],
+                ["CHM 101", "General Chemistry", "Chemical principles and quantitative calculations.", 2]
+            ],
+
+            "Second Semester": [
+                ["MTH 102", "Engineering Mathematics II", "Differentiation, integration and vectors.", 3],
+                ["PHY 102", "General Physics II", "Electricity, magnetism and waves.", 3]
+            ]
+
+        },
+
+        "200 Level": {
+
+            "First Semester": [
+                ["MTH 201", "Engineering Mathematics III", "Differential equations and advanced calculus.", 3],
+                ["CVE 201", "Engineering Mechanics", "Statics, forces and equilibrium.", 3],
+                ["CVE 203", "Strength of Materials", "Stress, strain and structural behaviour.", 2]
+            ],
+
+            "Second Semester": [
+                ["MTH 202", "Numerical Methods", "Numerical solutions to engineering problems.", 2],
+                ["CVE 202", "Structural Analysis", "Analysis of structural systems.", 3]
+            ]
+
+        }
+
+    },
+
+
+    "Mechanical Engineering": {
+
+        description: "Mechanical systems, engineering mathematics, mechanics and thermodynamics.",
+
+        "100 Level": {
+
+            "First Semester": [
+                ["MTH 101", "Engineering Mathematics I", "Algebra, trigonometry and introductory calculus.", 3],
+                ["PHY 101", "General Physics I", "Mechanics and physical measurements.", 3]
+            ],
+
+            "Second Semester": [
+                ["MTH 102", "Engineering Mathematics II", "Differentiation, integration and vectors.", 3],
+                ["PHY 102", "General Physics II", "Electricity, magnetism and waves.", 3]
+            ]
+
+        },
+
+        "200 Level": {
+
+            "First Semester": [
+                ["MTH 201", "Advanced Engineering Mathematics", "Calculus and differential equations.", 3],
+                ["MEE 201", "Engineering Mechanics", "Statics, dynamics and forces.", 3]
+            ],
+
+            "Second Semester": [
+                ["MTH 202", "Numerical Methods", "Computational methods for engineering.", 2],
+                ["MEE 202", "Thermodynamics", "Energy, heat and thermodynamic systems.", 3]
+            ]
+
+        }
+
+    },
+
+
+    "Economics": {
+
+        description: "Economic theory, quantitative methods, mathematical economics and statistical analysis.",
+
+        "100 Level": {
+
+            "First Semester": [
+                ["ECO 101", "Introduction to Economics", "Basic economic principles and economic reasoning.", 2],
+                ["MTH 101", "Basic Mathematics", "Algebra, functions and introductory mathematical methods.", 3],
+                ["STA 101", "Introduction to Statistics", "Data, averages, dispersion and probability.", 2]
+            ],
+
+            "Second Semester": [
+                ["ECO 102", "Principles of Microeconomics", "Consumer behaviour, demand and supply.", 2],
+                ["STA 102", "Statistical Methods", "Statistical analysis and probability distributions.", 2]
+            ]
+
+        },
+
+        "200 Level": {
+
+            "First Semester": [
+                ["ECO 201", "Mathematical Economics I", "Functions, derivatives and economic applications.", 3],
+                ["STA 201", "Probability Theory", "Probability and random variables.", 2]
+            ],
+
+            "Second Semester": [
+                ["ECO 202", "Mathematical Economics II", "Optimisation and mathematical economic models.", 3],
+                ["ECO 204", "Introduction to Econometrics", "Statistical techniques in economic research.", 3]
+            ]
+
+        }
+
+    },
+
+
+    "Accounting": {
+
+        description: "Financial accounting, business mathematics, quantitative methods and financial analysis.",
+
+        "100 Level": {
+
+            "First Semester": [
+                ["ACC 101", "Introduction to Accounting", "Basic accounting principles and financial records.", 3],
+                ["BUS 101", "Business Mathematics I", "Fractions, percentages, ratios and commercial arithmetic.", 2],
+                ["STA 101", "Introduction to Statistics", "Data presentation and descriptive statistics.", 2]
+            ],
+
+            "Second Semester": [
+                ["ACC 102", "Financial Accounting", "Accounting records and financial statements.", 3],
+                ["BUS 102", "Business Mathematics II", "Interest, discounts and financial calculations.", 2]
+            ]
+
+        },
+
+        "200 Level": {
+
+            "First Semester": [
+                ["ACC 201", "Intermediate Financial Accounting", "Accounting standards and financial reporting.", 3],
+                ["STA 201", "Business Statistics", "Statistical techniques for business decisions.", 2]
+            ],
+
+            "Second Semester": [
+                ["ACC 202", "Cost Accounting", "Cost classification, analysis and calculations.", 3],
+                ["FIN 202", "Financial Mathematics", "Interest rates, annuities and investment calculations.", 2]
+            ]
+
+        }
+
+    },
+
+
+    "Physics": {
+
+        description: "Mathematical physics, mechanics, electromagnetism and physical theory.",
+
+        "100 Level": {
+
+            "First Semester": [
+                ["PHY 101", "General Physics I", "Mechanics, vectors and measurements.", 3],
+                ["MTH 101", "Elementary Mathematics I", "Algebra, functions and trigonometry.", 3]
+            ],
+
+            "Second Semester": [
+                ["PHY 102", "General Physics II", "Electricity, magnetism and waves.", 3],
+                ["MTH 102", "Elementary Mathematics II", "Calculus and coordinate geometry.", 3]
+            ]
+
+        },
+
+        "200 Level": {
+
+            "First Semester": [
+                ["PHY 201", "Mathematical Physics I", "Vectors, differential calculus and mathematical methods.", 3],
+                ["MTH 201", "Calculus and Analysis", "Advanced differentiation and integration.", 3]
+            ],
+
+            "Second Semester": [
+                ["PHY 202", "Mathematical Physics II", "Differential equations and vector calculus.", 3],
+                ["MTH 202", "Linear Algebra", "Matrices and vector spaces.", 3]
+            ]
+
+        }
+
+    },
+
+
+    "Statistics": {
+
+        description: "Probability, statistical inference, mathematical statistics and data analysis.",
+
+        "100 Level": {
+
+            "First Semester": [
+                ["STA 101", "Introduction to Statistics", "Statistical concepts and data presentation.", 3],
+                ["MTH 101", "Elementary Mathematics I", "Algebra, functions and mathematical foundations.", 3]
+            ],
+
+            "Second Semester": [
+                ["STA 102", "Descriptive Statistics", "Measures of central tendency and dispersion.", 3],
+                ["MTH 102", "Elementary Mathematics II", "Calculus and mathematical methods.", 3]
+            ]
+
+        },
+
+        "200 Level": {
+
+            "First Semester": [
+                ["STA 201", "Probability Theory", "Probability, random variables and distributions.", 3],
+                ["MTH 201", "Linear Algebra", "Matrices and vector spaces.", 3]
+            ],
+
+            "Second Semester": [
+                ["STA 202", "Statistical Inference", "Estimation, hypothesis testing and inference.", 3],
+                ["STA 204", "Regression Analysis", "Correlation and regression models.", 3]
+            ]
+
+        }
+
+    },
+
+
+    "Data Science": {
+
+        description: "Statistics, programming, machine learning and mathematical foundations of data science.",
+
+        "100 Level": {
+
+            "First Semester": [
+                ["DSC 101", "Introduction to Data Science", "Data science principles and applications.", 2],
+                ["MTH 101", "Elementary Mathematics I", "Algebra and mathematical foundations.", 3],
+                ["STA 101", "Introduction to Statistics", "Descriptive statistics and data presentation.", 3]
+            ],
+
+            "Second Semester": [
+                ["DSC 102", "Introduction to Programming", "Programming concepts and data handling.", 3],
+                ["MTH 102", "Calculus I", "Limits, differentiation and integration.", 3]
+            ]
+
+        },
+
+        "200 Level": {
+
+            "First Semester": [
+                ["DSC 201", "Data Structures", "Data organisation and algorithms.", 3],
+                ["MTH 201", "Linear Algebra", "Vectors, matrices and transformations.", 3],
+                ["STA 201", "Probability Theory", "Random variables and probability distributions.", 3]
+            ],
+
+            "Second Semester": [
+                ["DSC 202", "Statistical Computing", "Computational methods for statistical analysis.", 3],
+                ["MTH 202", "Calculus II", "Advanced integration and applications.", 3]
+            ]
+
+        }
+
+    }
+
+};
+
+
+/* PROGRAMME INFORMATION */
+
+const params = new URLSearchParams(window.location.search);
+
+let programme = params.get("programme") || "Computer Science";
+
+const title = document.getElementById("programmeTitle");
+const description = document.getElementById("programmeDescription");
+
+title.textContent = programme + " Courses";
+
+const programmeData = courseDatabase[programme];
+
+if (programmeData) {
+
+    description.textContent = programmeData.description;
+
+} else {
+
+    description.textContent =
+        "Explore courses related to " + programme +
+        ". Its detailed course catalogue will be added as MathGenius expands.";
+
+}
+
+
+/* INSTITUTION LEVELS */
+
+const institution = document.getElementById("institution");
+const academicLevel = document.getElementById("academicLevel");
+
+function updateLevels() {
+
+    const type = institution.value;
+
+    let levels = [];
+
+    if (type === "University") {
+
+        levels = [
+            "100 Level",
+            "200 Level",
+            "300 Level",
+            "400 Level",
+            "500 Level",
+            "600 Level"
+        ];
+
+    } else if (type === "Polytechnic") {
+
+        levels = [
+            "ND 1",
+            "ND 2",
+            "HND 1",
+            "HND 2"
+        ];
+
+    } else {
+
+        levels = [
+            "NCE 100 Level",
+            "NCE 200 Level",
+            "NCE 300 Level",
+            "Degree 100 Level",
+            "Degree 200 Level",
+            "Degree 300 Level",
+            "Degree 400 Level"
+        ];
+
+    }
+
+    academicLevel.innerHTML = "";
+
+    levels.forEach(level => {
+
+        const option = document.createElement("option");
+
+        option.value = level;
+        option.textContent = level;
+
+        academicLevel.appendChild(option);
+
+    });
+
+    displayCourses();
+
+}
+
+
+institution.addEventListener("change", updateLevels);
+
+academicLevel.addEventListener("change", displayCourses);
+
+document
+    .getElementById("semester")
+    .addEventListener("change", displayCourses);
+
+
+/* DISPLAY COURSES */
+
+function displayCourses() {
+
+    const grid = document.getElementById("courseGrid");
+    const empty = document.getElementById("emptyState");
+
+    const level = academicLevel.value;
+    const semester = document.getElementById("semester").value;
+
+    grid.innerHTML = "";
+
+    let courses = [];
+
+    if (
+        programmeData &&
+        programmeData[level] &&
+        programmeData[level][semester]
+    ) {
+
+        courses = programmeData[level][semester];
+
+    }
+
+    if (courses.length === 0) {
+
+        empty.style.display = "block";
+        grid.style.display = "none";
+
+        document.getElementById("courseDescription").textContent =
+            "No courses have been added for " + level +
+            " - " + semester + " yet.";
+
+        return;
+
+    }
+
+    empty.style.display = "none";
+    grid.style.display = "grid";
+
+    document.getElementById("courseDescription").textContent =
+        courses.length + " courses available for " +
+        level + " - " + semester + ".";
+
+
+    courses.forEach(course => {
+
+        const card = document.createElement("article");
+
+        card.className = "course-card";
+
+        const link =
+            "lesson.html?programme=" +
+            encodeURIComponent(programme) +
+            "&code=" +
+            encodeURIComponent(course[0]) +
+            "&course=" +
+            encodeURIComponent(course[1]);
+
+        const code = document.createElement("span");
+        code.className = "course-code";
+        code.textContent = course[0];
+
+        const heading = document.createElement("h3");
+        heading.textContent = course[1];
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent = course[2];
+
+        const meta = document.createElement("div");
+        meta.className = "course-meta";
+
+        const semesterText = document.createElement("span");
+        semesterText.textContent = semester;
+
+        const creditText = document.createElement("span");
+        creditText.textContent = course[3] + " Credit Units";
+
+        meta.append(semesterText, creditText);
+
+        const anchor = document.createElement("a");
+        anchor.href = link;
+        anchor.textContent = "Open Course →";
+
+        card.append(code, heading, paragraph, meta, anchor);
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* EMPTY STATE BUTTON */
+
+function showAllCourses() {
+
+    institution.value = "University";
+
+    updateLevels();
+
+    academicLevel.value = "100 Level";
+
+    document.getElementById("semester").value = "First Semester";
+
+    displayCourses();
+
+}
+
+
+updateLevels();
+
+</script>
+
+</body>
+</html>
