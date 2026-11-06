@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Textbook | MathGenius</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Georgia&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+    --bg: #080e1d;
+    --sidebar: #0c1629;
+    --card: #111c32;
+    --card2: #16243d;
+    --blue: #4388ff;
+    --purple: #9565ff;
+    --cyan: #32d4e7;
+    --text: #f3f6ff;
+    --muted: #9aaac5;
+    --border: rgba(255,255,255,.09);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+}
+
+/* NAVIGATION */
+
+.navbar {
+    height: 68px;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0b1426;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--blue);
+}
+
+.nav-right {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.nav-right a:hover {
+    color: white;
+}
+
+/* PAGE LAYOUT */
+
+.layout {
+    display: grid;
+    grid-template-columns: 285px minmax(0, 1fr);
+    min-height: calc(100vh - 68px);
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    padding: 25px 17px;
+    position: sticky;
+    top: 68px;
+    height: calc(100vh - 68px);
+    overflow-y: auto;
+}
+
+.sidebar-label {
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin: 23px 10px 12px;
+    text-transform: uppercase;
+}
+
+.course-name {
+    padding: 15px;
+    background: rgba(67,136,255,.12);
+    border: 1px solid rgba(67,136,255,.2);
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    font-weight: 700;
+}
+
+.chapter-title {
+    padding: 12px 10px;
+    font-size: 12px;
+    color: #cbd8f1;
+    font-weight: 700;
+}
+
+.topic-link {
+    display: block;
+    padding: 11px 12px;
+    margin: 4px 0;
+    border-radius: 7px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.topic-link:hover {
+    background: var(--card2);
+    color: white;
+}
+
+.topic-link.active {
+    background: rgba(67,136,255,.18);
+    color: #8bbaff;
+    border-left: 3px solid var(--blue);
+}
+
+.topic-link.completed::after {
+    content: " ✓";
+    color: var(--cyan);
+    float: right;
+}
+
+/* CONTENT */
+
+.content {
+    width: 100%;
+    max-width: 1100px;
+    padding: 35px 6%;
+    margin: auto;
+}
+
+.breadcrumb {
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 25px;
+}
+
+.breadcrumb a {
+    color: #81afff;
+}
+
+.course-header {
+    margin-bottom: 30px;
+}
+
+.course-header .tag {
+    display: inline-block;
+    padding: 7px 11px;
+    border-radius: 5px;
+    background: rgba(67,136,255,.13);
+    color: #8bbaff;
+    font-size: 10px;
+    margin-bottom: 15px;
+}
+
+.course-header h1 {
+    font-size: clamp(25px, 4vw, 36px);
+    line-height: 1.3;
+    margin-bottom: 12px;
+}
+
+.course-header p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* PROGRESS */
+
+.progress-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 17px;
+    margin-bottom: 30px;
+}
+
+.progress-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+    margin-bottom: 12px;
+}
+
+.progress-top span:last-child {
+    color: var(--cyan);
+}
+
+.progress-track {
+    height: 6px;
+    background: #25334c;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    transition: .3s;
+}
+
+/* LESSON */
+
+.lesson {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: clamp(20px, 5vw, 42px);
+}
+
+.lesson-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.lesson-number {
+    color: var(--cyan);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.bookmark-btn {
+    background: #1c2a43;
+    border: 1px solid var(--border);
+    color: white;
+    padding: 9px 13px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.bookmark-btn.saved {
+    color: var(--cyan);
+    border-color: var(--cyan);
+}
+
+.lesson h2 {
+    font-size: clamp(23px, 4vw, 30px);
+    margin-bottom: 18px;
+    line-height: 1.4;
+}
+
+.lesson h3 {
+    font-size: 18px;
+    margin: 32px 0 13px;
+    color: #91baff;
+}
+
+.lesson h4 {
+    font-size: 14px;
+    margin: 20px 0 10px;
+}
+
+.lesson p {
+    color: #c1cce0;
+    font-size: 14px;
+    line-height: 2;
+    margin-bottom: 15px;
+}
+
+.lesson ul,
+.lesson ol {
+    padding-left: 24px;
+    color: #c1cce0;
+    margin: 15px 0 22px;
+}
+
+.lesson li {
+    font-size: 13px;
+    line-height: 2;
+    padding-left: 5px;
+}
+
+.definition {
+    background: rgba(67,136,255,.09);
+    border-left: 4px solid var(--blue);
+    border-radius: 7px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.definition strong {
+    color: #8bbaff;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.definition p {
+    margin: 0;
+}
+
+.formula {
+    background: #0a1427;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 22px;
+    text-align: center;
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+.formula .math {
+    font-family: Georgia, serif;
+    font-size: 23px;
+    color: #8fc5ff;
+    white-space: nowrap;
+}
+
+.formula small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 10px;
+}
+
+.example {
+    background: #0e1b31;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.example-label {
+    color: var(--cyan);
+    font-size: 11px;
+    font-weight: 800;
+    margin-bottom: 14px;
+}
+
+.example p {
+    margin-bottom: 12px;
+}
+
+.solution {
+    border-top: 1px solid var(--border);
+    margin-top: 15px;
+    padding-top: 15px;
+}
+
+.step {
+    background: #15243c;
+    padding: 12px;
+    border-radius: 6px;
+    margin: 10px 0;
+    color: #d5e3ff;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.answer {
+    color: var(--cyan);
+    font-weight: 700;
+}
+
+.tip {
+    padding: 17px;
+    background: rgba(50,212,231,.07);
+    border: 1px solid rgba(50,212,231,.17);
+    border-radius: 9px;
+    margin: 22px 0;
+}
+
+.tip strong {
+    color: var(--cyan);
+    font-size: 12px;
+}
+
+.tip p {
+    margin: 8px 0 0;
+    font-size: 12px;
+}
+
+/* PRACTICE */
+
+.practice {
+    background: #0c172b;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    margin-top: 35px;
+}
+
+.practice h3 {
+    margin-top: 0;
+}
+
+.question {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.question:last-of-type {
+    border-bottom: none;
+}
+
+.question p {
+    color: white;
+    font-weight: 600;
+}
+
+.question input {
+    width: 100%;
+    padding: 13px;
+    margin-top: 12px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: #15243c;
+    color: white;
+    outline: none;
+}
+
+.question input:focus {
+    border-color: var(--blue);
+}
+
+.check-btn {
+    background: var(--blue);
+    border: none;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 7px;
+    font-weight: 700;
+    margin-top: 17px;
+    cursor: pointer;
+}
+
+.feedback {
+    font-size: 12px;
+    margin-top: 10px;
+    line-height: 1.7;
+}
+
+.correct {
+    color: var(--cyan);
+}
+
+.incorrect {
+    color: #ff8585;
+}
+
+/* SUMMARY */
+
+.summary {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid rgba(149,101,255,.2);
+    background: rgba(149,101,255,.07);
+    border-radius: 10px;
+}
+
+.summary h3 {
+    margin-top: 0;
+    color: #b99cff;
+}
+
+.summary p {
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
+/* NAVIGATION BUTTONS */
+
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.lesson-navigation button {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.lesson-navigation button:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+}
+
+.mark-complete {
+    width: 100%;
+    padding: 15px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    padding: 25px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* MOBILE */
+
+@media(max-width: 850px) {
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: relative;
+        top: 0;
+        height: auto;
+        max-height: 260px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-label {
+        margin-top: 14px;
+    }
+
+    .content {
+        padding: 30px 5%;
+    }
+
+}
+
+@media(max-width: 500px) {
+
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .nav-right {
+        gap: 10px;
+        font-size: 10px;
+    }
+
+    .lesson {
+        padding: 20px 16px;
+    }
+
+    .lesson p {
+        font-size: 13px;
+    }
+
+    .formula .math {
+        font-size: 19px;
+    }
+
+    .lesson-navigation button {
+        font-size: 10px;
+        padding: 12px 7px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+        Math<span>Genius</span>
+    </a>
+
+    <div class="nav-right">
+        <a href="learning.html">Learning Centre</a>
+        <a href="dashboard.html">Dashboard</a>
+    </div>
+
+</nav>
+
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="course-name" id="sidebarCourse">
+            Loading Course...
+        </div>
+
+        <div class="sidebar-label">Course Contents</div>
+
+        <div id="chapterNavigation"></div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="content">
+
+        <div class="breadcrumb">
+            <a href="learning.html">Learning Centre</a>
+            /
+            <a href="#" id="programmeLink">Programme</a>
+            /
+            <span id="breadcrumbCourse">Course</span>
+        </div>
+
+
+        <header class="course-header">
+
+            <span class="tag">DIGITAL TEXTBOOK</span>
+
+            <h1 id="courseTitle">Loading Course...</h1>
+
+            <p id="courseDescription">
+                Your academic learning journey starts here.
+            </p>
+
+        </header>
+
+
+        <!-- READING PROGRESS -->
+
+        <section class="progress-card">
+
+            <div class="progress-top">
+
+                <span>Course Reading Progress</span>
+
+                <span id="progressText">0% completed</span>
+
+            </div>
+
+            <div class="progress-track">
+
+                <div class="progress-fill" id="progressFill"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LESSON CONTENT -->
+
+        <article class="lesson">
+
+            <div class="lesson-top">
+
+                <span class="lesson-number" id="lessonNumber">
+                    TOPIC 01
+                </span>
+
+                <button class="bookmark-btn" id="bookmarkButton">
+                    ☆ Bookmark
+                </button>
+
+            </div>
+
+            <div id="lessonContent"></div>
+
+            <section class="practice" id="practiceSection">
+
+                <h3>🧠 Test Your Understanding</h3>
+
+                <p>
+                    Answer the questions below to check your understanding
+                    of this topic.
+                </p>
+
+                <div id="practiceQuestions"></div>
+
+                <button class="check-btn" onclick="checkAnswers()">
+                    Check My Answers
+                </button>
+
+                <div id="practiceFeedback" class="feedback"></div>
+
+            </section>
+
+
+            <div class="summary" id="summarySection">
+
+                <h3>📌 Topic Summary</h3>
+
+                <p id="summaryText"></p>
+
+            </div>
+
+
+            <div class="lesson-navigation">
+
+                <button id="previousButton" onclick="changeTopic(-1)">
+                    ← Previous Topic
+                </button>
+
+                <button id="nextButton" onclick="changeTopic(1)">
+                    Next Topic →
+                </button>
+
+            </div>
+
+
+            <button class="mark-complete" id="completeButton">
+                ✓ Mark Topic as Completed
+            </button>
+
+        </article>
+
+    </main>
+
+</div>
+
+
+<footer class="footer">
+
+    © 2026 MathGenius. Solve Smarter. Learn Better.
+
+</footer>
+
+
+<script>
+
+/*
+=================================================
+MATHGENIUS TEXTBOOK SYSTEM
+=================================================
+*/
+
+// GET COURSE INFORMATION FROM URL
+
+const params = new URLSearchParams(window.location.search);
+
+const programme = params.get("programme") || "Computer Science";
+
+const courseCode = params.get("code") || "MTH 101";
+
+const courseName = params.get("course") || "Elementary Mathematics I";
+
+
+document.getElementById("sidebarCourse").textContent = courseName;
+
+document.getElementById("courseTitle").textContent = courseName;
+
+document.getElementById("breadcrumbCourse").textContent = courseCode;
+
+document.getElementById("programmeLink").textContent = programme;
+
+document.getElementById("programmeLink").href =
+    "courses.html?programme=" + encodeURIComponent(programme);
+
+document.title = courseName + " | MathGenius";
+
+
+// LESSON DATABASE
+
+const lessonDatabase = {
+
+    "MTH 101": {
+
+        description:
+            "An introduction to fundamental mathematical principles, algebraic operations, equations and functions.",
+
+        chapters: [
+
+            {
+                title: "Chapter 1: Introduction to Mathematics",
+
+                topics: [
+
+                    {
+                        title: "Meaning and Importance of Mathematics",
+
+                        content: `
+                            <h2>Meaning and Importance of Mathematics</h2>
+
+                            <h3>1.1 Introduction</h3>
+
+                            <p>
+                            Mathematics is one of the oldest and most important
+                            academic disciplines. It is concerned with the study
+                            of numbers, quantities, structures, patterns,
+                            relationships and logical reasoning.
+                            </p>
+
+                            <p>
+                            Mathematics provides the foundation for solving
+                            problems in science, engineering, economics,
+                            computing, business and many other fields.
+                            </p>
+
+                            <h3>1.2 Definition of Mathematics</h3>
+
+                            <div class="definition">
+                                <strong>Definition</strong>
+                                <p>
+                                Mathematics is the systematic study of numbers,
+                                quantities, shapes, structures and patterns using
+                                logical reasoning, symbols and mathematical
+                                operations.
+                                </p>
+                            </div>
+
+                            <h3>1.3 Major Branches of Mathematics</h3>
+
+                            <p>Mathematics consists of several important branches:</p>
+
+                            <ul>
+                                <li><strong>Arithmetic:</strong> The study of numbers and basic operations.</li>
+                                <li><strong>Algebra:</strong> The study of symbols, variables and equations.</li>
+                                <li><strong>Geometry:</strong> The study of shapes, sizes and spatial relationships.</li>
+                                <li><strong>Trigonometry:</strong> The study of relationships between angles and sides of triangles.</li>
+                                <li><strong>Calculus:</strong> The study of change, limits, differentiation and integration.</li>
+                                <li><strong>Statistics:</strong> The collection, organisation, analysis and interpretation of data.</li>
+                            </ul>
+
+                            <h3>1.4 Importance of Mathematics</h3>
+
+                            <p>
+                            Mathematics is important because it develops
+                            logical reasoning, analytical thinking and
+                            problem-solving abilities.
+                            </p>
+
+                            <ul>
+                                <li>It supports scientific discoveries.</li>
+                                <li>It is used in engineering designs.</li>
+                                <li>It supports computer programming and algorithms.</li>
+                                <li>It helps economists analyse financial systems.</li>
+                                <li>It is used in research and statistical analysis.</li>
+                            </ul>
+
+                            <div class="tip">
+                                <strong>Academic Note</strong>
+                                <p>
+                                Mathematics is not simply about calculating
+                                answers. It is also about understanding
+                                relationships and developing logical methods
+                                for solving problems.
+                                </p>
+                            </div>
+                        `,
+
+                        summary:
+                            "Mathematics is the systematic study of numbers, quantities, structures and patterns. Its major branches include arithmetic, algebra, geometry, trigonometry, calculus and statistics.",
+
+                        questions: [
+                            {
+                                question: "What is the study of symbols, variables and equations called?",
+                                answer: "algebra",
+                                explanation: "Algebra uses letters and symbols to represent quantities and relationships."
+                            },
+                            {
+                                question: "Which branch studies the collection and analysis of data?",
+                                answer: "statistics",
+                                explanation: "Statistics deals with collecting, organising, analysing and interpreting data."
+                            }
+                        ]
+                    },
+
+                    {
+                        title: "Number Systems",
+
+                        content: `
+                            <h2>Number Systems</h2>
+
+                            <h3>2.1 Introduction</h3>
+
+                            <p>
+                            Numbers are fundamental mathematical objects
+                            used to represent quantities, measurements and
+                            mathematical relationships.
+                            </p>
+
+                            <p>
+                            Different types of numbers are organised into
+                            groups known as number systems.
+                            </p>
+
+                            <h3>2.2 Natural Numbers</h3>
+
+                            <div class="definition">
+                                <strong>Definition</strong>
+                                <p>
+                                Natural numbers are counting numbers,
+                                commonly represented as 1, 2, 3, 4, 5, and so on.
+                                </p>
+                            </div>
+
+                            <div class="formula">
+                                <div class="math">N = {1, 2, 3, 4, 5, ...}</div>
+                                <small>Natural numbers under the positive-integer convention</small>
+                            </div>
+
+                            <h3>2.3 Whole Numbers</h3>
+
+                            <p>
+                            Whole numbers include zero and all natural numbers.
+                            </p>
+
+                            <div class="formula">
+                                <div class="math">W = {0, 1, 2, 3, 4, ...}</div>
+                            </div>
+
+                            <h3>2.4 Integers</h3>
+
+                            <p>
+                            Integers consist of positive whole numbers,
+                            negative whole numbers and zero.
+                            </p>
+
+                            <div class="formula">
+                                <div class="math">Z = {..., -3, -2, -1, 0, 1, 2, 3, ...}</div>
+                            </div>
+
+                            <h3>2.5 Rational Numbers</h3>
+
+                            <div class="definition">
+                                <strong>Definition</strong>
+                                <p>
+                                A rational number is any number that can be
+                                expressed as a fraction of two integers,
+                                where the denominator is not zero.
+                                </p>
+                            </div>
+
+                            <div class="formula">
+                                <div class="math">a / b, &nbsp; b ≠ 0</div>
+                            </div>
+
+                            <p>
+                            Examples include 1/2, 3/4, -5/2 and 7.
+                            </p>
+
+                            <h3>2.6 Irrational Numbers</h3>
+
+                            <p>
+                            Irrational numbers cannot be expressed as a ratio
+                            of two integers. Their decimal representations
+                            do not terminate or repeat periodically.
+                            </p>
+
+                            <p>Examples include √2, √3 and π.</p>
+
+                            <h3>2.7 Real Numbers</h3>
+
+                            <p>
+                            Real numbers consist of all rational and
+                            irrational numbers. They can be represented
+                            on the number line.
+                            </p>
+
+                            <h3>2.8 Worked Example</h3>
+
+                            <div class="example">
+
+                                <div class="example-label">EXAMPLE 1</div>
+
+                                <p>Classify the following numbers:</p>
+
+                                <p>5, -3, 1/2 and √2.</p>
+
+                                <div class="solution">
+
+                                    <div class="step">
+                                        5 is a natural number, whole number,
+                                        integer, rational number and real number.
+                                    </div>
+
+                                    <div class="step">
+                                        -3 is an integer, rational number
+                                        and real number.
+                                    </div>
+
+                                    <div class="step">
+                                        1/2 is a rational number and real number.
+                                    </div>
+
+                                    <div class="step">
+                                        √2 is an irrational number and real number.
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        `,
+
+                        summary:
+                            "The major number systems include natural numbers, whole numbers, integers, rational numbers, irrational numbers and real numbers.",
+
+                        questions: [
+                            {
+                                question: "Which number system includes negative whole numbers, positive whole numbers and zero?",
+                                answer: "integers",
+                                explanation: "Integers include negative numbers, zero and positive whole numbers."
+                            },
+                            {
+                                question: "Is √2 rational or irrational?",
+                                answer: "irrational",
+                                explanation: "√2 cannot be expressed as a ratio of two integers."
+                            }
+                        ]
+                    }
+
+                ]
+
+            },
+
+            {
+                title: "Chapter 2: Basic Algebra",
+
+                topics: [
+
+                    {
+                        title: "Introduction to Algebra",
+
+                        content: `
+                            <h2>Introduction to Algebra</h2>
+
+                            <h3>2.1 Introduction</h3>
+
+                            <p>
+                            Algebra is a branch of mathematics that uses
+                            letters, symbols and numbers to represent
+                            quantities and relationships.
+                            </p>
+
+                            <p>
+                            Unlike basic arithmetic, where quantities
+                            are usually known, algebra allows unknown
+                            quantities to be represented by variables.
+                            </p>
+
+                            <h3>2.2 Algebraic Variables</h3>
+
+                            <div class="definition">
+                                <strong>Definition</strong>
+                                <p>
+                                A variable is a symbol, usually a letter,
+                                used to represent an unknown or changing
+                                mathematical quantity.
+                                </p>
+                            </div>
+
+                            <p>
+                            Common variables include x, y, z, a and b.
+                            </p>
+
+                            <h3>2.3 Algebraic Expressions</h3>
+
+                            <p>
+                            An algebraic expression is a combination
+                            of variables, constants and mathematical
+                            operations.
+                            </p>
+
+                            <div class="formula">
+                                <div class="math">3x + 5</div>
+                                <small>Example of an algebraic expression</small>
+                            </div>
+
+                            <p>
+                            In this expression:
+                            </p>
+
+                            <ul>
+                                <li>3 is the coefficient.</li>
+                                <li>x is the variable.</li>
+                                <li>5 is the constant.</li>
+                            </ul>
+
+                            <h3>2.4 Worked Example</h3>
+
+                            <div class="example">
+
+                                <div class="example-label">EXAMPLE 1</div>
+
+                                <p>
+                                Simplify the expression:
+                                </p>
+
+                                <div class="formula">
+                                    <div class="math">3x + 5x - 2x</div>
+                                </div>
+
+                                <div class="solution">
+
+                                    <div class="step">
+                                        Step 1: Identify like terms.
+                                    </div>
+
+                                    <div class="step">
+                                        Step 2: Combine their coefficients.
+                                        <br>
+                                        3 + 5 - 2 = 6
+                                    </div>
+
+                                    <div class="step">
+                                        Step 3: Retain the variable.
+                                    </div>
+
+                                    <p class="answer">Final Answer: 6x</p>
+
+                                </div>
+
+                            </div>
+
+                            <h3>2.5 Applications of Algebra</h3>
+
+                            <p>
+                            Algebra is used in engineering, computing,
+                            economics, physics, financial calculations
+                            and scientific research.
+                            </p>
+                        `,
+
+                        summary:
+                            "Algebra uses variables, constants and mathematical operations to represent quantities and relationships. Like terms can be combined by adding or subtracting their coefficients.",
+
+                        questions: [
+                            {
+                                question: "Simplify: 4x + 3x",
+                                answer: "7x",
+                                explanation: "Add the coefficients: 4 + 3 = 7. Therefore, the answer is 7x."
+                            },
+                            {
+                                question: "What is the coefficient of x in 8x + 4?",
+                                answer: "8",
+                                explanation: "The coefficient is the number multiplying the variable."
+                            }
+                        ]
+                    },
+
+                    {
+                        title: "Linear Equations",
+
+                        content: `
+                            <h2>Linear Equations</h2>
+
+                            <h3>3.1 Introduction</h3>
+
+                            <p>
+                            Equations are mathematical statements
+                            that indicate equality between two expressions.
+                            A linear equation is an equation in which
+                            the highest power of the unknown variable is one.
+                            </p>
+
+                            <div class="definition">
+                                <strong>Definition</strong>
+                                <p>
+                                A linear equation in one variable is an
+                                equation that can be written in the form
+                                ax + b = 0, where a and b are constants
+                                and a is not zero.
+                                </p>
+                            </div>
+
+                            <div class="formula">
+                                <div class="math">ax + b = 0</div>
+                            </div>
+
+                            <h3>3.2 Solving Linear Equations</h3>
+
+                            <p>
+                            To solve a linear equation, the objective
+                            is to isolate the unknown variable while
+                            maintaining equality on both sides.
+                            </p>
+
+                            <h3>3.3 Worked Example</h3>
+
+                            <div class="example">
+
+                                <div class="example-label">EXAMPLE 1</div>
+
+                                <p>Solve the equation:</p>
+
+                                <div class="formula">
+                                    <div class="math">3x + 6 = 15</div>
+                                </div>
+
+                                <div class="solution">
+
+                                    <div class="step">
+                                        Step 1: Subtract 6 from both sides.
+                                        <br>
+                                        3x + 6 - 6 = 15 - 6
+                                    </div>
+
+                                    <div class="step">
+                                        Step 2:
+                                        <br>
+                                        3x = 9
+                                    </div>
+
+                                    <div class="step">
+                                        Step 3: Divide both sides by 3.
+                                        <br>
+                                        x = 9/3
+                                    </div>
+
+                                    <p class="answer">Final Answer: x = 3</p>
+
+                                </div>
+
+                            </div>
+
+                            <h3>3.4 Verification</h3>
+
+                            <p>
+                            Substitute x = 3 into the original equation:
+                            </p>
+
+                            <div class="formula">
+                                <div class="math">3(3) + 6 = 15</div>
+                            </div>
+
+                            <p>
+                            9 + 6 = 15. Therefore, the solution is correct.
+                            </p>
+                        `,
+
+                        summary:
+                            "A linear equation has a highest variable power of one. Solve it by performing equal operations on both sides until the unknown variable is isolated.",
+
+                        questions: [
+                            {
+                                question: "Solve: 2x + 4 = 12. Enter your answer as x=4 or 4.",
+                                answer: "4",
+                                explanation: "Subtract 4 from both sides to obtain 2x = 8. Divide by 2 to obtain x = 4."
+                            },
+                            {
+                                question: "Solve: 5x = 25.",
+                                answer: "5",
+                                explanation: "Divide both sides by 5. Therefore, x = 5."
+                            }
+                        ]
+                    }
+
+                ]
+
+            }
+
+        ]
+
+    },
+
+    "CSC 101": {
+
+        description:
+            "Introduction to computer science, computing principles, computer systems and problem solving.",
+
+        chapters: [
+
+            {
+                title: "Chapter 1: Foundations of Computer Science",
+
+                topics: [
+
+                    {
+                        title: "Introduction to Computer Science",
+
+                        content: `
+                            <h2>Introduction to Computer Science</h2>
+
+                            <h3>1.1 Introduction</h3>
+
+                            <p>
+                            Computer Science is an academic discipline
+                            concerned with the study of computation,
+                            algorithms, information processing and
+                            the design of computer systems.
+                            </p>
+
+                            <h3>1.2 Definition of Computer Science</h3>
+
+                            <div class="definition">
+                                <strong>Definition</strong>
+                                <p>
+                                Computer Science is the systematic study
+                                of computational processes, algorithms,
+                                data structures and computer systems.
+                                </p>
+                            </div>
+
+                            <h3>1.3 Major Areas of Computer Science</h3>
+
+                            <ul>
+                                <li>Programming and software development.</li>
+                                <li>Computer architecture.</li>
+                                <li>Data structures and algorithms.</li>
+                                <li>Artificial intelligence.</li>
+                                <li>Computer networks.</li>
+                                <li>Database management.</li>
+                                <li>Cybersecurity.</li>
+                            </ul>
+
+                            <h3>1.4 Relationship Between Mathematics and Computer Science</h3>
+
+                            <p>
+                            Mathematics provides important foundations
+                            for computer science. Mathematical logic,
+                            discrete mathematics, probability, statistics
+                            and linear algebra are used in different
+                            areas of computing.
+                            </p>
+
+                            <div class="tip">
+                                <strong>Important</strong>
+                                <p>
+                                A strong understanding of mathematical
+                                reasoning helps computer scientists
+                                design algorithms, analyse complexity
+                                and solve computational problems.
+                                </p>
+                            </div>
+                        `,
+
+                        summary:
+                            "Computer Science studies computation, algorithms, information processing and computer systems. Mathematics provides important foundations for many computing disciplines.",
+
+                        questions: [
+                            {
+                                question: "What is the systematic study of algorithms and computation called?",
+                                answer: "computer science",
+                                explanation: "Computer Science studies computation, algorithms and information processing."
+                            }
+                        ]
+                    }
+
+                ]
+
+            }
+
+        ]
+
+    },
+
+    "STA 101": {
+
+        description:
+            "Introduction to statistical concepts, data organisation, descriptive statistics and probability.",
+
+        chapters: [
+
+            {
+                title: "Chapter 1: Introduction to Statistics",
+
+                topics: [
+
+                    {
+                        title: "Meaning and Scope of Statistics",
+
+                        content: `
+                            <h2>Meaning and Scope of Statistics</h2>
+
+                            <h3>1.1 Introduction</h3>
+
+                            <p>
+                            Statistics is an important mathematical
+                            discipline used to collect, organise,
+                            analyse, interpret and present data.
+                            </p>
+
+                            <h3>1.2 Definition of Statistics</h3>
+
+                            <div class="definition">
+                                <strong>Definition</strong>
+                                <p>
+                                Statistics is the science of collecting,
+                                organising, summarising, analysing and
+                                interpreting data to support decisions
+                                and draw meaningful conclusions.
+                                </p>
+                            </div>
+
+                            <h3>1.3 Branches of Statistics</h3>
+
+                            <h4>Descriptive Statistics</h4>
+
+                            <p>
+                            Descriptive statistics involves methods
+                            used to organise, summarise and present
+                            information obtained from data.
+                            </p>
+
+                            <h4>Inferential Statistics</h4>
+
+                            <p>
+                            Inferential statistics uses information
+                            from a sample to make conclusions or
+                            predictions about a larger population.
+                            </p>
+
+                            <h3>1.4 Applications of Statistics</h3>
+
+                            <ul>
+                                <li>Medical and health research.</li>
+                                <li>Economic analysis.</li>
+                                <li>Business decision-making.</li>
+                                <li>Engineering quality control.</li>
+                                <li>Scientific experiments.</li>
+                                <li>Educational research.</li>
+                            </ul>
+                        `,
+
+                        summary:
+                            "Statistics is the science of collecting, organising, analysing and interpreting data. Its two major branches are descriptive and inferential statistics.",
+
+                        questions: [
+                            {
+                                question: "Which branch of statistics summarises and presents data?",
+                                answer: "descriptive statistics",
+                                explanation: "Descriptive statistics summarises and presents information from data."
+                            }
+                        ]
+                    }
+
+                ]
+
+            }
+
+        ]
+
+    }
+
+};
+
+
+// SELECT LESSON CONTENT
+
+let selectedDatabase = lessonDatabase[courseCode];
+
+// If a course has no specific textbook yet,
+// display an honest development notice.
+
+if (!selectedDatabase) {
+
+    selectedDatabase = {
+
+        description:
+            "This course has been added to the MathGenius catalogue. Its complete textbook chapters are being prepared.",
+
+        chapters: [
+
+            {
+                title: "Course Introduction",
+
+                topics: [
+
+                    {
+                        title: "Introduction to " + courseName,
+
+                        content: `
+                            <h2>Introduction to ${courseName}</h2>
+
+                            <h3>Welcome to Your Course</h3>
+
+                            <p>
+                            Welcome to this academic course on MathGenius.
+                            This course is part of the
+                            ${programme} programme.
+                            </p>
+
+                            <div class="definition">
+                                <strong>Course Information</strong>
+                                <p>
+                                ${courseName} is included in the
+                                academic learning catalogue. Its
+                                detailed chapters, definitions,
+                                explanations, worked examples and
+                                practice questions will be added
+                                as the textbook content is developed.
+                                </p>
+                            </div>
+
+                            <h3>What to Expect</h3>
+
+                            <ul>
+                                <li>Detailed academic definitions.</li>
+                                <li>Structured textbook chapters.</li>
+                                <li>Mathematical concepts and formulas where relevant.</li>
+                                <li>Worked examples.</li>
+                                <li>Practice questions and solutions.</li>
+                            </ul>
+
+                            <div class="tip">
+                                <strong>Content Development Notice</strong>
+                                <p>
+                                This is a course introduction,
+                                not a complete textbook lesson.
+                                More detailed academic materials
+                                will be published for this course.
+                                </p>
+                            </div>
+                        `,
+
+                        summary:
+                            "This course belongs to the " + programme +
+                            " academic programme. Detailed textbook materials are being prepared.",
+
+                        questions: []
+
+                    }
+
+                ]
+
+            }
+
+        ]
+
+    };
+
+}
+
+
+// SET COURSE DESCRIPTION
+
+document.getElementById("courseDescription").textContent =
+    selectedDatabase.description;
+
+
+// FLATTEN ALL TOPICS
+
+let allTopics = [];
+
+selectedDatabase.chapters.forEach((chapter, chapterIndex) => {
+
+    chapter.topics.forEach((topic, topicIndex) => {
+
+        allTopics.push({
+
+            chapter: chapter.title,
+
+            chapterIndex: chapterIndex,
+
+            topicIndex: topicIndex,
+
+            title: topic.title,
+
+            content: topic.content,
+
+            summary: topic.summary,
+
+            questions: topic.questions || []
+
+        });
+
+    });
+
+});
+
+
+let currentTopic = 0;
+
+const storageKey =
+    "mathgenius_progress_" +
+    encodeURIComponent(programme) + "_" +
+    encodeURIComponent(courseCode);
+
+const bookmarkKey =
+    "mathgenius_bookmarks";
+
+const completedTopics =
+    JSON.parse(localStorage.getItem(storageKey) || "[]");
+
+
+// SIDEBAR NAVIGATION
+
+function renderSidebar() {
+
+    const navigation =
+        document.getElementById("chapterNavigation");
+
+    navigation.innerHTML = "";
+
+    selectedDatabase.chapters.forEach((chapter, chapterIndex) => {
+
+        const heading = document.createElement("div");
+
+        heading.className = "chapter-title";
+
+        heading.textContent = chapter.title;
+
+        navigation.appendChild(heading);
+
+        chapter.topics.forEach((topic, topicIndex) => {
+
+            const index = allTopics.findIndex(item =>
+                item.chapterIndex === chapterIndex &&
+                item.topicIndex === topicIndex
+            );
+
+            const link = document.createElement("div");
+
+            link.className = "topic-link";
+
+            link.textContent =
+                (topicIndex + 1) + ". " + topic.title;
+
+            if (completedTopics.includes(index)) {
+                link.classList.add("completed");
+            }
+
+            if (index === currentTopic) {
+                link.classList.add("active");
+            }
+
+            link.addEventListener("click", () => {
+
+                currentTopic = index;
+
+                renderTopic();
+
+            });
+
+            navigation.appendChild(link);
+
+        });
+
+    });
+
+}
+
+
+// DISPLAY LESSON
+
+function renderTopic() {
+
+    const topic = allTopics[currentTopic];
+
+    document.getElementById("lessonNumber").textContent =
+        "TOPIC " + String(currentTopic + 1).padStart(2, "0") +
+        " / " + allTopics.length;
+
+    document.getElementById("lessonContent").innerHTML =
+        topic.content;
+
+    document.getElementById("summaryText").textContent =
+        topic.summary;
+
+    renderQuestions(topic.questions);
+
+    renderSidebar();
+
+    updateProgress();
+
+    updateBookmark();
+
+    document.getElementById("previousButton").disabled =
+        currentTopic === 0;
+
+    document.getElementById("nextButton").disabled =
+        currentTopic === allTopics.length - 1;
+
+    const completeButton =
+        document.getElementById("completeButton");
+
+    if (completedTopics.includes(currentTopic)) {
+
+        completeButton.textContent =
+            "✓ Topic Completed";
+
+    } else {
+
+        completeButton.textContent =
+            "✓ Mark Topic as Completed";
+
+    }
+
+    document.getElementById("practiceFeedback").textContent = "";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+// PRACTICE QUESTIONS
+
+function renderQuestions(questions) {
+
+    const container =
+        document.getElementById("practiceQuestions");
+
+    container.innerHTML = "";
+
+    if (questions.length === 0) {
+
+        container.innerHTML = `
+            <p>
+                Practice questions for this topic are
+                being prepared.
+            </p>
+        `;
+
+        document.querySelector(".check-btn").style.display = "none";
+
+        return;
+
+    }
+
+    document.querySelector(".check-btn").style.display = "inline-block";
+
+    questions.forEach((question, index) => {
+
+        const wrapper = document.createElement("div");
+
+        wrapper.className = "question";
+
+        const paragraph = document.createElement("p");
+
+        paragraph.textContent =
+            (index + 1) + ". " + question.question;
+
+        const input = document.createElement("input");
+
+        input.type = "text";
+
+        input.id = "answer" + index;
+
+        input.placeholder = "Enter your answer...";
+
+        wrapper.append(paragraph, input);
+
+        container.appendChild(wrapper);
+
+    });
+
+}
+
+
+// CHECK ANSWERS
+
+function normalizeAnswer(value) {
+
+    return value
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/^x=/, "")
+        .replace(/,/g, "");
+
+}
+
+
+function checkAnswers() {
+
+    const questions = allTopics[currentTopic].questions;
+
+    if (!questions.length) {
+        return;
+    }
+
+    let score = 0;
+
+    let feedback = "";
+
+    questions.forEach((question, index) => {
+
+        const input =
+            document.getElementById("answer" + index);
+
+        const userAnswer = normalizeAnswer(input.value);
+
+        const correctAnswer = normalizeAnswer(question.answer);
+
+        const isCorrect = userAnswer === correctAnswer;
+
+        if (isCorrect) {
+
+            score++;
+
+            feedback += `
+                <p class="correct">
+                    Question ${index + 1}: Correct! ✓
+                    ${question.explanation}
+                </p>
+            `;
+
+        } else {
+
+            feedback += `
+                <p class="incorrect">
+                    Question ${index + 1}: Not quite.
+                    Correct answer: ${question.answer}.
+                    ${question.explanation}
+                </p>
+            `;
+
+        }
+
+    });
+
+    feedback += `
+        <br>
+        <strong>
+            Your Score: ${score} / ${questions.length}
+        </strong>
+    `;
+
+    document.getElementById("practiceFeedback").innerHTML =
+        feedback;
+
+}
+
+
+// PREVIOUS AND NEXT TOPICS
+
+function changeTopic(direction) {
+
+    const newIndex = currentTopic + direction;
+
+    if (newIndex < 0 || newIndex >= allTopics.length) {
+        return;
+    }
+
+    currentTopic = newIndex;
+
+    renderTopic();
+
+}
+
+
+// MARK COMPLETED
+
+document.getElementById("completeButton")
+    .addEventListener("click", () => {
+
+        if (!completedTopics.includes(currentTopic)) {
+
+            completedTopics.push(currentTopic);
+
+            localStorage.setItem(
+                storageKey,
+                JSON.stringify(completedTopics)
+            );
+
+        }
+
+        renderTopic();
+
+    });
+
+
+// PROGRESS
+
+function updateProgress() {
+
+    const percentage =
+        Math.round(
+            (completedTopics.length / allTopics.length) * 100
+        );
+
+    document.getElementById("progressText").textContent =
+        percentage + "% completed";
+
+    document.getElementById("progressFill").style.width =
+        percentage + "%";
+
+}
+
+
+// BOOKMARK SYSTEM
+
+function getBookmarks() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(bookmarkKey) || "[]"
+        );
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function updateBookmark() {
+
+    const button =
+        document.getElementById("bookmarkButton");
+
+    const topic = allTopics[currentTopic];
+
+    const bookmarks = getBookmarks();
+
+    const exists = bookmarks.some(item =>
+        item.programme === programme &&
+        item.courseCode === courseCode &&
+        item.topic === topic.title
+    );
+
+    button.classList.toggle("saved", exists);
+
+    button.textContent = exists
+        ? "★ Bookmarked"
+        : "☆ Bookmark";
+
+}
+
+
+document.getElementById("bookmarkButton")
+    .addEventListener("click", () => {
+
+        const topic = allTopics[currentTopic];
+
+        let bookmarks = getBookmarks();
+
+        const exists = bookmarks.some(item =>
+            item.programme === programme &&
+            item.courseCode === courseCode &&
+            item.topic === topic.title
+        );
+
+        if (exists) {
+
+            bookmarks = bookmarks.filter(item =>
+                !(
+                    item.programme === programme &&
+                    item.courseCode === courseCode &&
+                    item.topic === topic.title
+                )
+            );
+
+        } else {
+
+            bookmarks.push({
+
+                programme: programme,
+
+                courseCode: courseCode,
+
+                courseName: courseName,
+
+                topic: topic.title,
+
+                savedAt: new Date().toISOString()
+
+            });
+
+        }
+
+        localStorage.setItem(
+            bookmarkKey,
+            JSON.stringify(bookmarks)
+        );
+
+        updateBookmark();
+
+    });
+
+
+// INITIALISE TEXTBOOK
+
+renderSidebar();
+
+renderTopic();
+
+</script>
+
+</body>
+</html>
