@@ -65,7 +65,7 @@ a {
 
 .nav-links {
     display: flex;
-    gap: 25px;
+    gap: 22px;
     align-items: center;
     font-size: 13px;
     color: var(--muted);
@@ -159,6 +159,81 @@ a {
     font-weight: 700;
     cursor: pointer;
 }
+
+/* STUDY TOOLS */
+
+.study-tools {
+    padding: 35px 7%;
+    background: #0b1426;
+    border-bottom: 1px solid var(--border);
+}
+
+.tools-heading {
+    margin-bottom: 20px;
+}
+
+.tools-heading h2 {
+    font-size: 21px;
+    margin-bottom: 7px;
+}
+
+.tools-heading p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.tool-card {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding: 22px;
+    background: linear-gradient(145deg, #152642, #101a2e);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: .25s;
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--blue);
+}
+
+.tool-icon {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: rgba(67,136,255,.14);
+    font-size: 25px;
+}
+
+.tool-card h3 {
+    font-size: 15px;
+    margin-bottom: 7px;
+}
+
+.tool-card p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.tool-arrow {
+    margin-left: auto;
+    color: #80aaff;
+    font-size: 20px;
+}
+
+/* MAIN CONTENT */
 
 .container {
     padding: 55px 7%;
@@ -338,6 +413,8 @@ a {
     text-align: center;
 }
 
+/* RESPONSIVE DESIGN */
+
 @media(max-width: 850px) {
     .programme-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -367,6 +444,10 @@ a {
         padding: 55px 6%;
     }
 
+    .study-tools {
+        padding: 30px 6%;
+    }
+
     .container {
         padding: 42px 6%;
     }
@@ -377,6 +458,14 @@ a {
 
     .search-area button {
         padding: 15px;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-card {
+        padding: 18px;
     }
 
     .programme-grid {
@@ -402,6 +491,8 @@ a {
         <a href="index.html">Home</a>
         <a href="#programmes">Programmes</a>
         <a href="#institutions">Institutions</a>
+        <a href="notes.html">My Notes</a>
+        <a href="quiz.html">Quiz Centre</a>
         <a href="dashboard.html" class="nav-button">Dashboard</a>
     </div>
 
@@ -440,6 +531,42 @@ a {
 
 </header>
 
+<!-- STUDY TOOLS SECTION -->
+
+<section class="study-tools">
+
+    <div class="tools-heading">
+        <h2>📚 Your Study Tools</h2>
+        <p>Organise your learning, save important information and test your knowledge.</p>
+    </div>
+
+    <div class="tools-grid">
+
+        <a href="notes.html" class="tool-card">
+            <div class="tool-icon">📝</div>
+
+            <div>
+                <h3>My Notes</h3>
+                <p>Create, save, edit and organise your personal study notes.</p>
+            </div>
+
+            <span class="tool-arrow">→</span>
+        </a>
+
+        <a href="quiz.html" class="tool-card">
+            <div class="tool-icon">🧠</div>
+
+            <div>
+                <h3>Quiz Centre</h3>
+                <p>Practise questions, check your answers and review your scores.</p>
+            </div>
+
+            <span class="tool-arrow">→</span>
+        </a>
+
+    </div>
+
+</section>
 
 <section class="container" id="institutions">
 
@@ -469,7 +596,6 @@ a {
 
         </div>
 
-
         <div class="institution-card"
              onclick="selectInstitution('Polytechnic')">
 
@@ -485,7 +611,6 @@ a {
             <button>Explore Polytechnic →</button>
 
         </div>
-
 
         <div class="institution-card"
              onclick="selectInstitution('College of Education')">
@@ -507,7 +632,6 @@ a {
 
 </section>
 
-
 <section class="container" id="programmes">
 
     <div class="section-heading">
@@ -520,7 +644,6 @@ a {
         </p>
 
     </div>
-
 
     <div class="filter-area">
 
@@ -565,7 +688,6 @@ a {
         </button>
 
     </div>
-
 
     <div class="programme-grid" id="programmeGrid">
 
@@ -767,7 +889,6 @@ a {
 
     </div>
 
-
     <div class="info-box">
 
         <h2>🎯 Your Academic Journey Starts Here</h2>
@@ -786,7 +907,6 @@ a {
 
 </section>
 
-
 <footer class="footer">
 
     <p>
@@ -798,7 +918,6 @@ a {
     </p>
 
 </footer>
-
 
 <script>
 
@@ -819,7 +938,6 @@ function selectInstitution(institution) {
     );
 }
 
-
 function filterProgrammes(category, button) {
 
     selectedCategory = category;
@@ -832,7 +950,6 @@ function filterProgrammes(category, button) {
 
     searchProgrammes();
 }
-
 
 function searchProgrammes() {
 
@@ -849,7 +966,6 @@ function searchProgrammes() {
     cards.forEach(card => {
 
         const category = card.dataset.category;
-
         const text = card.innerText.toLowerCase();
 
         const categoryMatch =
@@ -859,14 +975,10 @@ function searchProgrammes() {
         const searchMatch = text.includes(search);
 
         if (categoryMatch && searchMatch) {
-
             card.style.display = "block";
             visible++;
-
         } else {
-
             card.style.display = "none";
-
         }
 
     });
@@ -874,7 +986,6 @@ function searchProgrammes() {
     document.getElementById("noResults").style.display =
         visible === 0 ? "block" : "none";
 }
-
 
 document
     .getElementById("programmeSearch")
