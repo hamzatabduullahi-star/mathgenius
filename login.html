@@ -80,6 +80,13 @@
             color: #a8a6ff;
             cursor: pointer;
             font-size: 13px;
+            padding: 8px;
+            z-index: 2;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .toggle-password:focus {
+            outline: none;
         }
 
         .forgot-password {
@@ -399,54 +406,98 @@
     </main>
 
 
+    <!-- AUTHENTICATION SCRIPT -->
     <script src="./auth.js"></script>
 
+
+    <!-- PASSWORD VISIBILITY AND PAGE NAVIGATION -->
     <script>
-        // Password visibility controls
-        function setupPasswordToggle(inputId, buttonId) {
-            const input = document.getElementById(inputId);
-            const button = document.getElementById(buttonId);
+        document.addEventListener("DOMContentLoaded", function () {
 
-            if (!input || !button) return;
+            // PASSWORD VISIBILITY CONTROLS
+            function setupPasswordToggle(inputId, buttonId) {
 
-            button.addEventListener("click", () => {
-                const isPassword = input.type === "password";
+                const input = document.getElementById(inputId);
+                const button = document.getElementById(buttonId);
 
-                input.type = isPassword ? "text" : "password";
-                button.textContent = isPassword ? "Hide" : "Show";
+                if (!input || !button) return;
+
+                button.type = "button";
+
+                button.addEventListener("click", function (event) {
+
+                    event.preventDefault();
+
+                    const isHidden = input.type === "password";
+
+                    input.type = isHidden ? "text" : "password";
+
+                    button.textContent = isHidden ? "Hide" : "Show";
+
+                });
+            }
+
+            // Login password
+            setupPasswordToggle(
+                "password",
+                "togglePassword"
+            );
+
+            // New password
+            setupPasswordToggle(
+                "newPassword",
+                "toggleNewPassword"
+            );
+
+            // Confirm password
+            setupPasswordToggle(
+                "confirmNewPassword",
+                "toggleConfirmPassword"
+            );
+
+
+            // SWITCH BETWEEN LOGIN AND RECOVERY SECTIONS
+            const loginSection =
+                document.getElementById("loginSection");
+
+            const recoverySection =
+                document.getElementById("recoverySection");
+
+            const forgotPassword =
+                document.getElementById("forgotPassword");
+
+            const backToLogin =
+                document.getElementById("backToLogin");
+
+
+            forgotPassword.addEventListener("click", function(event) {
+
+                event.preventDefault();
+
+                loginSection.classList.add("hidden");
+
+                recoverySection.classList.remove("hidden");
+
+                document.getElementById("resetEmail").value =
+                    document.getElementById("email").value.trim();
+
+                document.getElementById("resetMessage").textContent = "";
+
             });
-        }
 
-        setupPasswordToggle("password", "togglePassword");
-        setupPasswordToggle("newPassword", "toggleNewPassword");
-        setupPasswordToggle("confirmNewPassword", "toggleConfirmPassword");
 
-        // Switch between login and recovery sections
-        const loginSection = document.getElementById("loginSection");
-        const recoverySection = document.getElementById("recoverySection");
+            backToLogin.addEventListener("click", function(event) {
 
-        const forgotPassword = document.getElementById("forgotPassword");
-        const backToLogin = document.getElementById("backToLogin");
+                event.preventDefault();
 
-        forgotPassword.addEventListener("click", function(event) {
-            event.preventDefault();
+                recoverySection.classList.add("hidden");
 
-            loginSection.classList.add("hidden");
-            recoverySection.classList.remove("hidden");
+                loginSection.classList.remove("hidden");
 
-            document.getElementById("resetEmail").value =
-                document.getElementById("email").value.trim();
+                document.getElementById("authMessage").textContent = "";
 
-            document.getElementById("resetMessage").textContent = "";
-        });
+            });
 
-        backToLogin.addEventListener("click", function(event) {
-            event.preventDefault();
-
-            recoverySection.classList.add("hidden");
-            loginSection.classList.remove("hidden");
-
-            document.getElementById("authMessage").textContent = "";
         });
     </script>
 
