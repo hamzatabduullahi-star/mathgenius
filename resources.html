@@ -149,6 +149,10 @@
             font-size: 14px;
         }
 
+        .download-button:hover {
+            opacity: .9;
+        }
+
         .download-button.disabled {
             background: #303b59;
             color: #aebbd8;
@@ -206,20 +210,22 @@
         <h1>Academic Resources Library</h1>
 
         <p>
-            Access detailed study materials, textbooks, explanations,
-            formulas and worked examples across different academic
-            disciplines. Download your materials and continue learning
-            even when you are offline.
+            Explore comprehensive academic textbooks, university-level
+            explanations, formulas, worked examples, practical exercises
+            and examination preparation materials across multiple
+            disciplines. Download your textbooks and study offline.
         </p>
 
     </section>
 
     <div class="search-box">
+
         <input
             type="search"
             id="resourceSearch"
             placeholder="Search textbooks, subjects or topics..."
         >
+
     </div>
 
     <div class="category-buttons">
@@ -329,9 +335,9 @@
             </div>
 
             <a
-                href="./resources/computer-science-fundamentals.pdf"
+                href="./resources/computer-science-fundamentals-study-guide.pdf"
                 class="download-button"
-                download="Computer-Science-Fundamentals.pdf"
+                download="Computer-Science-Fundamentals-Study-Guide.pdf"
             >
                 📥 Download Study Guide
             </a>
@@ -340,17 +346,18 @@
 
         <article class="resource-card" data-category="computer-science">
 
-            <div class="resource-icon">💻</div>
+            <div class="resource-icon">👨‍💻</div>
 
             <h3>Introduction to Programming</h3>
 
             <p>
                 Understand programming concepts, variables,
-                data types, conditions, loops and functions.
+                data types, conditions, loops, functions and
+                problem-solving techniques.
             </p>
 
             <div class="resource-meta">
-                Computer Science • Beginner
+                Computer Science • University Level
             </div>
 
             <a href="./resources/introduction-to-programming.pdf"
@@ -368,7 +375,7 @@
 
             <p>
                 Study database concepts, SQL, relational models,
-                normalization and database design.
+                normalization, database design and transactions.
             </p>
 
             <div class="resource-meta">
@@ -390,7 +397,7 @@
 
             <p>
                 Learn arrays, linked lists, stacks, queues,
-                trees, sorting and searching algorithms.
+                trees, graphs, sorting and searching algorithms.
             </p>
 
             <div class="resource-meta">
@@ -440,7 +447,7 @@
             </p>
 
             <div class="resource-meta">
-                Statistics • Beginner
+                Statistics • University Level
             </div>
 
             <a href="./resources/descriptive-statistics.pdf"
@@ -525,8 +532,10 @@
     </div>
 
     <div class="empty-message" id="emptyMessage">
+
         No study materials match your search.
         Try another keyword or category.
+
     </div>
 
     <div class="library-note">
@@ -537,11 +546,15 @@
         Once downloaded to your device, you can open and read them
         without an internet connection.
 
-        New subjects and study materials will be added progressively.
+        New textbooks and academic subjects will be added progressively.
 
     </div>
 
 </main>
+
+<footer>
+    © 2026 MathGenius. Solve Smarter. Learn Better.
+</footer>
 
 <script>
 
@@ -580,6 +593,7 @@
             if (matchesCategory && matchesSearch) {
 
                 card.style.display = "";
+
                 visibleCount++;
 
             } else {
