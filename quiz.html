@@ -1,337 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#080d1c">
-    <title>Quiz Centre | MathGenius</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1c">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<title>Quiz & Assessment Centre | MathGenius</title>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #080d1c;
-            color: #f4f6ff;
-        }
+<style>
+*{box-sizing:border-box}
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            padding: 18px 6%;
-            background: #0d1427;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#080d1c;
+    color:#f4f6ff;
+}
 
-        .logo {
-            color: white;
-            text-decoration: none;
-            font-size: 24px;
-            font-weight: 800;
-        }
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:18px 6%;
+    background:#0d1427;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
 
-        .logo span {
-            color: #6d91ff;
-        }
+.logo{
+    color:white;
+    text-decoration:none;
+    font-size:24px;
+    font-weight:800;
+}
 
-        .back-link {
-            color: #91aaff;
-            text-decoration: none;
-            font-size: 14px;
-        }
+.logo span{color:#6d91ff}
 
-        main {
-            max-width: 1000px;
-            margin: auto;
-            padding: 35px 20px 60px;
-        }
+.back-link{
+    color:#91aaff;
+    text-decoration:none;
+    font-size:14px;
+}
 
-        .hero {
-            padding: 35px;
-            border-radius: 20px;
-            background:
-                radial-gradient(circle at top right, rgba(0,200,255,0.13), transparent 40%),
-                linear-gradient(120deg, #142747, #191c40);
-            border: 1px solid rgba(109,145,255,0.2);
-            margin-bottom: 30px;
-        }
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:35px 20px 60px;
+}
 
-        .hero h1 {
-            font-size: 32px;
-            margin: 0 0 12px;
-        }
+.hero{
+    padding:35px;
+    border-radius:20px;
+    background:
+    radial-gradient(circle at top right,rgba(0,200,255,.13),transparent 40%),
+    linear-gradient(120deg,#142747,#191c40);
+    border:1px solid rgba(109,145,255,.2);
+    margin-bottom:30px;
+}
 
-        .hero p {
-            color: #aab6ce;
-            line-height: 1.8;
-            margin: 0;
-        }
+.hero h1{
+    font-size:32px;
+    margin:0 0 12px;
+}
 
-        .panel {
-            background: #111a30;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 17px;
-            padding: 25px;
-            margin-bottom: 22px;
-        }
+.hero p{
+    color:#aab6ce;
+    line-height:1.8;
+    margin:0;
+}
 
-        .panel h2 {
-            font-size: 21px;
-            margin: 0 0 18px;
-        }
+.hero-badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin-top:20px;
+}
 
-        label {
-            display: block;
-            color: #b5c1d9;
-            font-size: 13px;
-            margin-bottom: 9px;
-        }
+.badge{
+    padding:8px 12px;
+    background:rgba(85,124,255,.13);
+    color:#a9bcff;
+    border-radius:30px;
+    font-size:12px;
+}
 
-        select {
-            width: 100%;
-            padding: 14px;
-            background: #080f21;
-            color: white;
-            border: 1px solid #293957;
-            border-radius: 9px;
-            font-size: 14px;
-            margin-bottom: 18px;
-        }
+.panel{
+    background:#111a30;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:17px;
+    padding:25px;
+    margin-bottom:22px;
+}
 
-        button {
-            cursor: pointer;
-            border: none;
-            border-radius: 9px;
-            padding: 13px 20px;
-            font-size: 14px;
-            font-weight: 700;
-        }
+.panel h2{
+    font-size:21px;
+    margin:0 0 18px;
+}
 
-        .primary-btn {
-            background: #557cff;
-            color: white;
-        }
+label{
+    display:block;
+    color:#b5c1d9;
+    font-size:13px;
+    margin-bottom:9px;
+}
 
-        .primary-btn:hover {
-            background: #4168e8;
-        }
+select{
+    width:100%;
+    padding:14px;
+    background:#080f21;
+    color:white;
+    border:1px solid #293957;
+    border-radius:9px;
+    font-size:14px;
+    margin-bottom:18px;
+}
 
-        .secondary-btn {
-            background: #26344f;
-            color: white;
-        }
+button{
+    cursor:pointer;
+    border:none;
+    border-radius:9px;
+    padding:13px 20px;
+    font-size:14px;
+    font-weight:700;
+}
 
-        .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+.primary-btn{
+    background:#557cff;
+    color:white;
+}
 
-        .quiz-header span {
-            color: #91aaff;
-            font-size: 13px;
-            font-weight: bold;
-        }
+.primary-btn:hover{background:#4168e8}
 
-        .progress-track {
-            height: 8px;
-            background: #26344f;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 25px;
-        }
+.secondary-btn{
+    background:#26344f;
+    color:white;
+}
 
-        .progress-bar {
-            height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, #557cff, #47d8e8);
-            transition: width 0.3s;
-        }
+.subject-info{
+    padding:14px;
+    background:#0b1429;
+    border:1px solid #293957;
+    border-radius:10px;
+    color:#aab6ce;
+    font-size:13px;
+    line-height:1.7;
+    margin-bottom:18px;
+}
 
-        .question {
-            font-size: 20px;
-            line-height: 1.6;
-            margin-bottom: 22px;
-        }
+.selection-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
 
-        .options {
-            display: grid;
-            gap: 12px;
-        }
+.selection-grid>div{min-width:0}
 
-        .option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px;
-            background: #0b1429;
-            border: 1px solid #293957;
-            border-radius: 10px;
-            cursor: pointer;
-            color: #d9e1f3;
-            line-height: 1.5;
-        }
+.quiz-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:20px;
+}
 
-        .option:hover {
-            border-color: #6d91ff;
-        }
+.quiz-header span{
+    color:#91aaff;
+    font-size:13px;
+    font-weight:bold;
+}
 
-        .option input {
-            accent-color: #557cff;
-            width: 17px;
-            height: 17px;
-            flex-shrink: 0;
-        }
+.progress-track{
+    height:8px;
+    background:#26344f;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:25px;
+}
 
-        .quiz-actions {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 25px;
-        }
+.progress-bar{
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,#557cff,#47d8e8);
+    transition:width .3s;
+}
 
-        .result {
-            text-align: center;
-        }
+.question{
+    font-size:21px;
+    line-height:1.6;
+    margin-bottom:22px;
+}
 
-        .score-circle {
-            width: 145px;
-            height: 145px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            margin: 25px auto;
-            border-radius: 50%;
-            background: #142747;
-            border: 7px solid #557cff;
-        }
+.options{
+    display:grid;
+    gap:12px;
+}
 
-        .score-circle strong {
-            font-size: 35px;
-        }
+.option{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:16px;
+    background:#0b1429;
+    border:1px solid #293957;
+    border-radius:10px;
+    cursor:pointer;
+    color:#d9e1f3;
+    line-height:1.5;
+}
 
-        .score-circle span {
-            color: #aab6ce;
-            font-size: 12px;
-        }
+.option:hover{border-color:#6d91ff}
 
-        .result h2 {
-            margin-bottom: 10px;
-        }
+.option:has(input:checked){
+    border-color:#6d91ff;
+    background:#152447;
+}
 
-        .result p {
-            color: #aab6ce;
-            line-height: 1.7;
-        }
+.option input{
+    accent-color:#557cff;
+    width:18px;
+    height:18px;
+    flex-shrink:0;
+}
 
-        .review-item {
-            text-align: left;
-            padding: 18px;
-            background: #0b1429;
-            border-radius: 12px;
-            margin-top: 13px;
-            border: 1px solid rgba(255,255,255,0.06);
-        }
+.quiz-actions{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    margin-top:25px;
+}
 
-        .review-item h3 {
-            font-size: 15px;
-            line-height: 1.6;
-        }
+.result{text-align:center}
 
-        .correct {
-            color: #69e6a9;
-        }
+.score-circle{
+    width:145px;
+    height:145px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    margin:25px auto;
+    border-radius:50%;
+    background:#142747;
+    border:7px solid #557cff;
+}
 
-        .incorrect {
-            color: #ff9999;
-        }
+.score-circle strong{font-size:35px}
 
-        .explanation {
-            color: #aab6ce;
-            font-size: 13px;
-            line-height: 1.7;
-            margin-top: 10px;
-        }
+.score-circle span{
+    color:#aab6ce;
+    font-size:12px;
+}
 
-        .history-item {
-            padding: 15px;
-            background: #0b1429;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-            font-size: 13px;
-        }
+.result p{
+    color:#aab6ce;
+    line-height:1.7;
+}
 
-        .history-item span {
-            color: #91aaff;
-        }
+.review-item{
+    text-align:left;
+    padding:18px;
+    background:#0b1429;
+    border-radius:12px;
+    margin-top:13px;
+    border:1px solid rgba(255,255,255,.06);
+}
 
-        .empty {
-            color: #8995ad;
-            text-align: center;
-            padding: 25px 10px;
-            line-height: 1.7;
-        }
+.review-item h3{
+    font-size:15px;
+    line-height:1.6;
+}
 
-        [hidden] {
-            display: none !important;
-        }
+.correct{color:#69e6a9}
+.incorrect{color:#ff9999}
 
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: #8995ad;
-            border-top: 1px solid rgba(255,255,255,0.07);
-            font-size: 13px;
-        }
+.explanation{
+    color:#aab6ce;
+    font-size:13px;
+    line-height:1.7;
+    margin-top:10px;
+}
 
-        @media(max-width: 600px) {
-            header {
-                padding: 16px;
-            }
+.history-item{
+    padding:15px;
+    background:#0b1429;
+    border-radius:10px;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    font-size:13px;
+}
 
-            .logo {
-                font-size: 21px;
-            }
+.history-item span{color:#91aaff}
 
-            main {
-                padding: 25px 15px 45px;
-            }
+.history-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
 
-            .hero {
-                padding: 25px 20px;
-            }
+.small-btn{
+    padding:8px 12px;
+    font-size:12px;
+    background:#26344f;
+    color:white;
+}
 
-            .hero h1 {
-                font-size: 26px;
-            }
+.empty{
+    color:#8995ad;
+    text-align:center;
+    padding:25px 10px;
+    line-height:1.7;
+}
 
-            .panel {
-                padding: 20px;
-            }
+[hidden]{display:none!important}
 
-            .question {
-                font-size: 17px;
-            }
+footer{
+    text-align:center;
+    padding:25px;
+    color:#8995ad;
+    border-top:1px solid rgba(255,255,255,.07);
+    font-size:13px;
+}
 
-            .quiz-actions button {
-                padding: 12px;
-                font-size: 12px;
-            }
-        }
-    </style>
+@media(max-width:650px){
+    header{padding:16px}
+    .logo{font-size:21px}
+    main{padding:25px 15px 45px}
+    .hero{padding:25px 20px}
+    .hero h1{font-size:26px}
+    .panel{padding:20px}
+    .question{font-size:18px}
+    .selection-grid{grid-template-columns:1fr}
+    .quiz-actions button{padding:12px;font-size:12px}
+}
+</style>
 </head>
 
 <body>
@@ -348,115 +356,158 @@
 
 <main>
 
-    <section class="hero">
-        <h1>🧠 Quiz & Assessment Centre</h1>
+<section class="hero">
+    <h1>🧠 Quiz & Assessment Centre</h1>
 
-        <p>
-            Challenge yourself, test your understanding and
-            discover how much you have learned.
-            Every question is an opportunity to improve.
-        </p>
-    </section>
+    <p>
+        Test your knowledge across multiple academic disciplines.
+        Challenge yourself, identify areas for improvement and
+        strengthen your understanding through practice.
+    </p>
 
-    <!-- QUIZ SELECTION -->
+    <div class="hero-badges">
+        <span class="badge">📚 Multiple Subjects</span>
+        <span class="badge">🎯 Random Questions</span>
+        <span class="badge">📈 Performance Tracking</span>
+        <span class="badge">💡 Detailed Explanations</span>
+    </div>
+</section>
 
-    <section class="panel" id="selectionPanel">
+<!-- SELECTION -->
 
-        <h2>Choose Your Assessment</h2>
+<section class="panel" id="selectionPanel">
 
-        <label for="subject">Select a subject</label>
+    <h2>Choose Your Assessment</h2>
 
-        <select id="subject">
-            <option value="mathematics">Mathematics</option>
-            <option value="computer">Computer Science</option>
-            <option value="statistics">Statistics</option>
-        </select>
+    <label for="subject">Academic discipline</label>
 
-        <label for="difficulty">Difficulty level</label>
+    <select id="subject">
+        <option value="mathematics">Mathematics</option>
+        <option value="computer">Computer Science</option>
+        <option value="statistics">Statistics</option>
+        <option value="physics">Physics</option>
+        <option value="chemistry">Chemistry</option>
+        <option value="biology">Biology</option>
+        <option value="english">English Language</option>
+        <option value="economics">Economics</option>
+        <option value="accounting">Accounting</option>
+        <option value="engineering">Engineering</option>
+        <option value="business">Business Administration</option>
+        <option value="it">Information Technology</option>
+    </select>
 
-        <select id="difficulty">
-            <option value="all">All Levels</option>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-        </select>
+    <div class="subject-info" id="subjectInfo">
+        Choose a subject to begin your assessment.
+    </div>
 
-        <button class="primary-btn" id="startButton">
-            Start Quiz →
+    <div class="selection-grid">
+
+        <div>
+            <label for="difficulty">Difficulty level</label>
+            <select id="difficulty">
+                <option value="all">All Levels</option>
+                <option value="easy">Beginner</option>
+                <option value="medium">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="questionCount">Number of questions</label>
+            <select id="questionCount">
+                <option value="10">10 Questions</option>
+                <option value="20">20 Questions</option>
+                <option value="30">30 Questions</option>
+                <option value="50">50 Questions</option>
+                <option value="100">100 Questions</option>
+            </select>
+        </div>
+
+    </div>
+
+    <button class="primary-btn" id="startButton">
+        Start Assessment →
+    </button>
+
+</section>
+
+<!-- QUIZ -->
+
+<section class="panel" id="quizPanel" hidden>
+
+    <div class="quiz-header">
+        <span id="questionCounter"></span>
+        <span id="quizSubject"></span>
+    </div>
+
+    <div class="progress-track">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <h2 class="question" id="questionText"></h2>
+
+    <div class="options" id="optionsContainer"></div>
+
+    <div class="quiz-actions">
+
+        <button class="secondary-btn" id="quitButton">
+            Exit Quiz
         </button>
 
-    </section>
-
-    <!-- QUIZ AREA -->
-
-    <section class="panel" id="quizPanel" hidden>
-
-        <div class="quiz-header">
-            <span id="questionCounter">Question 1</span>
-            <span id="quizSubject">Mathematics</span>
-        </div>
-
-        <div class="progress-track">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-
-        <h2 class="question" id="questionText"></h2>
-
-        <div class="options" id="optionsContainer"></div>
-
-        <div class="quiz-actions">
-
-            <button class="secondary-btn" id="quitButton">
-                Exit Quiz
-            </button>
-
-            <button class="primary-btn" id="nextButton">
-                Next Question →
-            </button>
-
-        </div>
-
-    </section>
-
-    <!-- RESULT AREA -->
-
-    <section class="panel result" id="resultPanel" hidden>
-
-        <h2>Assessment Completed!</h2>
-
-        <p id="resultMessage"></p>
-
-        <div class="score-circle">
-            <strong id="scorePercentage">0%</strong>
-            <span>Your Score</span>
-        </div>
-
-        <p id="scoreDetails"></p>
-
-        <h2>Answer Review</h2>
-
-        <div id="reviewContainer"></div>
-
-        <br>
-
-        <button class="primary-btn" id="retakeButton">
-            Try Again
+        <button class="primary-btn" id="nextButton">
+            Next Question →
         </button>
 
-        <button class="secondary-btn" id="homeButton">
-            Back to Quiz Centre
+    </div>
+
+</section>
+
+<!-- RESULTS -->
+
+<section class="panel result" id="resultPanel" hidden>
+
+    <h2>Assessment Completed!</h2>
+
+    <p id="resultMessage"></p>
+
+    <div class="score-circle">
+        <strong id="scorePercentage">0%</strong>
+        <span>Your Score</span>
+    </div>
+
+    <p id="scoreDetails"></p>
+
+    <h2>Answer Review</h2>
+
+    <div id="reviewContainer"></div>
+
+    <br>
+
+    <button class="primary-btn" id="retakeButton">
+        Try Again
+    </button>
+
+    <button class="secondary-btn" id="homeButton">
+        Back to Quiz Centre
+    </button>
+
+</section>
+
+<!-- HISTORY -->
+
+<section class="panel" id="historyPanel">
+
+    <div class="history-actions">
+        <h2>📈 Previous Attempts</h2>
+
+        <button class="small-btn" id="clearHistoryButton">
+            Clear History
         </button>
+    </div>
 
-    </section>
+    <div id="historyContainer"></div>
 
-    <!-- QUIZ HISTORY -->
-
-    <section class="panel" id="historyPanel">
-
-        <h2>📈 Your Previous Attempts</h2>
-
-        <div id="historyContainer"></div>
-
-    </section>
+</section>
 
 </main>
 
@@ -466,396 +517,1043 @@
 
 <script>
 
+/* =========================================
+   QUESTION BANK
+========================================= */
+
 const questionBank = {
 
-    mathematics: [
+mathematics: [
+{
+difficulty:"easy",
+question:"What is 12 × 8?",
+options:["86","96","108","88"],
+answer:1,
+explanation:"12 multiplied by 8 equals 96."
+},
+{
+difficulty:"easy",
+question:"What is the square root of 144?",
+options:["10","11","12","14"],
+answer:2,
+explanation:"12 × 12 = 144."
+},
+{
+difficulty:"easy",
+question:"What is 25% of 200?",
+options:["25","40","50","75"],
+answer:2,
+explanation:"25/100 × 200 = 50."
+},
+{
+difficulty:"medium",
+question:"Solve: 2x + 6 = 16.",
+options:["3","4","5","6"],
+answer:2,
+explanation:"2x = 16 - 6 = 10. Therefore x = 5."
+},
+{
+difficulty:"medium",
+question:"What is the derivative of x²?",
+options:["x","2x","x³","2"],
+answer:1,
+explanation:"Using the power rule, d(x²)/dx = 2x."
+},
+{
+difficulty:"medium",
+question:"What is 5!?",
+options:["25","60","100","120"],
+answer:3,
+explanation:"5! = 5 × 4 × 3 × 2 × 1 = 120."
+},
+{
+difficulty:"advanced",
+question:"What is the integral of 2x with respect to x?",
+options:["x² + C","2x² + C","x + C","2 + C"],
+answer:0,
+explanation:"The antiderivative of 2x is x² + C."
+},
+{
+difficulty:"advanced",
+question:"What is the determinant of [[2,1],[3,4]]?",
+options:["5","8","11","2"],
+answer:0,
+explanation:"Determinant = (2 × 4) - (1 × 3) = 5."
+}
+],
 
-        {
-            difficulty: "easy",
-            question: "What is the value of 12 × 8?",
-            options: ["86", "96", "108", "88"],
-            answer: 1,
-            explanation: "12 multiplied by 8 equals 96."
-        },
+computer:[
+{
+difficulty:"easy",
+question:"What does CPU stand for?",
+options:["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Processing User"],
+answer:0,
+explanation:"CPU means Central Processing Unit."
+},
+{
+difficulty:"easy",
+question:"Which is an input device?",
+options:["Monitor","Printer","Keyboard","Speaker"],
+answer:2,
+explanation:"A keyboard enters data into a computer."
+},
+{
+difficulty:"easy",
+question:"Which language structures web pages?",
+options:["HTML","Python","SQL","C++"],
+answer:0,
+explanation:"HTML defines the structure of web pages."
+},
+{
+difficulty:"medium",
+question:"What does RAM stand for?",
+options:["Read Access Memory","Random Access Memory","Run Active Memory","Remote Access Machine"],
+answer:1,
+explanation:"RAM means Random Access Memory."
+},
+{
+difficulty:"medium",
+question:"Which data structure follows FIFO?",
+options:["Stack","Tree","Queue","Graph"],
+answer:2,
+explanation:"A queue follows First In, First Out."
+},
+{
+difficulty:"medium",
+question:"What is the purpose of an operating system?",
+options:["Browse only","Manage hardware and software resources","Create documents only","Play music only"],
+answer:1,
+explanation:"An operating system manages hardware, software and system resources."
+},
+{
+difficulty:"advanced",
+question:"What is the time complexity of binary search?",
+options:["O(n)","O(n²)","O(log n)","O(1)"],
+answer:2,
+explanation:"Binary search halves the search space at each step, giving O(log n) time."
+},
+{
+difficulty:"advanced",
+question:"Which normal form removes partial dependency?",
+options:["1NF","2NF","3NF","BCNF"],
+answer:1,
+explanation:"Second Normal Form eliminates partial dependencies on a composite candidate key."
+}
+],
 
-        {
-            difficulty: "easy",
-            question: "What is the square root of 144?",
-            options: ["10", "11", "12", "14"],
-            answer: 2,
-            explanation: "12 × 12 = 144."
-        },
+statistics:[
+{
+difficulty:"easy",
+question:"What is the mean of 2, 4 and 6?",
+options:["3","4","5","6"],
+answer:1,
+explanation:"(2 + 4 + 6) / 3 = 4."
+},
+{
+difficulty:"easy",
+question:"What is the median of 3, 5 and 7?",
+options:["3","5","7","15"],
+answer:1,
+explanation:"The middle value is 5."
+},
+{
+difficulty:"easy",
+question:"Which measure identifies the most frequent value?",
+options:["Mean","Median","Mode","Range"],
+answer:2,
+explanation:"The mode is the most frequently occurring value."
+},
+{
+difficulty:"medium",
+question:"What is the range of 4, 8, 10 and 15?",
+options:["7","9","11","15"],
+answer:2,
+explanation:"Range = 15 - 4 = 11."
+},
+{
+difficulty:"medium",
+question:"What does standard deviation measure?",
+options:["Middle value","Spread around the mean","Most frequent value","Number of observations"],
+answer:1,
+explanation:"Standard deviation measures how spread out observations are around their mean."
+},
+{
+difficulty:"medium",
+question:"If all observations are identical, what is their variance?",
+options:["1","0","100","Cannot be determined"],
+answer:1,
+explanation:"Identical observations have no variation, so their variance is zero."
+},
+{
+difficulty:"advanced",
+question:"What is the probability of getting a head when a fair coin is tossed?",
+options:["1/4","1/2","1/3","1"],
+answer:1,
+explanation:"There are two equally likely outcomes, so the probability is 1/2."
+},
+{
+difficulty:"advanced",
+question:"What is the correlation coefficient range?",
+options:["0 to 1","-1 to +1","-10 to +10","0 to 100"],
+answer:1,
+explanation:"The correlation coefficient ranges from -1 to +1."
+}
+],
 
-        {
-            difficulty: "easy",
-            question: "What is 25% of 200?",
-            options: ["25", "40", "50", "75"],
-            answer: 2,
-            explanation: "25/100 × 200 = 50."
-        },
+physics:[
+{
+difficulty:"easy",
+question:"What is the SI unit of force?",
+options:["Joule","Newton","Watt","Pascal"],
+answer:1,
+explanation:"Force is measured in newtons (N)."
+},
+{
+difficulty:"easy",
+question:"What is the speed formula?",
+options:["Distance × Time","Distance / Time","Time / Distance","Mass × Acceleration"],
+answer:1,
+explanation:"Speed equals distance divided by time."
+},
+{
+difficulty:"easy",
+question:"Which instrument measures temperature?",
+options:["Barometer","Thermometer","Ammeter","Voltmeter"],
+answer:1,
+explanation:"A thermometer measures temperature."
+},
+{
+difficulty:"medium",
+question:"What is the SI unit of power?",
+options:["Watt","Newton","Joule","Ohm"],
+answer:0,
+explanation:"Power is measured in watts."
+},
+{
+difficulty:"medium",
+question:"Which law states that every action has an equal and opposite reaction?",
+options:["Newton's First Law","Newton's Second Law","Newton's Third Law","Ohm's Law"],
+answer:2,
+explanation:"Newton's Third Law describes action and reaction."
+},
+{
+difficulty:"medium",
+question:"What is the kinetic energy formula?",
+options:["mv","½mv²","mgh","Fd"],
+answer:1,
+explanation:"Kinetic energy is one-half mass multiplied by velocity squared."
+},
+{
+difficulty:"advanced",
+question:"What is the SI unit of electric charge?",
+options:["Ampere","Volt","Coulomb","Ohm"],
+answer:2,
+explanation:"Electric charge is measured in coulombs."
+},
+{
+difficulty:"advanced",
+question:"If velocity changes by 20 m/s in 4 seconds, what is the acceleration?",
+options:["4 m/s²","5 m/s²","10 m/s²","80 m/s²"],
+answer:1,
+explanation:"Acceleration = change in velocity / time = 20/4 = 5 m/s²."
+}
+],
 
-        {
-            difficulty: "medium",
-            question: "Solve: 2x + 6 = 16.",
-            options: ["3", "4", "5", "6"],
-            answer: 2,
-            explanation: "2x = 16 - 6 = 10. Therefore x = 5."
-        },
+chemistry:[
+{
+difficulty:"easy",
+question:"What is the chemical symbol for oxygen?",
+options:["Ox","O","Og","Oy"],
+answer:1,
+explanation:"The chemical symbol for oxygen is O."
+},
+{
+difficulty:"easy",
+question:"What is the pH of pure water at 25°C?",
+options:["1","5","7","14"],
+answer:2,
+explanation:"Pure water is neutral, with a pH of approximately 7."
+},
+{
+difficulty:"easy",
+question:"Which particle has a negative charge?",
+options:["Proton","Neutron","Electron","Nucleus"],
+answer:2,
+explanation:"Electrons carry a negative electric charge."
+},
+{
+difficulty:"medium",
+question:"What is the atomic number of carbon?",
+options:["4","6","8","12"],
+answer:1,
+explanation:"Carbon has six protons, giving it atomic number 6."
+},
+{
+difficulty:"medium",
+question:"What type of bond involves sharing electrons?",
+options:["Ionic","Covalent","Metallic","Hydrogen"],
+answer:1,
+explanation:"Covalent bonding involves sharing electron pairs."
+},
+{
+difficulty:"medium",
+question:"What is the chemical formula for water?",
+options:["CO₂","H₂O","O₂","NaCl"],
+answer:1,
+explanation:"A water molecule contains two hydrogen atoms and one oxygen atom."
+},
+{
+difficulty:"advanced",
+question:"What is Avogadro's approximate constant?",
+options:["6.022 × 10²³","3.14 × 10²","9.81","1.602 × 10⁻¹⁹"],
+answer:0,
+explanation:"One mole contains approximately 6.022 × 10²³ elementary entities."
+},
+{
+difficulty:"advanced",
+question:"Oxidation involves what process?",
+options:["Gain of electrons","Loss of electrons","Gain of neutrons","Loss of protons"],
+answer:1,
+explanation:"Oxidation is the loss of electrons."
+}
+],
 
-        {
-            difficulty: "medium",
-            question: "What is the derivative of x²?",
-            options: ["x", "2x", "x³", "2"],
-            answer: 1,
-            explanation: "Using the power rule, d(x²)/dx = 2x."
-        },
+biology:[
+{
+difficulty:"easy",
+question:"What is the basic unit of life?",
+options:["Tissue","Organ","Cell","System"],
+answer:2,
+explanation:"The cell is the basic structural and functional unit of life."
+},
+{
+difficulty:"easy",
+question:"Which organ pumps blood around the body?",
+options:["Liver","Heart","Lung","Kidney"],
+answer:1,
+explanation:"The heart pumps blood through the circulatory system."
+},
+{
+difficulty:"easy",
+question:"Which pigment helps plants absorb light?",
+options:["Haemoglobin","Chlorophyll","Melanin","Keratin"],
+answer:1,
+explanation:"Chlorophyll absorbs light energy for photosynthesis."
+},
+{
+difficulty:"medium",
+question:"Where does photosynthesis mainly occur?",
+options:["Mitochondria","Chloroplasts","Ribosomes","Nucleus"],
+answer:1,
+explanation:"Photosynthesis takes place in chloroplasts."
+},
+{
+difficulty:"medium",
+question:"Which molecule carries genetic information?",
+options:["DNA","ATP","Glucose","Water"],
+answer:0,
+explanation:"DNA stores hereditary genetic information."
+},
+{
+difficulty:"medium",
+question:"What is the function of red blood cells?",
+options:["Fight infection","Carry oxygen","Digest food","Produce hormones"],
+answer:1,
+explanation:"Red blood cells transport oxygen using haemoglobin."
+},
+{
+difficulty:"advanced",
+question:"What is the typical number of chromosomes in a human body cell?",
+options:["23","44","46","48"],
+answer:2,
+explanation:"Most human somatic cells contain 46 chromosomes."
+},
+{
+difficulty:"advanced",
+question:"Which process produces genetically varied gametes?",
+options:["Mitosis","Meiosis","Binary fission","Budding"],
+answer:1,
+explanation:"Meiosis produces gametes and contributes to genetic variation."
+}
+],
 
-        {
-            difficulty: "medium",
-            question: "What is the value of 5!?",
-            options: ["25", "60", "100", "120"],
-            answer: 3,
-            explanation: "5! = 5 × 4 × 3 × 2 × 1 = 120."
-        }
+english:[
+{
+difficulty:"easy",
+question:"Which word is a noun?",
+options:["Quickly","Beautiful","Teacher","Run"],
+answer:2,
+explanation:"A teacher is a person, so the word is a noun."
+},
+{
+difficulty:"easy",
+question:"What is the opposite of 'ancient'?",
+options:["Old","Modern","Historic","Former"],
+answer:1,
+explanation:"Modern is an antonym of ancient."
+},
+{
+difficulty:"easy",
+question:"Choose the correct spelling.",
+options:["Recieve","Receive","Receeve","Receve"],
+answer:1,
+explanation:"The correct spelling is receive."
+},
+{
+difficulty:"medium",
+question:"Which sentence is grammatically correct?",
+options:["She go to school.","She goes to school.","She going school.","She gone to school."],
+answer:1,
+explanation:"The singular subject 'she' takes 'goes' in the simple present tense."
+},
+{
+difficulty:"medium",
+question:"What is a synonym of 'abundant'?",
+options:["Scarce","Plentiful","Empty","Limited"],
+answer:1,
+explanation:"Abundant means existing in large quantities; plentiful is a synonym."
+},
+{
+difficulty:"medium",
+question:"Which figure of speech compares two things using 'like' or 'as'?",
+options:["Metaphor","Simile","Irony","Hyperbole"],
+answer:1,
+explanation:"A simile makes an explicit comparison using like or as."
+},
+{
+difficulty:"advanced",
+question:"What is the term for a word that has the opposite meaning of another?",
+options:["Synonym","Antonym","Homonym","Acronym"],
+answer:1,
+explanation:"An antonym is a word with an opposite meaning."
+},
+{
+difficulty:"advanced",
+question:"Which clause can stand alone as a complete sentence?",
+options:["Dependent clause","Independent clause","Relative clause","Subordinate clause"],
+answer:1,
+explanation:"An independent clause expresses a complete thought."
+}
+],
 
-    ],
+economics:[
+{
+difficulty:"easy",
+question:"What is economics primarily concerned with?",
+options:["Unlimited resources","Scarcity and choice","Weather","Literature"],
+answer:1,
+explanation:"Economics studies how people allocate scarce resources."
+},
+{
+difficulty:"easy",
+question:"What is demand?",
+options:["Willingness and ability to buy","Cost of production","Government tax","Total supply"],
+answer:0,
+explanation:"Demand is the willingness and ability to purchase goods or services."
+},
+{
+difficulty:"easy",
+question:"What is the basic unit of currency in Nigeria?",
+options:["Cedi","Naira","Rand","Shilling"],
+answer:1,
+explanation:"Nigeria's official currency is the naira."
+},
+{
+difficulty:"medium",
+question:"What generally happens to quantity demanded when price falls?",
+options:["It decreases","It increases","It remains zero","It disappears"],
+answer:1,
+explanation:"Other things being equal, a lower price generally increases quantity demanded."
+},
+{
+difficulty:"medium",
+question:"What is opportunity cost?",
+options:["Total profit","Next best alternative forgone","Market price","Tax paid"],
+answer:1,
+explanation:"Opportunity cost is the value of the next best alternative sacrificed."
+},
+{
+difficulty:"medium",
+question:"Which institution commonly controls monetary policy in Nigeria?",
+options:["CBN","NCC","NBS","FRSC"],
+answer:0,
+explanation:"The Central Bank of Nigeria is responsible for monetary policy."
+},
+{
+difficulty:"advanced",
+question:"What does GDP measure?",
+options:["Total population","Value of final goods and services produced domestically","Government debt only","Exports only"],
+answer:1,
+explanation:"Gross Domestic Product measures the value of final goods and services produced within an economy."
+},
+{
+difficulty:"advanced",
+question:"What is inflation?",
+options:["A general rise in prices","A fall in population","An increase in exports only","A reduction in money supply only"],
+answer:0,
+explanation:"Inflation is a sustained increase in the general price level."
+}
+],
 
-    computer: [
+accounting:[
+{
+difficulty:"easy",
+question:"What is the basic accounting equation?",
+options:["Assets = Liabilities + Equity","Assets = Revenue - Expenses","Profit = Assets + Cash","Liabilities = Revenue + Expenses"],
+answer:0,
+explanation:"The fundamental accounting equation is Assets = Liabilities + Equity."
+},
+{
+difficulty:"easy",
+question:"Which statement reports financial position?",
+options:["Income statement","Balance sheet","Cash receipt","Sales invoice"],
+answer:1,
+explanation:"The balance sheet reports assets, liabilities and equity at a point in time."
+},
+{
+difficulty:"easy",
+question:"What is cash?",
+options:["An expense","An asset","A liability","A loss"],
+answer:1,
+explanation:"Cash is an asset because it is a resource controlled by the business."
+},
+{
+difficulty:"medium",
+question:"What does a debit do to an asset account?",
+options:["Increases it","Decreases it","Closes it","Has no effect"],
+answer:0,
+explanation:"Asset accounts normally increase with debits."
+},
+{
+difficulty:"medium",
+question:"What is revenue?",
+options:["Income earned from operations","Money borrowed","Owner's personal expense","Outstanding debt"],
+answer:0,
+explanation:"Revenue is income earned from business activities."
+},
+{
+difficulty:"medium",
+question:"Which account normally has a credit balance?",
+options:["Cash","Purchases","Capital","Rent expense"],
+answer:2,
+explanation:"Capital is an equity account and normally carries a credit balance."
+},
+{
+difficulty:"advanced",
+question:"What is depreciation?",
+options:["Increase in sales","Allocation of an asset's depreciable cost over useful life","Payment of dividends","Increase in cash"],
+answer:1,
+explanation:"Depreciation allocates the depreciable amount of a tangible asset over its useful life."
+},
+{
+difficulty:"advanced",
+question:"What is a trial balance used to check?",
+options:["Market demand","Equality of debit and credit totals","Employee attendance","Product quality"],
+answer:1,
+explanation:"A trial balance checks whether total debit balances equal total credit balances."
+}
+],
 
-        {
-            difficulty: "easy",
-            question: "What does CPU stand for?",
-            options: [
-                "Central Processing Unit",
-                "Computer Personal Unit",
-                "Central Program Utility",
-                "Control Processing User"
-            ],
-            answer: 0,
-            explanation: "CPU means Central Processing Unit."
-        },
+engineering:[
+{
+difficulty:"easy",
+question:"What is the SI unit of length?",
+options:["Kilogram","Metre","Second","Newton"],
+answer:1,
+explanation:"The metre is the SI base unit of length."
+},
+{
+difficulty:"easy",
+question:"Which instrument measures electric current?",
+options:["Voltmeter","Ammeter","Thermometer","Barometer"],
+answer:1,
+explanation:"An ammeter measures electric current."
+},
+{
+difficulty:"easy",
+question:"What is the SI unit of mass?",
+options:["Gram","Kilogram","Newton","Pound"],
+answer:1,
+explanation:"The kilogram is the SI base unit of mass."
+},
+{
+difficulty:"medium",
+question:"What does Ohm's law state?",
+options:["V = IR","P = IV²","F = ma²","E = mc"],
+answer:0,
+explanation:"Ohm's law states that voltage equals current multiplied by resistance."
+},
+{
+difficulty:"medium",
+question:"Which material is commonly used as an electrical conductor?",
+options:["Rubber","Copper","Glass","Plastic"],
+answer:1,
+explanation:"Copper conducts electricity effectively."
+},
+{
+difficulty:"medium",
+question:"What is stress in engineering mechanics?",
+options:["Force per unit area","Mass per unit volume","Distance per time","Energy per second"],
+answer:0,
+explanation:"Stress is internal force divided by cross-sectional area."
+},
+{
+difficulty:"advanced",
+question:"What is the SI unit of pressure?",
+options:["Joule","Pascal","Watt","Coulomb"],
+answer:1,
+explanation:"Pressure is measured in pascals, equivalent to newtons per square metre."
+},
+{
+difficulty:"advanced",
+question:"What does Young's modulus describe?",
+options:["Electrical resistance","Elastic stiffness of a material","Thermal conductivity","Fluid density"],
+answer:1,
+explanation:"Young's modulus measures a material's stiffness in the elastic region."
+}
+],
 
-        {
-            difficulty: "easy",
-            question: "Which of these is an input device?",
-            options: ["Monitor", "Printer", "Keyboard", "Speaker"],
-            answer: 2,
-            explanation: "A keyboard is used to enter data into a computer."
-        },
+business:[
+{
+difficulty:"easy",
+question:"What is entrepreneurship?",
+options:["Starting and managing a business venture","Avoiding all risks","Only working for government","Buying personal goods"],
+answer:0,
+explanation:"Entrepreneurship involves identifying opportunities and organizing resources to create a business."
+},
+{
+difficulty:"easy",
+question:"What is profit?",
+options:["Revenue minus expenses","Expenses plus debt","Total assets","Owner's salary only"],
+answer:0,
+explanation:"Profit is the amount remaining after expenses are deducted from revenue."
+},
+{
+difficulty:"easy",
+question:"What is marketing?",
+options:["Creating and delivering value to customers","Only keeping records","Borrowing money","Hiring workers only"],
+answer:0,
+explanation:"Marketing identifies customer needs and creates, communicates and delivers value."
+},
+{
+difficulty:"medium",
+question:"What does SWOT analysis examine?",
+options:["Sales only","Strengths, Weaknesses, Opportunities and Threats","Staff wages","Tax rates"],
+answer:1,
+explanation:"SWOT is a strategic planning framework."
+},
+{
+difficulty:"medium",
+question:"What is working capital?",
+options:["Current assets minus current liabilities","Total sales","Fixed assets only","Long-term debt"],
+answer:0,
+explanation:"Working capital measures short-term financial resources available to a business."
+},
+{
+difficulty:"medium",
+question:"What is customer satisfaction?",
+options:["Meeting or exceeding customer expectations","Increasing prices only","Reducing product quality","Avoiding feedback"],
+answer:0,
+explanation:"Customer satisfaction reflects how well a product or service meets expectations."
+},
+{
+difficulty:"advanced",
+question:"What is break-even point?",
+options:["Maximum possible profit","Point where total revenue equals total costs","Lowest selling price","Total fixed assets"],
+answer:1,
+explanation:"At break-even, a business makes neither profit nor loss."
+},
+{
+difficulty:"advanced",
+question:"What is market segmentation?",
+options:["Dividing a market into groups with similar characteristics","Closing a market","Increasing production only","Removing competition"],
+answer:0,
+explanation:"Market segmentation divides customers into groups with shared needs or characteristics."
+}
+],
 
-        {
-            difficulty: "easy",
-            question: "Which language is mainly used to structure web pages?",
-            options: ["HTML", "Python", "SQL", "C++"],
-            answer: 0,
-            explanation: "HTML provides the structure of web pages."
-        },
-
-        {
-            difficulty: "medium",
-            question: "What does RAM stand for?",
-            options: [
-                "Read Access Memory",
-                "Random Access Memory",
-                "Run Active Memory",
-                "Remote Access Machine"
-            ],
-            answer: 1,
-            explanation: "RAM means Random Access Memory."
-        },
-
-        {
-            difficulty: "medium",
-            question: "Which data structure follows FIFO?",
-            options: ["Stack", "Tree", "Queue", "Graph"],
-            answer: 2,
-            explanation: "Queue follows First In, First Out (FIFO)."
-        },
-
-        {
-            difficulty: "medium",
-            question: "What is the purpose of an operating system?",
-            options: [
-                "Only to browse the internet",
-                "To manage computer hardware and software resources",
-                "Only to create documents",
-                "Only to play music"
-            ],
-            answer: 1,
-            explanation: "An operating system manages hardware, software and system resources."
-        }
-
-    ],
-
-    statistics: [
-
-        {
-            difficulty: "easy",
-            question: "What is the mean of 2, 4 and 6?",
-            options: ["3", "4", "5", "6"],
-            answer: 1,
-            explanation: "(2 + 4 + 6) / 3 = 4."
-        },
-
-        {
-            difficulty: "easy",
-            question: "What is the middle value of 3, 5 and 7?",
-            options: ["3", "5", "7", "15"],
-            answer: 1,
-            explanation: "The median is the middle value when the data is arranged in order."
-        },
-
-        {
-            difficulty: "easy",
-            question: "Which measure identifies the most frequent value?",
-            options: ["Mean", "Median", "Mode", "Range"],
-            answer: 2,
-            explanation: "Mode is the value that appears most frequently."
-        },
-
-        {
-            difficulty: "medium",
-            question: "What is the range of 4, 8, 10 and 15?",
-            options: ["7", "9", "11", "15"],
-            answer: 2,
-            explanation: "Range = highest value - lowest value = 15 - 4 = 11."
-        },
-
-        {
-            difficulty: "medium",
-            question: "What does standard deviation measure?",
-            options: [
-                "The middle value",
-                "The spread of data around the mean",
-                "The most frequent value",
-                "The total number of observations"
-            ],
-            answer: 1,
-            explanation: "Standard deviation measures how spread out values are around the mean."
-        },
-
-        {
-            difficulty: "medium",
-            question: "If all observations are identical, what is the variance?",
-            options: ["1", "0", "100", "Cannot be determined"],
-            answer: 1,
-            explanation: "There is no variation when all observations are identical, so variance is zero."
-        }
-
-    ]
+it:[
+{
+difficulty:"easy",
+question:"What does IT stand for?",
+options:["Internet Transfer","Information Technology","Internal Testing","Integrated Text"],
+answer:1,
+explanation:"IT means Information Technology."
+},
+{
+difficulty:"easy",
+question:"Which device connects a computer to a network?",
+options:["Router","Keyboard","Printer","Monitor"],
+answer:0,
+explanation:"A router forwards data between networks."
+},
+{
+difficulty:"easy",
+question:"What does URL stand for?",
+options:["Uniform Resource Locator","Universal Record Link","User Reference Location","Unified Routing Language"],
+answer:0,
+explanation:"URL means Uniform Resource Locator."
+},
+{
+difficulty:"medium",
+question:"What does HTTPS help provide?",
+options:["Encrypted communication","Faster typing","More storage","Automatic printing"],
+answer:0,
+explanation:"HTTPS uses encryption to protect communication between a browser and a website."
+},
+{
+difficulty:"medium",
+question:"What is cloud computing?",
+options:["Using remote computing resources over a network","Weather forecasting","Saving only to a flash drive","Replacing all computers"],
+answer:0,
+explanation:"Cloud computing provides computing services over a network, commonly the internet."
+},
+{
+difficulty:"medium",
+question:"What is phishing?",
+options:["A fraudulent attempt to obtain sensitive information","A backup method","A programming language","A network cable"],
+answer:0,
+explanation:"Phishing uses deceptive messages or websites to steal information."
+},
+{
+difficulty:"advanced",
+question:"What is multi-factor authentication?",
+options:["Using more than one type of verification","Using multiple usernames only","Changing a screen colour","Sharing one password"],
+answer:0,
+explanation:"MFA requires two or more different authentication factors."
+},
+{
+difficulty:"advanced",
+question:"What is a firewall?",
+options:["A network security system that filters traffic","A computer screen","A storage device","A programming editor"],
+answer:0,
+explanation:"A firewall monitors and controls network traffic according to security rules."
+}
+]
 
 };
 
-const HISTORY_KEY = "mathgenius_quiz_history_v1";
+/* =========================================
+   SETTINGS AND STATE
+========================================= */
 
-let questions = [];
-let currentQuestion = 0;
-let answers = [];
-let selectedSubject = "";
-let selectedDifficulty = "";
+const HISTORY_KEY="mathgenius_quiz_history_v1";
 
-const selectionPanel = document.getElementById("selectionPanel");
-const quizPanel = document.getElementById("quizPanel");
-const resultPanel = document.getElementById("resultPanel");
+const subjectNames={
+    mathematics:"Mathematics",
+    computer:"Computer Science",
+    statistics:"Statistics",
+    physics:"Physics",
+    chemistry:"Chemistry",
+    biology:"Biology",
+    english:"English Language",
+    economics:"Economics",
+    accounting:"Accounting",
+    engineering:"Engineering",
+    business:"Business Administration",
+    it:"Information Technology"
+};
 
-const questionText = document.getElementById("questionText");
-const optionsContainer = document.getElementById("optionsContainer");
+const subjectDescriptions={
+    mathematics:"Arithmetic, algebra, calculus, geometry and mathematical reasoning.",
+    computer:"Programming, algorithms, databases, computer architecture and computing.",
+    statistics:"Probability, data analysis, distributions and statistical methods.",
+    physics:"Mechanics, electricity, energy, motion and physical principles.",
+    chemistry:"Atoms, chemical bonding, reactions and chemical calculations.",
+    biology:"Cells, genetics, organisms, human biology and life processes.",
+    english:"Grammar, vocabulary, comprehension, spelling and language skills.",
+    economics:"Demand, supply, markets, economic systems and financial principles.",
+    accounting:"Financial records, accounting equations, statements and bookkeeping.",
+    engineering:"Engineering principles, measurements, mechanics and electrical concepts.",
+    business:"Management, entrepreneurship, marketing and business strategy.",
+    it:"Networks, cybersecurity, cloud computing and information systems."
+};
 
-function getSubjectName(subject) {
+let questions=[];
+let currentQuestion=0;
+let answers=[];
+let selectedSubject="";
+let selectedDifficulty="all";
+let completed=false;
 
-    const names = {
-        mathematics: "Mathematics",
-        computer: "Computer Science",
-        statistics: "Statistics"
-    };
+const $=id=>document.getElementById(id);
 
-    return names[subject] || subject;
+const selectionPanel=$("selectionPanel");
+const quizPanel=$("quizPanel");
+const resultPanel=$("resultPanel");
+const historyPanel=$("historyPanel");
+
+/* =========================================
+   RANDOMIZATION
+========================================= */
+
+function shuffle(array){
+
+    const result=[...array];
+
+    for(let i=result.length-1;i>0;i--){
+
+        const j=Math.floor(Math.random()*(i+1));
+
+        [result[i],result[j]]=[result[j],result[i]];
+
+    }
+
+    return result;
 }
 
-function startQuiz() {
+/* =========================================
+   SUBJECT INFORMATION
+========================================= */
 
-    selectedSubject = document.getElementById("subject").value;
+function updateSubjectInfo(){
 
-    selectedDifficulty = document.getElementById("difficulty").value;
+    const subject=$("subject").value;
 
-    questions = questionBank[selectedSubject].filter(question => {
+    $("subjectInfo").textContent=
+        subjectDescriptions[subject];
 
-        return selectedDifficulty === "all" ||
-            question.difficulty === selectedDifficulty;
+}
+
+$("subject").addEventListener("change",updateSubjectInfo);
+
+updateSubjectInfo();
+
+/* =========================================
+   START QUIZ
+========================================= */
+
+function startQuiz(){
+
+    selectedSubject=$("subject").value;
+    selectedDifficulty=$("difficulty").value;
+
+    const available=questionBank[selectedSubject].filter(q=>
+        selectedDifficulty==="all"||
+        q.difficulty===selectedDifficulty
+    );
+
+    if(available.length===0){
+
+        alert("No questions are available for this selection.");
+        return;
+
+    }
+
+    const requestedCount=parseInt($("questionCount").value,10);
+
+    // Never repeat a question in the same assessment.
+    questions=shuffle(available).slice(
+        0,
+        Math.min(requestedCount,available.length)
+    );
+
+    // Shuffle answer options while preserving the correct answer.
+    questions=questions.map(q=>{
+
+        const originalOptions=q.options.map((text,index)=>({
+            text,
+            correct:index===q.answer
+        }));
+
+        const mixedOptions=shuffle(originalOptions);
+
+        return {
+            ...q,
+            options:mixedOptions.map(o=>o.text),
+            answer:mixedOptions.findIndex(o=>o.correct)
+        };
 
     });
 
-    if (questions.length === 0) {
-        alert("No questions are currently available.");
-        return;
-    }
+    currentQuestion=0;
+    answers=new Array(questions.length).fill(null);
+    completed=false;
 
-    questions = [...questions].sort(() => Math.random() - 0.5);
+    selectionPanel.hidden=true;
+    resultPanel.hidden=true;
+    quizPanel.hidden=false;
+    historyPanel.hidden=true;
 
-    currentQuestion = 0;
-    answers = new Array(questions.length).fill(null);
-
-    selectionPanel.hidden = true;
-    resultPanel.hidden = true;
-    quizPanel.hidden = false;
-
-    document.getElementById("historyPanel").hidden = true;
-
-    document.getElementById("quizSubject").textContent =
-        getSubjectName(selectedSubject);
+    $("quizSubject").textContent=subjectNames[selectedSubject];
 
     showQuestion();
+
+    window.scrollTo({top:0,behavior:"smooth"});
+
 }
 
-function showQuestion() {
+/* =========================================
+   DISPLAY QUESTION
+========================================= */
 
-    const question = questions[currentQuestion];
+function showQuestion(){
 
-    document.getElementById("questionCounter").textContent =
-        `Question ${currentQuestion + 1} of ${questions.length}`;
+    const q=questions[currentQuestion];
 
-    document.getElementById("progressBar").style.width =
-        ((currentQuestion + 1) / questions.length * 100) + "%";
+    $("questionCounter").textContent=
+        `Question ${currentQuestion+1} of ${questions.length}`;
 
-    questionText.textContent = question.question;
+    $("progressBar").style.width=
+        ((currentQuestion+1)/questions.length*100)+"%";
 
-    optionsContainer.innerHTML = "";
+    $("questionText").textContent=q.question;
 
-    question.options.forEach((option, index) => {
+    $("optionsContainer").innerHTML="";
 
-        const label = document.createElement("label");
-        label.className = "option";
+    q.options.forEach((option,index)=>{
 
-        const input = document.createElement("input");
+        const label=document.createElement("label");
+        label.className="option";
 
-        input.type = "radio";
-        input.name = "answer";
-        input.value = index;
-        input.checked = answers[currentQuestion] === index;
+        const input=document.createElement("input");
 
-        input.addEventListener("change", function() {
-            answers[currentQuestion] = index;
+        input.type="radio";
+        input.name="answer";
+        input.value=index;
+        input.checked=answers[currentQuestion]===index;
+
+        input.addEventListener("change",()=>{
+            answers[currentQuestion]=index;
         });
 
-        const text = document.createElement("span");
-        text.textContent = option;
+        const text=document.createElement("span");
+        text.textContent=option;
 
-        label.append(input, text);
+        label.append(input,text);
 
-        optionsContainer.appendChild(label);
+        $("optionsContainer").appendChild(label);
 
     });
 
-    document.getElementById("nextButton").textContent =
-        currentQuestion === questions.length - 1
-            ? "Submit Quiz"
-            : "Next Question →";
+    $("nextButton").textContent=
+        currentQuestion===questions.length-1
+        ?"Submit Assessment"
+        :"Next Question →";
+
 }
 
-function nextQuestion() {
+/* =========================================
+   NEXT QUESTION
+========================================= */
 
-    if (answers[currentQuestion] === null) {
+function nextQuestion(){
+
+    if(answers[currentQuestion]===null){
+
         alert("Please select an answer before continuing.");
         return;
+
     }
 
-    if (currentQuestion < questions.length - 1) {
+    if(currentQuestion<questions.length-1){
 
         currentQuestion++;
         showQuestion();
 
-    } else {
+    }else{
 
         finishQuiz();
 
     }
+
 }
 
-function finishQuiz() {
+/* =========================================
+   COMPLETE QUIZ
+========================================= */
 
-    let score = 0;
+function finishQuiz(){
 
-    questions.forEach((question, index) => {
+    if(completed)return;
 
-        if (answers[index] === question.answer) {
-            score++;
-        }
+    completed=true;
+
+    let score=0;
+
+    questions.forEach((q,index)=>{
+
+        if(answers[index]===q.answer)score++;
 
     });
 
-    const percentage = Math.round((score / questions.length) * 100);
+    const percentage=Math.round(
+        (score/questions.length)*100
+    );
 
-    const subjectName = getSubjectName(selectedSubject);
+    $("scorePercentage").textContent=percentage+"%";
 
-    document.getElementById("scorePercentage").textContent =
-        percentage + "%";
-
-    document.getElementById("scoreDetails").textContent =
+    $("scoreDetails").textContent=
         `You answered ${score} out of ${questions.length} questions correctly.`;
 
-    let resultMessage = "Keep practising. Every attempt makes you better!";
+    let message="Keep practising. Every attempt makes you better!";
 
-    if (percentage >= 80) {
-        resultMessage = "Excellent work! You have demonstrated strong understanding.";
-    } else if (percentage >= 60) {
-        resultMessage = "Good effort! You are making progress.";
-    } else if (percentage >= 40) {
-        resultMessage = "You're getting there. Review the explanations and try again.";
+    if(percentage>=80){
+        message="Excellent work! You have demonstrated strong understanding.";
+    }else if(percentage>=60){
+        message="Good effort! Keep building your knowledge.";
+    }else if(percentage>=40){
+        message="You're making progress. Study the explanations and try again.";
     }
 
-    document.getElementById("resultMessage").textContent = resultMessage;
+    $("resultMessage").textContent=message;
 
     renderReview();
 
-    saveAttempt(subjectName, score, questions.length, percentage);
+    saveAttempt(score,questions.length,percentage);
 
-    quizPanel.hidden = true;
-    resultPanel.hidden = false;
-    document.getElementById("historyPanel").hidden = false;
+    quizPanel.hidden=true;
+    resultPanel.hidden=false;
+    historyPanel.hidden=false;
 
     renderHistory();
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    window.scrollTo({top:0,behavior:"smooth"});
+
 }
 
-function renderReview() {
+/* =========================================
+   ANSWER REVIEW
+========================================= */
 
-    const container = document.getElementById("reviewContainer");
+function renderReview(){
 
-    container.innerHTML = "";
+    const container=$("reviewContainer");
 
-    questions.forEach((question, index) => {
+    container.innerHTML="";
 
-        const isCorrect = answers[index] === question.answer;
+    questions.forEach((q,index)=>{
 
-        const item = document.createElement("div");
-        item.className = "review-item";
+        const isCorrect=answers[index]===q.answer;
 
-        const heading = document.createElement("h3");
-        heading.textContent = `${index + 1}. ${question.question}`;
+        const item=document.createElement("div");
+        item.className="review-item";
 
-        const status = document.createElement("p");
-        status.className = isCorrect ? "correct" : "incorrect";
+        const heading=document.createElement("h3");
+        heading.textContent=`${index+1}. ${q.question}`;
 
-        status.textContent = isCorrect
-            ? "✓ Correct answer"
-            : "✗ Incorrect answer";
+        const status=document.createElement("p");
+        status.className=isCorrect?"correct":"incorrect";
+        status.textContent=isCorrect
+            ?"✓ Correct answer"
+            :"✗ Incorrect answer";
 
-        const yourAnswer = document.createElement("p");
-        yourAnswer.textContent =
-            "Your answer: " + question.options[answers[index]];
+        const yourAnswer=document.createElement("p");
+        yourAnswer.textContent=
+            "Your answer: "+
+            (answers[index]===null
+                ?"Not answered"
+                :q.options[answers[index]]);
 
-        const correctAnswer = document.createElement("p");
-        correctAnswer.className = "correct";
-        correctAnswer.textContent =
-            "Correct answer: " + question.options[question.answer];
+        const correctAnswer=document.createElement("p");
+        correctAnswer.className="correct";
+        correctAnswer.textContent=
+            "Correct answer: "+q.options[q.answer];
 
-        const explanation = document.createElement("p");
-        explanation.className = "explanation";
-        explanation.textContent = "Explanation: " + question.explanation;
+        const explanation=document.createElement("p");
+        explanation.className="explanation";
+        explanation.textContent=
+            "Explanation: "+q.explanation;
 
         item.append(
             heading,
@@ -868,120 +1566,148 @@ function renderReview() {
         container.appendChild(item);
 
     });
+
 }
 
-function saveAttempt(subject, score, total, percentage) {
+/* =========================================
+   SAVE HISTORY
+========================================= */
 
-    let history = [];
+function getHistory(){
 
-    try {
-        history = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+    try{
 
-        if (!Array.isArray(history)) {
-            history = [];
-        }
+        const data=JSON.parse(
+            localStorage.getItem(HISTORY_KEY)||"[]"
+        );
 
-    } catch (error) {
-        history = [];
+        return Array.isArray(data)?data:[];
+
+    }catch(error){
+
+        return [];
+
     }
+
+}
+
+function saveAttempt(score,total,percentage){
+
+    const history=getHistory();
 
     history.unshift({
-        subject: subject,
-        score: score,
-        total: total,
-        percentage: percentage,
-        date: new Date().toISOString()
+
+        subject:subjectNames[selectedSubject],
+        difficulty:selectedDifficulty,
+        score,
+        total,
+        percentage,
+        date:new Date().toISOString()
+
     });
 
-    history = history.slice(0, 50);
+    localStorage.setItem(
+        HISTORY_KEY,
+        JSON.stringify(history.slice(0,50))
+    );
 
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
 }
 
-function renderHistory() {
+/* =========================================
+   DISPLAY HISTORY
+========================================= */
 
-    const container = document.getElementById("historyContainer");
+function renderHistory(){
 
-    let history = [];
+    const container=$("historyContainer");
 
-    try {
-        history = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+    const history=getHistory();
 
-        if (!Array.isArray(history)) {
-            history = [];
-        }
+    container.innerHTML="";
 
-    } catch (error) {
-        history = [];
-    }
+    if(history.length===0){
 
-    container.innerHTML = "";
-
-    if (history.length === 0) {
-
-        container.innerHTML = `
+        container.innerHTML=`
             <div class="empty">
-                You haven't completed any quizzes yet.
+                You haven't completed any assessments yet.
                 Your results will appear here.
             </div>
         `;
 
         return;
+
     }
 
-    history.forEach(attempt => {
+    history.forEach(attempt=>{
 
-        const item = document.createElement("div");
-        item.className = "history-item";
+        const item=document.createElement("div");
+        item.className="history-item";
 
-        const details = document.createElement("div");
+        const details=document.createElement("div");
 
-        details.textContent =
-            `${attempt.subject} — ${attempt.score}/${attempt.total}`;
+        const date=new Date(attempt.date);
 
-        const percentage = document.createElement("span");
+        details.textContent=
+            `${attempt.subject} • ${attempt.score}/${attempt.total} • ${date.toLocaleDateString()}`;
 
-        percentage.textContent = attempt.percentage + "%";
+        const percentage=document.createElement("span");
 
-        item.append(details, percentage);
+        percentage.textContent=attempt.percentage+"%";
+
+        item.append(details,percentage);
 
         container.appendChild(item);
 
     });
+
 }
 
-document.getElementById("startButton").addEventListener("click", startQuiz);
+/* =========================================
+   BUTTON EVENTS
+========================================= */
 
-document.getElementById("nextButton").addEventListener("click", nextQuestion);
+$("startButton").addEventListener("click",startQuiz);
 
-document.getElementById("quitButton").addEventListener("click", function() {
+$("nextButton").addEventListener("click",nextQuestion);
 
-    if (confirm("Are you sure you want to exit this quiz?")) {
+$("quitButton").addEventListener("click",()=>{
 
-        quizPanel.hidden = true;
-        selectionPanel.hidden = false;
-        document.getElementById("historyPanel").hidden = false;
+    if(confirm("Are you sure you want to exit this assessment?")){
+
+        quizPanel.hidden=true;
+        selectionPanel.hidden=false;
+        historyPanel.hidden=false;
+
+        window.scrollTo({top:0,behavior:"smooth"});
 
     }
 
 });
 
-document.getElementById("retakeButton").addEventListener("click", function() {
-    startQuiz();
-});
+$("retakeButton").addEventListener("click",startQuiz);
 
-document.getElementById("homeButton").addEventListener("click", function() {
+$("homeButton").addEventListener("click",()=>{
 
-    resultPanel.hidden = true;
-    selectionPanel.hidden = false;
-    document.getElementById("historyPanel").hidden = false;
+    resultPanel.hidden=true;
+    selectionPanel.hidden=false;
+    historyPanel.hidden=false;
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    window.scrollTo({top:0,behavior:"smooth"});
 
 });
+
+$("clearHistoryButton").addEventListener("click",()=>{
+
+    if(confirm("Are you sure you want to clear your quiz history?")){
+
+        localStorage.removeItem(HISTORY_KEY);
+        renderHistory();
+
+    }
+
+});
+
+/* INITIALIZE */
 
 renderHistory();
 
