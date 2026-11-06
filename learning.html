@@ -185,7 +185,7 @@ a {
 
 .tools-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
 }
 
@@ -198,7 +198,6 @@ a {
     border: 1px solid var(--border);
     border-radius: 14px;
     transition: .25s;
-    min-width: 0;
 }
 
 .tool-card:hover {
@@ -416,12 +415,6 @@ a {
 
 /* RESPONSIVE DESIGN */
 
-@media(max-width: 1000px) {
-    .tools-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
 @media(max-width: 850px) {
     .programme-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -500,6 +493,7 @@ a {
         <a href="#institutions">Institutions</a>
         <a href="notes.html">My Notes</a>
         <a href="quiz.html">Quiz Centre</a>
+        <a href="resources.html">Resources</a>
         <a href="dashboard.html" class="nav-button">Dashboard</a>
     </div>
 
@@ -549,6 +543,8 @@ a {
 
     <div class="tools-grid">
 
+        <!-- MY NOTES -->
+
         <a href="notes.html" class="tool-card">
             <div class="tool-icon">📝</div>
 
@@ -559,6 +555,8 @@ a {
 
             <span class="tool-arrow">→</span>
         </a>
+
+        <!-- QUIZ CENTRE -->
 
         <a href="quiz.html" class="tool-card">
             <div class="tool-icon">🧠</div>
@@ -571,14 +569,14 @@ a {
             <span class="tool-arrow">→</span>
         </a>
 
-        <!-- NEW: DOWNLOADABLE RESOURCES -->
+        <!-- DOWNLOADABLE RESOURCES -->
 
         <a href="resources.html" class="tool-card">
             <div class="tool-icon">📚</div>
 
             <div>
-                <h3>Downloadable Study Resources</h3>
-                <p>Access PDF textbooks, study guides and materials you can download and read offline.</p>
+                <h3>Downloadable Resources</h3>
+                <p>Download textbooks and study materials to read offline.</p>
             </div>
 
             <span class="tool-arrow">→</span>
