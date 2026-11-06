@@ -185,7 +185,7 @@ a {
 
 .tools-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
 }
 
@@ -198,6 +198,7 @@ a {
     border: 1px solid var(--border);
     border-radius: 14px;
     transition: .25s;
+    min-width: 0;
 }
 
 .tool-card:hover {
@@ -415,6 +416,12 @@ a {
 
 /* RESPONSIVE DESIGN */
 
+@media(max-width: 1000px) {
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media(max-width: 850px) {
     .programme-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -559,6 +566,19 @@ a {
             <div>
                 <h3>Quiz Centre</h3>
                 <p>Practise questions, check your answers and review your scores.</p>
+            </div>
+
+            <span class="tool-arrow">→</span>
+        </a>
+
+        <!-- NEW: DOWNLOADABLE RESOURCES -->
+
+        <a href="resources.html" class="tool-card">
+            <div class="tool-icon">📚</div>
+
+            <div>
+                <h3>Downloadable Study Resources</h3>
+                <p>Access PDF textbooks, study guides and materials you can download and read offline.</p>
             </div>
 
             <span class="tool-arrow">→</span>
