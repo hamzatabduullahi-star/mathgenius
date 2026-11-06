@@ -214,7 +214,6 @@
 
     </section>
 
-
     <div class="search-box">
         <input
             type="search"
@@ -223,31 +222,21 @@
         >
     </div>
 
-
     <div class="category-buttons">
 
         <button class="active" data-category="all">All Resources</button>
-
         <button data-category="mathematics">Mathematics</button>
-
         <button data-category="computer-science">Computer Science</button>
-
         <button data-category="statistics">Statistics</button>
-
         <button data-category="engineering">Engineering</button>
-
         <button data-category="economics">Economics</button>
-
         <button data-category="business">Business</button>
 
     </div>
 
-
     <h2 class="section-heading">Available Study Materials</h2>
 
-
     <div class="resource-grid" id="resourceGrid">
-
 
         <!-- MATHEMATICS -->
 
@@ -255,25 +244,27 @@
 
             <div class="resource-icon">📐</div>
 
-            <h3>Introduction to Algebra</h3>
+            <h3>Algebra Fundamentals</h3>
 
             <p>
-                Learn algebraic expressions, equations, inequalities,
-                functions and essential problem-solving techniques.
+                A university-level study guide covering algebraic
+                expressions, equations, factorisation, functions,
+                worked examples and practice questions.
             </p>
 
             <div class="resource-meta">
-                Mathematics • Beginner
+                Mathematics • University Level • PDF
             </div>
 
-            <a href="./resources/algebra-fundamentals.pdf"
-               class="download-button disabled"
-               aria-disabled="true">
-                Coming Soon
+            <a
+                href="./resources/algebra-fundamentals-study-guide%202.pdf"
+                class="download-button"
+                download="Algebra-Fundamentals-Study-Guide.pdf"
+            >
+                📥 Download Study Guide
             </a>
 
         </article>
-
 
         <article class="resource-card" data-category="mathematics">
 
@@ -291,13 +282,11 @@
             </div>
 
             <a href="./resources/calculus-1-2.pdf"
-               class="download-button disabled"
-               aria-disabled="true">
+               class="download-button disabled">
                 Coming Soon
             </a>
 
         </article>
-
 
         <article class="resource-card" data-category="mathematics">
 
@@ -315,13 +304,11 @@
             </div>
 
             <a href="./resources/linear-algebra.pdf"
-               class="download-button disabled"
-               aria-disabled="true">
+               class="download-button disabled">
                 Coming Soon
             </a>
 
         </article>
-
 
         <!-- COMPUTER SCIENCE -->
 
@@ -341,13 +328,11 @@
             </div>
 
             <a href="./resources/introduction-to-programming.pdf"
-               class="download-button disabled"
-               aria-disabled="true">
+               class="download-button disabled">
                 Coming Soon
             </a>
 
         </article>
-
 
         <article class="resource-card" data-category="computer-science">
 
@@ -365,13 +350,11 @@
             </div>
 
             <a href="./resources/database-management.pdf"
-               class="download-button disabled"
-               aria-disabled="true">
+               class="download-button disabled">
                 Coming Soon
             </a>
 
         </article>
-
 
         <article class="resource-card" data-category="computer-science">
 
@@ -389,13 +372,11 @@
             </div>
 
             <a href="./resources/data-structures-algorithms.pdf"
-               class="download-button disabled"
-               aria-disabled="true">
+               class="download-button disabled">
                 Coming Soon
             </a>
 
         </article>
-
 
         <!-- STATISTICS -->
 
@@ -415,13 +396,11 @@
             </div>
 
             <a href="./resources/probability-theory.pdf"
-               class="download-button disabled"
-               aria-disabled="true">
+               class="download-button disabled">
                 Coming Soon
             </a>
 
         </article>
-
 
         <article class="resource-card" data-category="statistics">
 
@@ -439,13 +418,11 @@
             </div>
 
             <a href="./resources/descriptive-statistics.pdf"
-               class="download-button disabled"
-               aria-disabled="true">
+               class="download-button disabled">
                 Coming Soon
             </a>
 
         </article>
-
 
         <!-- ENGINEERING -->
 
@@ -465,13 +442,11 @@
             </div>
 
             <a href="./resources/engineering-mathematics.pdf"
-               class="download-button disabled"
-               aria-disabled="true">
+               class="download-button disabled">
                 Coming Soon
             </a>
 
         </article>
-
 
         <!-- ECONOMICS -->
 
@@ -491,13 +466,11 @@
             </div>
 
             <a href="./resources/mathematical-economics.pdf"
-               class="download-button disabled"
-               aria-disabled="true">
+               class="download-button disabled">
                 Coming Soon
             </a>
 
         </article>
-
 
         <!-- BUSINESS -->
 
@@ -517,35 +490,32 @@
             </div>
 
             <a href="./resources/business-mathematics.pdf"
-               class="download-button disabled"
-               aria-disabled="true">
+               class="download-button disabled">
                 Coming Soon
             </a>
 
         </article>
 
-
     </div>
-
 
     <div class="empty-message" id="emptyMessage">
         No study materials match your search.
         Try another keyword or category.
     </div>
 
-
     <div class="library-note">
+
         <strong>📌 About Offline Learning</strong><br><br>
 
-        Downloadable materials will be provided as PDF documents.
+        Downloadable materials are provided as PDF documents.
         Once downloaded to your device, you can open and read them
         without an internet connection.
 
         New subjects and study materials will be added progressively.
+
     </div>
 
 </main>
-
 
 <script>
 
@@ -561,7 +531,6 @@
         document.getElementById("emptyMessage");
 
     let selectedCategory = "all";
-
 
     function filterResources() {
 
@@ -585,7 +554,6 @@
             if (matchesCategory && matchesSearch) {
 
                 card.style.display = "";
-
                 visibleCount++;
 
             } else {
@@ -600,7 +568,6 @@
             visibleCount === 0 ? "block" : "none";
 
     }
-
 
     categoryButtons.forEach(button => {
 
@@ -619,7 +586,6 @@
         });
 
     });
-
 
     searchInput.addEventListener("input", filterResources);
 
