@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d1c">
+
+    <title>Resources Library | MathGenius</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+        .resources-container {
+            width: min(1150px, 94%);
+            margin: 35px auto 70px;
+        }
+
+        .resources-hero {
+            background: linear-gradient(135deg, #172653, #38216b);
+            padding: 40px 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(130, 140, 255, .25);
+        }
+
+        .resources-hero h1 {
+            font-size: clamp(28px, 5vw, 42px);
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .resources-hero p {
+            color: #d0d9f5;
+            line-height: 1.8;
+            max-width: 650px;
+        }
+
+        .offline-badge {
+            display: inline-block;
+            background: rgba(50, 220, 160, .12);
+            color: #5cf0bd;
+            padding: 8px 13px;
+            border-radius: 30px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .search-box {
+            margin: 25px 0;
+        }
+
+        .search-box input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #39466b;
+            background: #0b1328;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #7775ff;
+        }
+
+        .category-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .category-buttons button {
+            border: 1px solid #39466b;
+            background: #141d37;
+            color: #cbd5f5;
+            padding: 10px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .category-buttons button.active,
+        .category-buttons button:hover {
+            background: #536dfe;
+            color: white;
+            border-color: #536dfe;
+        }
+
+        .section-heading {
+            color: white;
+            font-size: 23px;
+            margin: 30px 0 18px;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: #141d37;
+            border: 1px solid rgba(120, 130, 255, .2);
+            border-radius: 15px;
+            padding: 22px;
+            transition: .25s;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            border-color: #7775ff;
+        }
+
+        .resource-icon {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .resource-card h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .resource-card p {
+            color: #aebbd8;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .resource-meta {
+            color: #8f9bbd;
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+
+        .download-button {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #536dfe, #9333ea);
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .download-button.disabled {
+            background: #303b59;
+            color: #aebbd8;
+            cursor: not-allowed;
+        }
+
+        .empty-message {
+            display: none;
+            color: #b9c3dc;
+            text-align: center;
+            padding: 35px 10px;
+        }
+
+        .library-note {
+            margin-top: 35px;
+            padding: 20px;
+            background: rgba(83, 109, 254, .08);
+            border: 1px solid rgba(120, 130, 255, .2);
+            border-radius: 12px;
+            color: #c6d0eb;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        @media(max-width: 600px) {
+            .resources-hero {
+                padding: 28px 20px;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="index.html" class="logo">MathGenius</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="learning.html">Learning Centre</a>
+    </nav>
+</header>
+
+<main class="resources-container">
+
+    <section class="resources-hero">
+
+        <span class="offline-badge">
+            📚 DOWNLOAD AND LEARN OFFLINE
+        </span>
+
+        <h1>Academic Resources Library</h1>
+
+        <p>
+            Access detailed study materials, textbooks, explanations,
+            formulas and worked examples across different academic
+            disciplines. Download your materials and continue learning
+            even when you are offline.
+        </p>
+
+    </section>
+
+
+    <div class="search-box">
+        <input
+            type="search"
+            id="resourceSearch"
+            placeholder="Search textbooks, subjects or topics..."
+        >
+    </div>
+
+
+    <div class="category-buttons">
+
+        <button class="active" data-category="all">All Resources</button>
+
+        <button data-category="mathematics">Mathematics</button>
+
+        <button data-category="computer-science">Computer Science</button>
+
+        <button data-category="statistics">Statistics</button>
+
+        <button data-category="engineering">Engineering</button>
+
+        <button data-category="economics">Economics</button>
+
+        <button data-category="business">Business</button>
+
+    </div>
+
+
+    <h2 class="section-heading">Available Study Materials</h2>
+
+
+    <div class="resource-grid" id="resourceGrid">
+
+
+        <!-- MATHEMATICS -->
+
+        <article class="resource-card" data-category="mathematics">
+
+            <div class="resource-icon">📐</div>
+
+            <h3>Introduction to Algebra</h3>
+
+            <p>
+                Learn algebraic expressions, equations, inequalities,
+                functions and essential problem-solving techniques.
+            </p>
+
+            <div class="resource-meta">
+                Mathematics • Beginner
+            </div>
+
+            <a href="./resources/algebra-fundamentals.pdf"
+               class="download-button disabled"
+               aria-disabled="true">
+                Coming Soon
+            </a>
+
+        </article>
+
+
+        <article class="resource-card" data-category="mathematics">
+
+            <div class="resource-icon">∫</div>
+
+            <h3>Calculus I & II</h3>
+
+            <p>
+                Explore limits, continuity, differentiation,
+                integration and their practical applications.
+            </p>
+
+            <div class="resource-meta">
+                Mathematics • University Level
+            </div>
+
+            <a href="./resources/calculus-1-2.pdf"
+               class="download-button disabled"
+               aria-disabled="true">
+                Coming Soon
+            </a>
+
+        </article>
+
+
+        <article class="resource-card" data-category="mathematics">
+
+            <div class="resource-icon">📊</div>
+
+            <h3>Linear Algebra</h3>
+
+            <p>
+                Understand matrices, determinants, vectors,
+                systems of equations and transformations.
+            </p>
+
+            <div class="resource-meta">
+                Mathematics • University Level
+            </div>
+
+            <a href="./resources/linear-algebra.pdf"
+               class="download-button disabled"
+               aria-disabled="true">
+                Coming Soon
+            </a>
+
+        </article>
+
+
+        <!-- COMPUTER SCIENCE -->
+
+        <article class="resource-card" data-category="computer-science">
+
+            <div class="resource-icon">💻</div>
+
+            <h3>Introduction to Programming</h3>
+
+            <p>
+                Understand programming concepts, variables,
+                data types, conditions, loops and functions.
+            </p>
+
+            <div class="resource-meta">
+                Computer Science • Beginner
+            </div>
+
+            <a href="./resources/introduction-to-programming.pdf"
+               class="download-button disabled"
+               aria-disabled="true">
+                Coming Soon
+            </a>
+
+        </article>
+
+
+        <article class="resource-card" data-category="computer-science">
+
+            <div class="resource-icon">🗄️</div>
+
+            <h3>Database Management Systems</h3>
+
+            <p>
+                Study database concepts, SQL, relational models,
+                normalization and database design.
+            </p>
+
+            <div class="resource-meta">
+                Computer Science • University Level
+            </div>
+
+            <a href="./resources/database-management.pdf"
+               class="download-button disabled"
+               aria-disabled="true">
+                Coming Soon
+            </a>
+
+        </article>
+
+
+        <article class="resource-card" data-category="computer-science">
+
+            <div class="resource-icon">⚙️</div>
+
+            <h3>Data Structures and Algorithms</h3>
+
+            <p>
+                Learn arrays, linked lists, stacks, queues,
+                trees, sorting and searching algorithms.
+            </p>
+
+            <div class="resource-meta">
+                Computer Science • University Level
+            </div>
+
+            <a href="./resources/data-structures-algorithms.pdf"
+               class="download-button disabled"
+               aria-disabled="true">
+                Coming Soon
+            </a>
+
+        </article>
+
+
+        <!-- STATISTICS -->
+
+        <article class="resource-card" data-category="statistics">
+
+            <div class="resource-icon">📈</div>
+
+            <h3>Probability Theory</h3>
+
+            <p>
+                Explore probability rules, random variables,
+                distributions and probability calculations.
+            </p>
+
+            <div class="resource-meta">
+                Statistics • University Level
+            </div>
+
+            <a href="./resources/probability-theory.pdf"
+               class="download-button disabled"
+               aria-disabled="true">
+                Coming Soon
+            </a>
+
+        </article>
+
+
+        <article class="resource-card" data-category="statistics">
+
+            <div class="resource-icon">📉</div>
+
+            <h3>Descriptive Statistics</h3>
+
+            <p>
+                Understand data collection, frequency tables,
+                mean, median, mode, variance and standard deviation.
+            </p>
+
+            <div class="resource-meta">
+                Statistics • Beginner
+            </div>
+
+            <a href="./resources/descriptive-statistics.pdf"
+               class="download-button disabled"
+               aria-disabled="true">
+                Coming Soon
+            </a>
+
+        </article>
+
+
+        <!-- ENGINEERING -->
+
+        <article class="resource-card" data-category="engineering">
+
+            <div class="resource-icon">🏗️</div>
+
+            <h3>Engineering Mathematics</h3>
+
+            <p>
+                Study mathematical methods used in engineering,
+                including calculus, vectors and differential equations.
+            </p>
+
+            <div class="resource-meta">
+                Engineering • University Level
+            </div>
+
+            <a href="./resources/engineering-mathematics.pdf"
+               class="download-button disabled"
+               aria-disabled="true">
+                Coming Soon
+            </a>
+
+        </article>
+
+
+        <!-- ECONOMICS -->
+
+        <article class="resource-card" data-category="economics">
+
+            <div class="resource-icon">💹</div>
+
+            <h3>Mathematical Economics</h3>
+
+            <p>
+                Learn economic models, functions, equations,
+                optimization and quantitative analysis.
+            </p>
+
+            <div class="resource-meta">
+                Economics • University Level
+            </div>
+
+            <a href="./resources/mathematical-economics.pdf"
+               class="download-button disabled"
+               aria-disabled="true">
+                Coming Soon
+            </a>
+
+        </article>
+
+
+        <!-- BUSINESS -->
+
+        <article class="resource-card" data-category="business">
+
+            <div class="resource-icon">📚</div>
+
+            <h3>Business Mathematics</h3>
+
+            <p>
+                Understand percentages, interest, profit and loss,
+                financial calculations and business applications.
+            </p>
+
+            <div class="resource-meta">
+                Business • Beginner
+            </div>
+
+            <a href="./resources/business-mathematics.pdf"
+               class="download-button disabled"
+               aria-disabled="true">
+                Coming Soon
+            </a>
+
+        </article>
+
+
+    </div>
+
+
+    <div class="empty-message" id="emptyMessage">
+        No study materials match your search.
+        Try another keyword or category.
+    </div>
+
+
+    <div class="library-note">
+        <strong>📌 About Offline Learning</strong><br><br>
+
+        Downloadable materials will be provided as PDF documents.
+        Once downloaded to your device, you can open and read them
+        without an internet connection.
+
+        New subjects and study materials will be added progressively.
+    </div>
+
+</main>
+
+
+<script>
+
+    const searchInput = document.getElementById("resourceSearch");
+
+    const categoryButtons =
+        document.querySelectorAll(".category-buttons button");
+
+    const resourceCards =
+        document.querySelectorAll(".resource-card");
+
+    const emptyMessage =
+        document.getElementById("emptyMessage");
+
+    let selectedCategory = "all";
+
+
+    function filterResources() {
+
+        const searchText = searchInput.value.toLowerCase().trim();
+
+        let visibleCount = 0;
+
+        resourceCards.forEach(card => {
+
+            const category = card.dataset.category;
+
+            const content = card.textContent.toLowerCase();
+
+            const matchesCategory =
+                selectedCategory === "all" ||
+                category === selectedCategory;
+
+            const matchesSearch =
+                content.includes(searchText);
+
+            if (matchesCategory && matchesSearch) {
+
+                card.style.display = "";
+
+                visibleCount++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+        emptyMessage.style.display =
+            visibleCount === 0 ? "block" : "none";
+
+    }
+
+
+    categoryButtons.forEach(button => {
+
+        button.addEventListener("click", function() {
+
+            categoryButtons.forEach(btn =>
+                btn.classList.remove("active")
+            );
+
+            this.classList.add("active");
+
+            selectedCategory = this.dataset.category;
+
+            filterResources();
+
+        });
+
+    });
+
+
+    searchInput.addEventListener("input", filterResources);
+
+</script>
+
+</body>
+</html>
