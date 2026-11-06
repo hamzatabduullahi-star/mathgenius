@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Learning Centre | MathGenius</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #080e1d;
+    --card: #111c32;
+    --card2: #152440;
+    --blue: #4388ff;
+    --purple: #9565ff;
+    --cyan: #32d4e7;
+    --text: #f3f6ff;
+    --muted: #9aaac5;
+    --border: rgba(255,255,255,.09);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar {
+    min-height: 75px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: #0b1426;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--blue);
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.nav-button {
+    background: var(--blue);
+    color: white;
+    padding: 11px 17px;
+    border-radius: 9px;
+    font-weight: 700;
+}
+
+.hero {
+    padding: 75px 7% 65px;
+    background:
+    radial-gradient(circle at 85% 20%, rgba(67,136,255,.18), transparent 35%),
+    radial-gradient(circle at 10% 80%, rgba(149,101,255,.13), transparent 35%),
+    #0c172c;
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.badge {
+    display: inline-block;
+    color: #8dc6ff;
+    background: rgba(67,136,255,.13);
+    border: 1px solid rgba(67,136,255,.25);
+    padding: 9px 14px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 23px;
+}
+
+.hero h1 {
+    font-size: clamp(32px, 6vw, 55px);
+    line-height: 1.17;
+    margin-bottom: 20px;
+    letter-spacing: -1.5px;
+}
+
+.hero h1 span {
+    background: linear-gradient(90deg, #4388ff, #b28aff, #32d4e7);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.9;
+    max-width: 650px;
+}
+
+.search-area {
+    display: flex;
+    gap: 10px;
+    max-width: 650px;
+    margin-top: 30px;
+}
+
+.search-area input {
+    flex: 1;
+    min-width: 0;
+    padding: 16px;
+    background: #111f38;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: white;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-area input:focus {
+    border-color: var(--blue);
+}
+
+.search-area button {
+    padding: 0 22px;
+    border: none;
+    border-radius: 10px;
+    background: var(--blue);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.container {
+    padding: 55px 7%;
+}
+
+.section-heading {
+    margin-bottom: 25px;
+}
+
+.section-heading h2 {
+    font-size: 24px;
+    margin-bottom: 9px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.institution-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.institution-card {
+    background: linear-gradient(145deg, #152642, #101a2e);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 25px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.institution-card:hover,
+.programme-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--blue);
+}
+
+.institution-icon {
+    font-size: 30px;
+    margin-bottom: 18px;
+}
+
+.institution-card h3 {
+    font-size: 17px;
+    margin-bottom: 9px;
+}
+
+.institution-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.institution-card button {
+    margin-top: 18px;
+    background: transparent;
+    border: none;
+    color: #75aaff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.filter-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.filter-btn {
+    background: #14213a;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 25px;
+    padding: 10px 17px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.filter-btn.active {
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue);
+}
+
+.programme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 17px;
+}
+
+.programme-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    transition: .25s;
+}
+
+.programme-icon {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    background: rgba(67,136,255,.13);
+    border-radius: 12px;
+    font-size: 22px;
+    margin-bottom: 18px;
+}
+
+.programme-card h3 {
+    font-size: 15px;
+    margin-bottom: 9px;
+}
+
+.programme-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    min-height: 42px;
+}
+
+.programme-tag {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 6px 9px;
+    background: rgba(50,212,231,.09);
+    color: var(--cyan);
+    border-radius: 5px;
+    font-size: 10px;
+}
+
+.programme-card a {
+    display: block;
+    margin-top: 19px;
+    color: #80aaff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.no-results {
+    display: none;
+    color: var(--muted);
+    text-align: center;
+    padding: 35px;
+    grid-column: 1 / -1;
+}
+
+.info-box {
+    margin-top: 55px;
+    padding: 30px;
+    border: 1px solid rgba(67,136,255,.2);
+    border-radius: 16px;
+    background: linear-gradient(120deg, rgba(67,136,255,.12), rgba(149,101,255,.09));
+}
+
+.info-box h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.info-box p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.9;
+}
+
+.footer {
+    border-top: 1px solid var(--border);
+    padding: 30px 7%;
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+}
+
+@media(max-width: 850px) {
+    .programme-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .institution-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width: 550px) {
+    .navbar {
+        padding: 0 5%;
+        min-height: 65px;
+    }
+
+    .nav-links {
+        gap: 12px;
+        font-size: 11px;
+    }
+
+    .nav-links a:not(.nav-button) {
+        display: none;
+    }
+
+    .hero {
+        padding: 55px 6%;
+    }
+
+    .container {
+        padding: 42px 6%;
+    }
+
+    .search-area {
+        flex-direction: column;
+    }
+
+    .search-area button {
+        padding: 15px;
+    }
+
+    .programme-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .programme-card p {
+        min-height: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+        Math<span>Genius</span>
+    </a>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#programmes">Programmes</a>
+        <a href="#institutions">Institutions</a>
+        <a href="dashboard.html" class="nav-button">Dashboard</a>
+    </div>
+
+</nav>
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <span class="badge">📚 MATHGENIUS ACADEMIC LEARNING CENTRE</span>
+
+        <h1>
+            Learn More.<br>
+            Understand Better.<br>
+            <span>Achieve More.</span>
+        </h1>
+
+        <p>
+            Explore academic courses, understand difficult mathematical
+            concepts, study detailed textbook-style lessons and improve
+            your knowledge with practical examples and exercises.
+            Designed for university, polytechnic and college students.
+        </p>
+
+        <div class="search-area">
+            <input
+                type="text"
+                id="programmeSearch"
+                placeholder="Search programmes, e.g. Computer Science..."
+            >
+
+            <button onclick="searchProgrammes()">Search</button>
+        </div>
+
+    </div>
+
+</header>
+
+
+<section class="container" id="institutions">
+
+    <div class="section-heading">
+        <h2>Choose Your Institution</h2>
+
+        <p>
+            Select the type of higher institution you attend.
+        </p>
+    </div>
+
+    <div class="institution-grid">
+
+        <div class="institution-card"
+             onclick="selectInstitution('University')">
+
+            <div class="institution-icon">🏛️</div>
+
+            <h3>University</h3>
+
+            <p>
+                Undergraduate and postgraduate academic programmes
+                with comprehensive course materials.
+            </p>
+
+            <button>Explore University →</button>
+
+        </div>
+
+
+        <div class="institution-card"
+             onclick="selectInstitution('Polytechnic')">
+
+            <div class="institution-icon">🎓</div>
+
+            <h3>Polytechnic</h3>
+
+            <p>
+                National Diploma and Higher National Diploma
+                programmes and technical courses.
+            </p>
+
+            <button>Explore Polytechnic →</button>
+
+        </div>
+
+
+        <div class="institution-card"
+             onclick="selectInstitution('College of Education')">
+
+            <div class="institution-icon">📖</div>
+
+            <h3>College of Education</h3>
+
+            <p>
+                NCE and degree programmes covering mathematics,
+                sciences, education and related disciplines.
+            </p>
+
+            <button>Explore College →</button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="container" id="programmes">
+
+    <div class="section-heading">
+
+        <h2>Explore Academic Programmes</h2>
+
+        <p>
+            Mathematics is connected to many academic disciplines.
+            Find your programme and discover the courses you need.
+        </p>
+
+    </div>
+
+
+    <div class="filter-area">
+
+        <button class="filter-btn active"
+                onclick="filterProgrammes('All', this)">
+            All Programmes
+        </button>
+
+        <button class="filter-btn"
+                onclick="filterProgrammes('Computing', this)">
+            Computing
+        </button>
+
+        <button class="filter-btn"
+                onclick="filterProgrammes('Engineering', this)">
+            Engineering
+        </button>
+
+        <button class="filter-btn"
+                onclick="filterProgrammes('Science', this)">
+            Sciences
+        </button>
+
+        <button class="filter-btn"
+                onclick="filterProgrammes('Business', this)">
+            Business
+        </button>
+
+        <button class="filter-btn"
+                onclick="filterProgrammes('Environment', this)">
+            Environment
+        </button>
+
+        <button class="filter-btn"
+                onclick="filterProgrammes('Health', this)">
+            Health
+        </button>
+
+        <button class="filter-btn"
+                onclick="filterProgrammes('Education', this)">
+            Education
+        </button>
+
+    </div>
+
+
+    <div class="programme-grid" id="programmeGrid">
+
+        <div class="programme-card" data-category="Computing">
+            <div class="programme-icon">💻</div>
+            <h3>Computer Science</h3>
+            <p>Programming, algorithms, discrete mathematics, logic and computational methods.</p>
+            <span class="programme-tag">Computing & Technology</span>
+            <a href="courses.html?programme=Computer%20Science">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Computing">
+            <div class="programme-icon">⚙️</div>
+            <h3>Software Engineering</h3>
+            <p>Software development, algorithms, mathematical modelling and computational logic.</p>
+            <span class="programme-tag">Computing & Technology</span>
+            <a href="courses.html?programme=Software%20Engineering">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Computing">
+            <div class="programme-icon">📊</div>
+            <h3>Data Science</h3>
+            <p>Statistics, probability, linear algebra, calculus and data analysis.</p>
+            <span class="programme-tag">Computing & Technology</span>
+            <a href="courses.html?programme=Data%20Science">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Computing">
+            <div class="programme-icon">🔐</div>
+            <h3>Cybersecurity</h3>
+            <p>Cryptography, discrete mathematics, number theory and computational reasoning.</p>
+            <span class="programme-tag">Computing & Technology</span>
+            <a href="courses.html?programme=Cybersecurity">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Computing">
+            <div class="programme-icon">🌐</div>
+            <h3>Information Technology</h3>
+            <p>Computing principles, statistics, networking and quantitative methods.</p>
+            <span class="programme-tag">Computing & Technology</span>
+            <a href="courses.html?programme=Information%20Technology">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Engineering">
+            <div class="programme-icon">🏗️</div>
+            <h3>Civil Engineering</h3>
+            <p>Calculus, structural analysis, mechanics and engineering mathematics.</p>
+            <span class="programme-tag">Engineering</span>
+            <a href="courses.html?programme=Civil%20Engineering">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Engineering">
+            <div class="programme-icon">🔩</div>
+            <h3>Mechanical Engineering</h3>
+            <p>Calculus, differential equations, mechanics and numerical methods.</p>
+            <span class="programme-tag">Engineering</span>
+            <a href="courses.html?programme=Mechanical%20Engineering">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Engineering">
+            <div class="programme-icon">⚡</div>
+            <h3>Electrical Engineering</h3>
+            <p>Complex numbers, circuit analysis, calculus and differential equations.</p>
+            <span class="programme-tag">Engineering</span>
+            <a href="courses.html?programme=Electrical%20Engineering">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Engineering">
+            <div class="programme-icon">🛢️</div>
+            <h3>Petroleum Engineering</h3>
+            <p>Fluid mechanics, calculus, numerical analysis and mathematical modelling.</p>
+            <span class="programme-tag">Engineering</span>
+            <a href="courses.html?programme=Petroleum%20Engineering">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Science">
+            <div class="programme-icon">🔬</div>
+            <h3>Physics</h3>
+            <p>Calculus, vectors, mechanics, mathematical physics and differential equations.</p>
+            <span class="programme-tag">Physical Sciences</span>
+            <a href="courses.html?programme=Physics">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Science">
+            <div class="programme-icon">📈</div>
+            <h3>Statistics</h3>
+            <p>Probability, statistical inference, regression and mathematical statistics.</p>
+            <span class="programme-tag">Physical Sciences</span>
+            <a href="courses.html?programme=Statistics">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Science">
+            <div class="programme-icon">🧪</div>
+            <h3>Chemistry</h3>
+            <p>Quantitative chemistry, logarithms, calculus and chemical calculations.</p>
+            <span class="programme-tag">Physical Sciences</span>
+            <a href="courses.html?programme=Chemistry">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Business">
+            <div class="programme-icon">💰</div>
+            <h3>Economics</h3>
+            <p>Statistics, calculus, optimisation, econometrics and quantitative analysis.</p>
+            <span class="programme-tag">Business & Management</span>
+            <a href="courses.html?programme=Economics">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Business">
+            <div class="programme-icon">🧾</div>
+            <h3>Accounting</h3>
+            <p>Business mathematics, financial mathematics, statistics and quantitative methods.</p>
+            <span class="programme-tag">Business & Management</span>
+            <a href="courses.html?programme=Accounting">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Business">
+            <div class="programme-icon">🏦</div>
+            <h3>Banking & Finance</h3>
+            <p>Interest calculations, financial mathematics, statistics and investment analysis.</p>
+            <span class="programme-tag">Business & Management</span>
+            <a href="courses.html?programme=Banking%20and%20Finance">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Environment">
+            <div class="programme-icon">📐</div>
+            <h3>Architecture</h3>
+            <p>Geometry, measurements, trigonometry, structural mathematics and design calculations.</p>
+            <span class="programme-tag">Environmental Sciences</span>
+            <a href="courses.html?programme=Architecture">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Environment">
+            <div class="programme-icon">📏</div>
+            <h3>Quantity Surveying</h3>
+            <p>Measurements, statistics, financial mathematics and cost estimation.</p>
+            <span class="programme-tag">Environmental Sciences</span>
+            <a href="courses.html?programme=Quantity%20Surveying">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Environment">
+            <div class="programme-icon">🗺️</div>
+            <h3>Surveying & Geoinformatics</h3>
+            <p>Trigonometry, coordinate geometry, statistics and computational methods.</p>
+            <span class="programme-tag">Environmental Sciences</span>
+            <a href="courses.html?programme=Surveying">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Health">
+            <div class="programme-icon">🧬</div>
+            <h3>Biochemistry</h3>
+            <p>Statistics, logarithms, chemical calculations and quantitative analysis.</p>
+            <span class="programme-tag">Biological Sciences</span>
+            <a href="courses.html?programme=Biochemistry">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Health">
+            <div class="programme-icon">🦠</div>
+            <h3>Microbiology</h3>
+            <p>Biostatistics, probability, data analysis and laboratory calculations.</p>
+            <span class="programme-tag">Biological Sciences</span>
+            <a href="courses.html?programme=Microbiology">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Health">
+            <div class="programme-icon">🏥</div>
+            <h3>Public Health</h3>
+            <p>Biostatistics, epidemiology, probability and health data analysis.</p>
+            <span class="programme-tag">Health Sciences</span>
+            <a href="courses.html?programme=Public%20Health">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Education">
+            <div class="programme-icon">👨‍🏫</div>
+            <h3>Mathematics Education</h3>
+            <p>Mathematical concepts, teaching methods, algebra and educational assessment.</p>
+            <span class="programme-tag">Education</span>
+            <a href="courses.html?programme=Mathematics%20Education">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Education">
+            <div class="programme-icon">🖥️</div>
+            <h3>Computer Science Education</h3>
+            <p>Computing, logic, programming, discrete mathematics and educational technology.</p>
+            <span class="programme-tag">Education</span>
+            <a href="courses.html?programme=Computer%20Science%20Education">Explore Programme →</a>
+        </div>
+
+        <div class="programme-card" data-category="Education">
+            <div class="programme-icon">📚</div>
+            <h3>Physics Education</h3>
+            <p>Mechanics, vectors, mathematical physics and science education.</p>
+            <span class="programme-tag">Education</span>
+            <a href="courses.html?programme=Physics%20Education">Explore Programme →</a>
+        </div>
+
+        <div class="no-results" id="noResults">
+            No matching programme found. Try another search.
+        </div>
+
+    </div>
+
+
+    <div class="info-box">
+
+        <h2>🎯 Your Academic Journey Starts Here</h2>
+
+        <p>
+            MathGenius aims to make mathematics easier to understand
+            across different academic disciplines. Every programme
+            will have relevant courses, organised topics, detailed
+            definitions, mathematical formulas, worked examples,
+            practice questions and learning resources.
+            Our course catalogue will expand as more academic
+            programmes are introduced.
+        </p>
+
+    </div>
+
+</section>
+
+
+<footer class="footer">
+
+    <p>
+        © 2026 MathGenius. Solve Smarter. Learn Better.
+    </p>
+
+    <p style="margin-top:8px;">
+        A smarter approach to academic mathematics.
+    </p>
+
+</footer>
+
+
+<script>
+
+let selectedInstitution = "All";
+let selectedCategory = "All";
+
+function selectInstitution(institution) {
+
+    selectedInstitution = institution;
+
+    document.getElementById("programmes").scrollIntoView({
+        behavior: "smooth"
+    });
+
+    alert(
+        institution +
+        " selected. Programme-specific course organisation will be available in the next stage."
+    );
+}
+
+
+function filterProgrammes(category, button) {
+
+    selectedCategory = category;
+
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    searchProgrammes();
+}
+
+
+function searchProgrammes() {
+
+    const search = document
+        .getElementById("programmeSearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const cards = document.querySelectorAll(".programme-card");
+
+    let visible = 0;
+
+    cards.forEach(card => {
+
+        const category = card.dataset.category;
+
+        const text = card.innerText.toLowerCase();
+
+        const categoryMatch =
+            selectedCategory === "All" ||
+            category === selectedCategory;
+
+        const searchMatch = text.includes(search);
+
+        if (categoryMatch && searchMatch) {
+
+            card.style.display = "block";
+            visible++;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+    document.getElementById("noResults").style.display =
+        visible === 0 ? "block" : "none";
+}
+
+
+document
+    .getElementById("programmeSearch")
+    .addEventListener("input", searchProgrammes);
+
+</script>
+
+</body>
+</html>
