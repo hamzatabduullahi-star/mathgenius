@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d1c">
+    <title>My Notes | MathGenius</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #080d1c;
+            color: #f4f6ff;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 6%;
+            background: #0d1427;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #6d91ff;
+        }
+
+        header a.back {
+            color: #91aaff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+            padding: 35px 20px 60px;
+        }
+
+        .intro {
+            padding: 30px;
+            border-radius: 18px;
+            background: linear-gradient(120deg, #142747, #191c40);
+            border: 1px solid rgba(109,145,255,0.2);
+            margin-bottom: 30px;
+        }
+
+        .intro h1 {
+            font-size: 32px;
+            margin: 0 0 12px;
+        }
+
+        .intro p {
+            color: #aab6ce;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .course-info {
+            margin-top: 18px;
+            color: #8ba8ff;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .notes-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .panel {
+            background: #111a30;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 17px;
+            padding: 25px;
+            min-width: 0;
+        }
+
+        .panel h2 {
+            font-size: 21px;
+            margin: 0 0 20px;
+        }
+
+        label {
+            display: block;
+            color: #b5c1d9;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 17px;
+            background: #080f21;
+            border: 1px solid #293957;
+            border-radius: 9px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #6d91ff;
+        }
+
+        textarea {
+            min-height: 190px;
+            resize: vertical;
+            line-height: 1.7;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 9px;
+            padding: 12px 17px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .save-btn {
+            background: #557cff;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #4168e8;
+        }
+
+        .cancel-btn {
+            background: #26344f;
+            color: white;
+            margin-left: 7px;
+        }
+
+        .search-box {
+            margin-bottom: 15px;
+        }
+
+        .note-list {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .note-card {
+            padding: 17px;
+            background: #0b1429;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 12px;
+        }
+
+        .note-card h3 {
+            font-size: 16px;
+            margin: 0 0 9px;
+            overflow-wrap: anywhere;
+        }
+
+        .note-card p {
+            color: #aab6ce;
+            font-size: 13px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            margin: 0 0 12px;
+        }
+
+        .note-date {
+            color: #7486a8;
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .edit-btn {
+            background: rgba(71,118,255,0.17);
+            color: #91aaff;
+        }
+
+        .delete-btn {
+            background: rgba(255,70,70,0.12);
+            color: #ff9999;
+        }
+
+        .empty-state {
+            color: #8493af;
+            text-align: center;
+            padding: 35px 10px;
+            line-height: 1.7;
+        }
+
+        .message {
+            font-size: 13px;
+            margin-top: 12px;
+            color: #79e3b1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #8995ad;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            font-size: 13px;
+        }
+
+        @media(max-width: 750px) {
+            .notes-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .intro h1 {
+                font-size: 26px;
+            }
+
+            main {
+                padding: 25px 15px 45px;
+            }
+
+            .panel {
+                padding: 20px;
+            }
+        }
+
+        @media(max-width: 400px) {
+            header {
+                padding: 16px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .intro {
+                padding: 23px 19px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a href="dashboard.html" class="logo">
+        Math<span>Genius</span>
+    </a>
+
+    <a href="learning.html" class="back">
+        ← Learning Centre
+    </a>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h1>📝 My Study Notes</h1>
+
+        <p>
+            Your personal academic notebook.
+            Write down important definitions, formulas,
+            explanations and ideas while studying.
+        </p>
+
+        <div class="course-info" id="courseInfo">
+            General Study Notes
+        </div>
+    </section>
+
+    <div class="notes-layout">
+
+        <!-- NOTE EDITOR -->
+
+        <section class="panel">
+
+            <h2 id="formHeading">Create a Note</h2>
+
+            <form id="noteForm">
+
+                <label for="noteTitle">Note Title</label>
+
+                <input
+                    type="text"
+                    id="noteTitle"
+                    placeholder="e.g. Introduction to Algebra"
+                    maxlength="100"
+                    required
+                >
+
+                <label for="noteTopic">Topic (Optional)</label>
+
+                <input
+                    type="text"
+                    id="noteTopic"
+                    placeholder="e.g. Linear Equations"
+                    maxlength="100"
+                >
+
+                <label for="noteContent">Your Notes</label>
+
+                <textarea
+                    id="noteContent"
+                    placeholder="Write your study notes here..."
+                    required
+                ></textarea>
+
+                <button type="submit" class="save-btn" id="saveButton">
+                    Save Note
+                </button>
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    id="cancelButton"
+                    hidden
+                >
+                    Cancel
+                </button>
+
+                <div class="message" id="message"></div>
+
+            </form>
+
+        </section>
+
+        <!-- SAVED NOTES -->
+
+        <section class="panel">
+
+            <h2>My Saved Notes</h2>
+
+            <input
+                type="search"
+                id="searchNotes"
+                class="search-box"
+                placeholder="Search your notes..."
+            >
+
+            <div class="note-list" id="noteList"></div>
+
+        </section>
+
+    </div>
+
+</main>
+
+<footer>
+    © 2026 MathGenius. Solve Smarter. Learn Better.
+</footer>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+
+    const programme = params.get("programme") || "General";
+    const courseCode = params.get("code") || "";
+    const courseName = params.get("course") || "General Study Notes";
+    const topicFromUrl = params.get("topic") || "";
+
+    const STORAGE_KEY = "mathgenius_personal_notes_v1";
+
+    const noteForm = document.getElementById("noteForm");
+    const noteTitle = document.getElementById("noteTitle");
+    const noteTopic = document.getElementById("noteTopic");
+    const noteContent = document.getElementById("noteContent");
+    const noteList = document.getElementById("noteList");
+    const searchNotes = document.getElementById("searchNotes");
+    const saveButton = document.getElementById("saveButton");
+    const cancelButton = document.getElementById("cancelButton");
+    const message = document.getElementById("message");
+
+    let notes = [];
+    let editingId = null;
+
+    document.getElementById("courseInfo").textContent =
+        programme + " | " +
+        (courseCode ? courseCode + " | " : "") +
+        courseName;
+
+    noteTopic.value = topicFromUrl;
+
+    function loadNotes() {
+        try {
+            const saved = JSON.parse(
+                localStorage.getItem(STORAGE_KEY) || "[]"
+            );
+
+            notes = Array.isArray(saved) ? saved : [];
+        } catch (error) {
+            notes = [];
+        }
+    }
+
+    function saveNotes() {
+        try {
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(notes)
+            );
+        } catch (error) {
+            alert("Unable to save notes. Your browser storage may be full.");
+        }
+    }
+
+    function getCourseNotes() {
+        return notes.filter(note =>
+            note.programme === programme &&
+            note.courseCode === courseCode &&
+            note.courseName === courseName
+        );
+    }
+
+    function resetForm() {
+        noteForm.reset();
+        noteTopic.value = topicFromUrl;
+        editingId = null;
+
+        document.getElementById("formHeading").textContent =
+            "Create a Note";
+
+        saveButton.textContent = "Save Note";
+        cancelButton.hidden = true;
+        message.textContent = "";
+    }
+
+    noteForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const title = noteTitle.value.trim();
+        const topic = noteTopic.value.trim();
+        const content = noteContent.value.trim();
+
+        if (!title || !content) {
+            alert("Please enter a note title and content.");
+            return;
+        }
+
+        if (editingId !== null) {
+
+            const note = notes.find(item => item.id === editingId);
+
+            if (note) {
+                note.title = title;
+                note.topic = topic;
+                note.content = content;
+                note.updatedAt = new Date().toISOString();
+            }
+
+            message.textContent = "Your note has been updated.";
+
+        } else {
+
+            notes.unshift({
+                id: Date.now().toString() + Math.random().toString(16).slice(2),
+                programme: programme,
+                courseCode: courseCode,
+                courseName: courseName,
+                title: title,
+                topic: topic,
+                content: content,
+                createdAt: new Date().toISOString(),
+                updatedAt: null
+            });
+
+            message.textContent = "Your note has been saved.";
+        }
+
+        saveNotes();
+        renderNotes();
+        resetForm();
+    });
+
+    function formatDate(dateString) {
+        return new Date(dateString).toLocaleString();
+    }
+
+    function renderNotes() {
+        const query = searchNotes.value.trim().toLowerCase();
+
+        const filteredNotes = getCourseNotes().filter(note => {
+            return (
+                note.title.toLowerCase().includes(query) ||
+                note.topic.toLowerCase().includes(query) ||
+                note.content.toLowerCase().includes(query)
+            );
+        });
+
+        noteList.innerHTML = "";
+
+        if (filteredNotes.length === 0) {
+            noteList.innerHTML = `
+                <div class="empty-state">
+                    No notes found.<br>
+                    Create your first study note!
+                </div>
+            `;
+            return;
+        }
+
+        filteredNotes.forEach(note => {
+
+            const card = document.createElement("article");
+            card.className = "note-card";
+
+            const title = document.createElement("h3");
+            title.textContent = note.title;
+
+            const topic = document.createElement("div");
+            topic.className = "note-date";
+            topic.textContent = note.topic
+                ? "Topic: " + note.topic
+                : "General note";
+
+            const content = document.createElement("p");
+            content.textContent = note.content;
+
+            const date = document.createElement("div");
+            date.className = "note-date";
+            date.textContent = "Saved: " + formatDate(note.updatedAt || note.createdAt);
+
+            const actions = document.createElement("div");
+            actions.className = "note-actions";
+
+            const editButton = document.createElement("button");
+            editButton.className = "edit-btn";
+            editButton.textContent = "Edit";
+            editButton.addEventListener("click", () => editNote(note.id));
+
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "delete-btn";
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener("click", () => deleteNote(note.id));
+
+            actions.append(editButton, deleteButton);
+            card.append(title, topic, content, date, actions);
+
+            noteList.appendChild(card);
+        });
+    }
+
+    function editNote(id) {
+        const note = notes.find(item => item.id === id);
+
+        if (!note) return;
+
+        editingId = id;
+
+        noteTitle.value = note.title;
+        noteTopic.value = note.topic;
+        noteContent.value = note.content;
+
+        document.getElementById("formHeading").textContent =
+            "Edit Your Note";
+
+        saveButton.textContent = "Update Note";
+        cancelButton.hidden = false;
+
+        message.textContent = "";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+    function deleteNote(id) {
+        if (!confirm("Are you sure you want to delete this note?")) {
+            return;
+        }
+
+        notes = notes.filter(note => note.id !== id);
+
+        saveNotes();
+        renderNotes();
+
+        if (editingId === id) {
+            resetForm();
+        }
+    }
+
+    cancelButton.addEventListener("click", resetForm);
+
+    searchNotes.addEventListener("input", renderNotes);
+
+    loadNotes();
+    renderNotes();
+</script>
+
+</body>
+</html>
