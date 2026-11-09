@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1c">
+<title>NEXUS | MathGenius</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --nx-bg: #080d1c;
+    --nx-panel: rgba(17,26,48,.82);
+    --nx-panel-hover: #172542;
+    --nx-border: rgba(255,255,255,.09);
+    --nx-blue: #4776ff;
+    --nx-purple: #9b6dff;
+    --nx-cyan: #45d7ff;
+    --nx-text: #f4f6ff;
+    --nx-muted: #9caac5;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at 10% 5%, rgba(71,118,255,.13), transparent 35%),
+        radial-gradient(ellipse at 90% 35%, rgba(155,109,255,.10), transparent 35%),
+        var(--nx-bg);
+    color: var(--nx-text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+body[data-theme="purple"] {
+    --nx-blue: #9b6dff;
+    --nx-purple: #e16dff;
+    --nx-cyan: #b69aff;
+}
+
+body[data-theme="cyan"] {
+    --nx-blue: #00a9d6;
+    --nx-purple: #4776ff;
+    --nx-cyan: #45e5ff;
+}
+
+body[data-theme="emerald"] {
+    --nx-blue: #13b981;
+    --nx-purple: #36cfa0;
+    --nx-cyan: #7df5c4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, input {
+    font-family: inherit;
+}
+
+.nx-glow {
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: .12;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.nx-glow.one {
+    background: var(--nx-blue);
+    top: 100px;
+    left: -180px;
+}
+
+.nx-glow.two {
+    background: var(--nx-purple);
+    right: -180px;
+    bottom: 50px;
+}
+
+/* NAVIGATION */
+
+.nx-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,13,28,.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--nx-border);
+}
+
+.nx-nav-inner {
+    max-width: 1400px;
+    width: 94%;
+    min-height: 76px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.nx-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.nx-brand-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: linear-gradient(135deg,var(--nx-blue),var(--nx-purple));
+    box-shadow: 0 0 25px rgba(71,118,255,.3);
+    font-size: 23px;
+}
+
+.nx-brand span {
+    color: var(--nx-cyan);
+}
+
+.nx-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nx-nav-links a {
+    color: var(--nx-muted);
+    font-size: 13px;
+    padding: 10px 13px;
+    border-radius: 9px;
+    transition: .25s;
+}
+
+.nx-nav-links a:hover,
+.nx-nav-links a.active {
+    color: white;
+    background: rgba(71,118,255,.16);
+}
+
+.nx-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nx-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg,var(--nx-blue),var(--nx-purple));
+    color: white;
+    font-weight: 800;
+}
+
+.nx-menu {
+    display: none;
+    border: 1px solid var(--nx-border);
+    background: var(--nx-panel);
+    color: white;
+    padding: 9px 13px;
+    border-radius: 9px;
+    font-size: 20px;
+}
+
+/* MAIN */
+
+.nx-container {
+    width: min(1250px, 92%);
+    margin: auto;
+    padding: 38px 0 70px;
+}
+
+.nx-eyebrow {
+    color: var(--nx-cyan);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.nx-welcome {
+    position: relative;
+    overflow: hidden;
+    padding: 42px;
+    border-radius: 25px;
+    border: 1px solid var(--nx-border);
+    background:
+        radial-gradient(circle at 90% 20%, rgba(155,109,255,.2), transparent 35%),
+        linear-gradient(120deg,rgba(17,29,57,.97),rgba(13,20,42,.95));
+    box-shadow: 0 25px 70px rgba(0,0,0,.2);
+}
+
+.nx-welcome::after {
+    content: "∑";
+    position: absolute;
+    right: 55px;
+    top: -45px;
+    font-size: 220px;
+    font-family: 'Space Grotesk',sans-serif;
+    color: rgba(255,255,255,.035);
+    pointer-events: none;
+}
+
+.nx-welcome h1 {
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: clamp(30px,5vw,48px);
+    line-height: 1.2;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.nx-welcome h1 span {
+    background: linear-gradient(100deg,var(--nx-cyan),#a88aff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.nx-welcome p.description {
+    color: var(--nx-muted);
+    font-size: 14px;
+    max-width: 590px;
+    line-height: 1.8;
+}
+
+.nx-welcome-bottom {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.nx-date {
+    color: var(--nx-muted);
+    font-size: 12px;
+}
+
+.nx-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #65e7a6;
+    font-size: 11px;
+    padding: 7px 12px;
+    border-radius: 30px;
+    background: rgba(76,227,160,.09);
+    border: 1px solid rgba(76,227,160,.15);
+}
+
+.nx-status::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4ce3a0;
+    box-shadow: 0 0 10px #4ce3a0;
+}
+
+/* COMMAND CENTRE */
+
+.nx-command-section {
+    margin: 38px 0;
+}
+
+.nx-section-title {
+    margin-bottom: 18px;
+}
+
+.nx-section-title h2 {
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 23px;
+    margin-bottom: 5px;
+}
+
+.nx-section-title p {
+    color: var(--nx-muted);
+    font-size: 13px;
+}
+
+.nx-command-box {
+    position: relative;
+    padding: 8px;
+    border-radius: 17px;
+    background: linear-gradient(110deg,rgba(71,118,255,.35),rgba(155,109,255,.35));
+    box-shadow: 0 10px 35px rgba(71,118,255,.09);
+}
+
+.nx-command-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 12px;
+    background: #0d162b;
+    border-radius: 11px;
+}
+
+.nx-command-icon {
+    font-size: 22px;
+    padding: 0 5px;
+}
+
+.nx-command-inner input {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 5px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 14px;
+}
+
+.nx-command-inner input::placeholder {
+    color: #71809d;
+}
+
+.nx-command-inner button {
+    padding: 12px 19px;
+    border: none;
+    border-radius: 9px;
+    color: white;
+    font-weight: 800;
+    background: linear-gradient(110deg,var(--nx-blue),var(--nx-purple));
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.nx-command-hint {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 13px;
+}
+
+.nx-command-hint button {
+    color: var(--nx-muted);
+    border: 1px solid var(--nx-border);
+    background: rgba(255,255,255,.025);
+    padding: 7px 12px;
+    border-radius: 30px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.nx-command-hint button:hover {
+    color: white;
+    border-color: var(--nx-blue);
+}
+
+/* SECTION HEADINGS */
+
+.nx-section {
+    margin-top: 42px;
+}
+
+.nx-heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.nx-heading-row h2 {
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 22px;
+}
+
+.nx-heading-row p {
+    color: var(--nx-muted);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.nx-view-all {
+    color: var(--nx-cyan);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* TOOL CARDS */
+
+.nx-grid {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 16px;
+}
+
+.nx-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 195px;
+    padding: 21px;
+    border-radius: 17px;
+    background: var(--nx-panel);
+    border: 1px solid var(--nx-border);
+    transition: .3s ease;
+    backdrop-filter: blur(12px);
+}
+
+.nx-card:hover {
+    transform: translateY(-6px);
+    background: var(--nx-panel-hover);
+    border-color: rgba(109,145,255,.5);
+    box-shadow: 0 15px 40px rgba(0,0,0,.2);
+}
+
+.nx-card-icon {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: rgba(71,118,255,.15);
+    font-size: 23px;
+    margin-bottom: 17px;
+}
+
+.nx-card h3 {
+    font-size: 15px;
+    margin-bottom: 7px;
+}
+
+.nx-card p {
+    color: var(--nx-muted);
+    font-size: 11px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.nx-card > span {
+    color: var(--nx-cyan);
+    font-size: 11px;
+    font-weight: 800;
+    margin-top: auto;
+}
+
+.nx-card.featured {
+    background:
+        radial-gradient(circle at top right,rgba(0,220,255,.13),transparent 55%),
+        linear-gradient(135deg,#142747,#191c40);
+    border-color: rgba(91,163,255,.3);
+}
+
+/* WORKSPACE */
+
+.nx-workspace-grid {
+    display: grid;
+    grid-template-columns: 1.3fr .7fr;
+    gap: 17px;
+}
+
+.nx-panel {
+    min-width: 0;
+    padding: 24px;
+    border: 1px solid var(--nx-border);
+    background: var(--nx-panel);
+    border-radius: 18px;
+}
+
+.nx-panel h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.nx-panel-subtitle {
+    color: var(--nx-muted);
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.nx-activity {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(255,255,255,.055);
+}
+
+.nx-activity:last-child {
+    border-bottom: none;
+}
+
+.nx-activity-icon {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    background: rgba(71,118,255,.13);
+    border-radius: 11px;
+    font-size: 18px;
+}
+
+.nx-activity-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.nx-activity-info strong {
+    display: block;
+    font-size: 12px;
+}
+
+.nx-activity-info small {
+    color: var(--nx-muted);
+    font-size: 10px;
+}
+
+.nx-empty {
+    padding: 25px 10px;
+    text-align: center;
+    color: var(--nx-muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* PERSONALISATION */
+
+.nx-theme-options {
+    display: flex;
+    gap: 12px;
+    margin-top: 17px;
+}
+
+.nx-theme {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,.15);
+    cursor: pointer;
+    transition: .2s;
+}
+
+.nx-theme:hover,
+.nx-theme.selected {
+    outline: 2px solid white;
+    outline-offset: 3px;
+}
+
+.theme-blue {
+    background: linear-gradient(135deg,#4776ff,#9b6dff);
+}
+
+.theme-purple {
+    background: linear-gradient(135deg,#9b6dff,#e16dff);
+}
+
+.theme-cyan {
+    background: linear-gradient(135deg,#00a9d6,#45e5ff);
+}
+
+.theme-emerald {
+    background: linear-gradient(135deg,#13b981,#7df5c4);
+}
+
+.nx-theme-label {
+    color: var(--nx-muted);
+    font-size: 11px;
+    margin-top: 17px;
+}
+
+/* LEARNING CARD */
+
+.nx-learning-banner {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    padding: 30px;
+    margin-top: 20px;
+    border-radius: 19px;
+    border: 1px solid rgba(91,163,255,.3);
+    background:
+        radial-gradient(circle at 90% 50%,rgba(155,109,255,.2),transparent 40%),
+        linear-gradient(120deg,#142747,#191c40);
+}
+
+.nx-learning-banner h3 {
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 21px;
+    margin-bottom: 7px;
+}
+
+.nx-learning-banner p {
+    max-width: 560px;
+    color: var(--nx-muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.nx-learning-banner a {
+    flex-shrink: 0;
+    background: linear-gradient(110deg,var(--nx-blue),var(--nx-purple));
+    padding: 12px 18px;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* FOOTER */
+
+.nx-footer {
+    border-top: 1px solid var(--nx-border);
+    padding: 25px 15px;
+    text-align: center;
+    color: var(--nx-muted);
+    font-size: 11px;
+}
+
+/* LOGOUT */
+
+.nx-logout {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.nx-logout button {
+    color: #ffaaaa;
+    background: rgba(255,70,70,.08);
+    border: 1px solid rgba(255,100,100,.25);
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* COMMAND MESSAGE */
+
+.nx-message {
+    display: none;
+    margin-top: 12px;
+    padding: 12px 15px;
+    background: rgba(71,118,255,.1);
+    border: 1px solid rgba(71,118,255,.2);
+    color: #b9cbff;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+/* ANIMATION */
+
+.nx-animate {
+    animation: nxFade .7s ease both;
+}
+
+@keyframes nxFade {
+    from {
+        opacity: 0;
+        transform: translateY(17px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px) {
+    .nx-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    .nx-nav-links {
+        gap: 2px;
+    }
+
+    .nx-nav-links a {
+        padding: 9px;
+        font-size: 11px;
+    }
+}
+
+@media(max-width:700px) {
+    .nx-nav-inner {
+        min-height: 68px;
+        position: relative;
+    }
+
+    .nx-menu {
+        display: block;
+    }
+
+    .nx-nav-links {
+        display: none;
+        position: absolute;
+        top: 68px;
+        left: 0;
+        right: 0;
+        padding: 15px;
+        flex-direction: column;
+        align-items: stretch;
+        background: #101a31;
+        border: 1px solid var(--nx-border);
+        border-radius: 0 0 14px 14px;
+    }
+
+    .nx-nav-links.open {
+        display: flex;
+    }
+
+    .nx-nav-links a {
+        padding: 12px;
+        font-size: 13px;
+    }
+
+    .nx-container {
+        padding-top: 24px;
+    }
+
+    .nx-welcome {
+        padding: 28px 21px;
+    }
+
+    .nx-welcome::after {
+        right: -20px;
+        font-size: 150px;
+    }
+
+    .nx-welcome h1 {
+        font-size: 32px;
+    }
+
+    .nx-workspace-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nx-learning-banner {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media(max-width:480px) {
+    .nx-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nx-card {
+        min-height: 175px;
+    }
+
+    .nx-command-inner {
+        gap: 5px;
+    }
+
+    .nx-command-inner input {
+        font-size: 12px;
+    }
+
+    .nx-command-inner button {
+        padding: 11px 12px;
+        font-size: 11px;
+    }
+
+    .nx-heading-row h2 {
+        font-size: 19px;
+    }
+
+    .nx-panel {
+        padding: 19px;
+    }
+
+    .nx-welcome h1 {
+        font-size: 28px;
+    }
+
+    .nx-nav-right .nx-avatar {
+        width: 33px;
+        height: 33px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+</style>
+</head>
+
+<body data-theme="blue">
+
+<div class="nx-glow one"></div>
+<div class="nx-glow two"></div>
+
+<!-- NAVIGATION -->
+
+<header class="nx-nav">
+    <div class="nx-nav-inner">
+
+        <a href="nexus.html" class="nx-brand">
+            <div class="nx-brand-icon">∑</div>
+            <div>Math<span>Genius</span></div>
+        </a>
+
+        <nav class="nx-nav-links" id="nxNavLinks">
+            <a href="nexus.html" class="active">NEXUS</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="learning.html">Learning</a>
+            <a href="calculator.html">Calculator</a>
+            <a href="history.html">History</a>
+        </nav>
+
+        <div class="nx-nav-right">
+            <div class="nx-avatar" id="nxAvatar">M</div>
+            <button class="nx-menu" id="nxMenu" aria-label="Toggle navigation">☰</button>
+        </div>
+
+    </div>
+</header>
+
+<main class="nx-container">
+
+    <!-- WELCOME -->
+
+    <section class="nx-welcome nx-animate">
+
+        <p class="nx-eyebrow">MATHGENIUS NEXUS / PERSONAL COMMAND CENTRE</p>
+
+        <h1>
+            Welcome to your<br>
+            <span id="nxUserName">Mathematical Universe</span>
+        </h1>
+
+        <p class="description">
+            Your ideas, calculations, learning resources and mathematical
+            tools come together in one intelligent workspace.
+            Think beyond numbers. Explore beyond limits.
+        </p>
+
+        <div class="nx-welcome-bottom">
+            <span class="nx-status">Workspace Online</span>
+            <span class="nx-date" id="nxDate"></span>
+        </div>
+
+    </section>
+
+    <!-- COMMAND CENTRE -->
+
+    <section class="nx-command-section nx-animate">
+
+        <div class="nx-section-title">
+            <p class="nx-eyebrow">COMMAND INTERFACE</p>
+            <h2>What would you like to do?</h2>
+            <p>Search your workspace or enter a command.</p>
+        </div>
+
+        <div class="nx-command-box">
+
+            <div class="nx-command-inner">
+
+                <span class="nx-command-icon">⌘</span>
+
+                <input
+                    type="text"
+                    id="nxCommandInput"
+                    placeholder="Try 'Open Calculator' or 'Find Learning Centre'..."
+                    autocomplete="off"
+                >
+
+                <button id="nxCommandButton">Execute →</button>
+
+            </div>
+
+        </div>
+
+        <div class="nx-command-hint">
+            <button data-command="Open Calculator">Calculator</button>
+            <button data-command="Open Equation Solver">Equation Solver</button>
+            <button data-command="Open Learning Centre">Learning Centre</button>
+            <button data-command="Open Matrix">Matrix</button>
+            <button data-command="Open Statistics">Statistics</button>
+        </div>
+
+        <div class="nx-message" id="nxMessage" role="status"></div>
+
+    </section>
+
+    <!-- QUICK ACCESS -->
+
+    <section class="nx-section">
+
+        <div class="nx-heading-row">
+            <div>
+                <h2>Quick Access</h2>
+                <p>Your essential mathematical tools.</p>
+            </div>
+            <a href="dashboard.html" class="nx-view-all">Main Dashboard →</a>
+        </div>
+
+        <div class="nx-grid">
+
+            <a href="calculator.html" class="nx-card">
+                <div class="nx-card-icon">🧮</div>
+                <h3>Scientific Calculator</h3>
+                <p>Perform basic and advanced mathematical calculations.</p>
+                <span>Launch Calculator →</span>
+            </a>
+
+            <a href="solver.html" class="nx-card featured">
+                <div class="nx-card-icon">📐</div>
+                <h3>Equation Solver</h3>
+                <p>Explore equations and follow mathematical solutions.</p>
+                <span>Solve Equations →</span>
+            </a>
+
+            <a href="statistics.html" class="nx-card">
+                <div class="nx-card-icon">📊</div>
+                <h3>Statistics Lab</h3>
+                <p>Calculate statistical values and analyse numerical data.</p>
+                <span>Explore Statistics →</span>
+            </a>
+
+            <a href="matrix.html" class="nx-card">
+                <div class="nx-card-icon">🔢</div>
+                <h3>Matrix Laboratory</h3>
+                <p>Perform matrix operations and numerical transformations.</p>
+                <span>Open Matrix →</span>
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- PERSONAL WORKSPACE -->
+
+    <section class="nx-section">
+
+        <div class="nx-heading-row">
+            <div>
+                <h2>My Workspace</h2>
+                <p>Your personal mathematical environment.</p>
+            </div>
+        </div>
+
+        <div class="nx-workspace-grid">
+
+            <div class="nx-panel">
+
+                <h3>Recent Activity</h3>
+                <p class="nx-panel-subtitle">
+                    Your recent work saved in this browser.
+                </p>
+
+                <div id="nxActivityList">
+                    <div class="nx-empty">
+                        Your recent activities will appear here when
+                        supported tools save activity to your history.
+                        <br><br>
+                        Start exploring MathGenius!
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="nx-panel">
+
+                <h3>Personal Settings</h3>
+                <p class="nx-panel-subtitle">
+                    Make your workspace feel like yours.
+                </p>
+
+                <p style="font-size:12px;color:var(--nx-muted)">
+                    Choose your preferred interface colour.
+                </p>
+
+                <div class="nx-theme-options">
+
+                    <button class="nx-theme theme-blue selected"
+                        data-theme="blue" aria-label="Blue theme"></button>
+
+                    <button class="nx-theme theme-purple"
+                        data-theme="purple" aria-label="Purple theme"></button>
+
+                    <button class="nx-theme theme-cyan"
+                        data-theme="cyan" aria-label="Cyan theme"></button>
+
+                    <button class="nx-theme theme-emerald"
+                        data-theme="emerald" aria-label="Emerald theme"></button>
+
+                </div>
+
+                <p class="nx-theme-label" id="nxThemeLabel">
+                    Current theme: Midnight Blue
+                </p>
+
+                <div style="margin-top:25px;border-top:1px solid var(--nx-border);padding-top:18px">
+
+                    <a href="profile.html" class="nx-view-all">
+                        Manage My Profile →
+                    </a>
+
+                    <br><br>
+
+                    <a href="history.html" class="nx-view-all">
+                        View Calculation History →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- LEARNING CENTRE -->
+
+    <section class="nx-section">
+
+        <div class="nx-heading-row">
+            <div>
+                <h2>Expand Your Knowledge</h2>
+                <p>Go beyond calculations and develop your understanding.</p>
+            </div>
+        </div>
+
+        <div class="nx-learning-banner">
+
+            <div>
+                <p class="nx-eyebrow">YOUR KNOWLEDGE HUB</p>
+
+                <h3>Welcome to the Learning Universe</h3>
+
+                <p>
+                    Discover academic programmes, explore university-level
+                    courses, study mathematical topics, read learning
+                    materials and practise with questions.
+                </p>
+            </div>
+
+            <a href="learning.html">Explore Learning Centre →</a>
+
+        </div>
+
+    </section>
+
+    <!-- OTHER RESOURCES -->
+
+    <section class="nx-section">
+
+        <div class="nx-heading-row">
+            <div>
+                <h2>Explore More</h2>
+                <p>Other areas of your MathGenius workspace.</p>
+            </div>
+        </div>
+
+        <div class="nx-grid">
+
+            <a href="notes.html" class="nx-card">
+                <div class="nx-card-icon">📝</div>
+                <h3>My Notes</h3>
+                <p>Keep your mathematical thoughts and personal study notes.</p>
+                <span>Open Notes →</span>
+            </a>
+
+            <a href="quiz.html" class="nx-card">
+                <div class="nx-card-icon">🎯</div>
+                <h3>Quiz Centre</h3>
+                <p>Test your knowledge and practise different subjects.</p>
+                <span>Take a Quiz →</span>
+            </a>
+
+            <a href="resources.html" class="nx-card">
+                <div class="nx-card-icon">📚</div>
+                <h3>Resources Library</h3>
+                <p>Explore available academic books and study materials.</p>
+                <span>Browse Resources →</span>
+            </a>
+
+            <a href="profile.html" class="nx-card">
+                <div class="nx-card-icon">👤</div>
+                <h3>My Account</h3>
+                <p>View your personal information and account details.</p>
+                <span>Manage Account →</span>
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- LOGOUT -->
+
+    <div class="nx-logout">
+        <button id="nxLogoutButton">Log Out of MathGenius</button>
+    </div>
+
+</main>
+
+<footer class="nx-footer">
+    © 2026 MathGenius NEXUS. Solve Smarter. Learn Better. Think Beyond.
+</footer>
+
+<script src="auth.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* AUTHENTICATION */
+
+    if (typeof getCurrentUser !== "function") {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const user = getCurrentUser();
+
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const fullName = user.fullName || "Math Genius";
+    const firstName = fullName.trim().split(/\s+/)[0];
+
+    document.getElementById("nxUserName").textContent = firstName;
+
+    document.getElementById("nxAvatar").textContent =
+        firstName.charAt(0).toUpperCase();
+
+    /* DATE */
+
+    const dateElement = document.getElementById("nxDate");
+
+    dateElement.textContent = new Date().toLocaleDateString("en", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    });
+
+    /* MOBILE NAVIGATION */
+
+    const menuButton = document.getElementById("nxMenu");
+    const navLinks = document.getElementById("nxNavLinks");
+
+    menuButton.addEventListener("click", function () {
+        navLinks.classList.toggle("open");
+    });
+
+    navLinks.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+            navLinks.classList.remove("open");
+        });
+    });
+
+    /* COMMAND CENTRE */
+
+    const commandInput = document.getElementById("nxCommandInput");
+    const commandButton = document.getElementById("nxCommandButton");
+    const message = document.getElementById("nxMessage");
+
+    const commands = [
+        {
+            words: ["calculator", "calculate", "scientific calculator"],
+            url: "calculator.html",
+            name: "Scientific Calculator"
+        },
+        {
+            words: ["solver", "equation", "equation solver"],
+            url: "solver.html",
+            name: "Equation Solver"
+        },
+        {
+            words: ["learning", "learning centre", "courses", "programmes"],
+            url: "learning.html",
+            name: "Learning Centre"
+        },
+        {
+            words: ["statistics", "statistic", "mean", "median"],
+            url: "statistics.html",
+            name: "Statistics Calculator"
+        },
+        {
+            words: ["matrix", "matrices"],
+            url: "matrix.html",
+            name: "Matrix Calculator"
+        },
+        {
+            words: ["history", "previous calculations"],
+            url: "history.html",
+            name: "Calculation History"
+        },
+        {
+            words: ["profile", "account", "my account"],
+            url: "profile.html",
+            name: "My Profile"
+        },
+        {
+            words: ["notes", "my notes"],
+            url: "notes.html",
+            name: "My Notes"
+        },
+        {
+            words: ["quiz", "quizzes", "practice test"],
+            url: "quiz.html",
+            name: "Quiz Centre"
+        },
+        {
+            words: ["resources", "books", "library"],
+            url: "resources.html",
+            name: "Resources Library"
+        },
+        {
+            words: ["dashboard", "main dashboard"],
+            url: "dashboard.html",
+            name: "Main Dashboard"
+        }
+    ];
+
+    function executeCommand(value) {
+
+        const query = value.trim().toLowerCase();
+
+        if (!query) {
+            showMessage("Please enter a command first.");
+            return;
+        }
+
+        const match = commands.find(function (command) {
+            return command.words.some(function (word) {
+                return query.includes(word);
+            });
+        });
+
+        if (match) {
+            showMessage("Opening " + match.name + "...");
+            setTimeout(function () {
+                window.location.href = match.url;
+            }, 350);
+        } else {
+            showMessage(
+                "Command not recognised. Try Calculator, Equation Solver, Learning Centre, Matrix or Notes."
+            );
+        }
+    }
+
+    function showMessage(text) {
+        message.textContent = text;
+        message.style.display = "block";
+    }
+
+    commandButton.addEventListener("click", function () {
+        executeCommand(commandInput.value);
+    });
+
+    commandInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            executeCommand(commandInput.value);
+        }
+    });
+
+    document.querySelectorAll("[data-command]").forEach(function (button) {
+        button.addEventListener("click", function () {
+            const command = button.dataset.command;
+            commandInput.value = command;
+            executeCommand(command);
+        });
+    });
+
+    /* THEME PERSONALISATION */
+
+    const themeButtons = document.querySelectorAll(".nx-theme");
+    const themeLabel = document.getElementById("nxThemeLabel");
+
+    const themeNames = {
+        blue: "Midnight Blue",
+        purple: "Cosmic Purple",
+        cyan: "Electric Cyan",
+        emerald: "Emerald"
+    };
+
+    let savedTheme = "blue";
+
+    try {
+        savedTheme = localStorage.getItem("mathgenius_nexus_theme") || "blue";
+    } catch (error) {
+        savedTheme = "blue";
+    }
+
+    if (!themeNames[savedTheme]) {
+        savedTheme = "blue";
+    }
+
+    function setTheme(theme) {
+
+        document.body.dataset.theme = theme;
+
+        themeButtons.forEach(function (button) {
+            button.classList.toggle(
+                "selected",
+                button.dataset.theme === theme
+            );
+        });
+
+        themeLabel.textContent = "Current theme: " + themeNames[theme];
+
+        try {
+            localStorage.setItem("mathgenius_nexus_theme", theme);
+        } catch (error) {
+            console.warn("Theme preference could not be saved.");
+        }
+    }
+
+    setTheme(savedTheme);
+
+    themeButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            setTheme(button.dataset.theme);
+        });
+    });
+
+    /* LOGOUT */
+
+    document.getElementById("nxLogoutButton")
+        .addEventListener("click", function () {
+
+            if (confirm("Are you sure you want to log out?")) {
+                logout();
+            }
+
+        });
+
+});
+</script>
+
+</body>
+</html>
