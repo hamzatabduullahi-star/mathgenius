@@ -1,691 +1,654 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#080d1c">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1c">
+<title>Login | MathGenius</title>
+<link rel="stylesheet" href="./style.css">
 
-    <title>Login | MathGenius</title>
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    <link rel="stylesheet" href="./style.css">
+body {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(83,109,254,.13), transparent 35%),
+        radial-gradient(circle at 85% 75%, rgba(147,51,234,.12), transparent 35%),
+        #080d1c;
+}
 
-    <style>
-        .auth-container {
-            width: min(460px, 92%);
-            margin: 55px auto;
-            position: relative;
-            z-index: 1;
-        }
+.auth-container {
+    width: min(460px, 92%);
+    margin: 55px auto;
+    position: relative;
+    z-index: 2;
+}
 
-        .auth-card {
-            background: #141d37;
-            border: 1px solid rgba(120, 130, 255, 0.25);
-            border-radius: 18px;
-            padding: 30px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-        }
+.auth-card {
+    position: relative;
+    padding: 32px;
+    border-radius: 24px;
+    background: rgba(20,29,55,.72);
+    border: 1px solid rgba(120,130,255,.35);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35),
+        0 0 30px rgba(83,109,254,.10),
+        inset 0 1px 1px rgba(255,255,255,.08);
+    overflow: hidden;
+}
 
-        .auth-card h1 {
-            font-size: 29px;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
+.auth-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        135deg,
+        rgba(69,215,255,.12),
+        transparent 35%,
+        rgba(155,109,255,.12)
+    );
+    pointer-events: none;
+}
 
-        .auth-card > p {
-            color: #b9c3dc;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
+.auth-card h1 {
+    color: #fff;
+    font-size: 30px;
+    margin-bottom: 10px;
+    letter-spacing: -.5px;
+}
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+.auth-card > div > p {
+    color: #b9c3dc;
+    line-height: 1.7;
+    margin-bottom: 26px;
+}
 
-        .form-group label {
-            display: block;
-            color: #dce3f5;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
+.form-group {
+    margin-bottom: 21px;
+}
 
-        .form-group input {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 14px;
-            border-radius: 9px;
-            border: 1px solid #39466b;
-            background: #0b1328;
-            color: white;
-            font-size: 15px;
-            outline: none;
-        }
+.form-group label {
+    display: block;
+    color: #dce3f5;
+    margin-bottom: 9px;
+    font-size: 14px;
+}
 
-        .form-group input:focus {
-            border-color: #7775ff;
-        }
+.form-group input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(120,140,200,.35);
+    background: rgba(8,13,28,.75);
+    color: white;
+    font-size: 15px;
+    outline: none;
+    transition: .3s ease;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,.2);
+}
 
-        .password-wrapper {
-            position: relative;
-        }
+.form-group input:focus {
+    border-color: #45d7ff;
+    box-shadow:
+        0 0 0 3px rgba(69,215,255,.10),
+        0 0 20px rgba(71,118,255,.18);
+    transform: translateY(-2px);
+}
 
-        .password-wrapper input {
-            padding-right: 65px;
-        }
+.form-group input::placeholder {
+    color: #7f8ba9;
+}
 
-        .toggle-password {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            border: none;
-            background: transparent;
-            color: #a8a6ff;
-            cursor: pointer;
-            font-size: 13px;
-            padding: 8px;
-            z-index: 2;
-            -webkit-tap-highlight-color: transparent;
-        }
+.password-wrapper {
+    position: relative;
+}
 
-        .toggle-password:focus {
-            outline: none;
-        }
+.password-wrapper input {
+    padding-right: 70px;
+}
 
-        .forgot-password {
-            display: block;
-            text-align: right;
-            margin-top: -8px;
-            margin-bottom: 20px;
-            color: #a8a6ff;
-            text-decoration: none;
-            font-size: 13px;
-        }
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #a8a6ff;
+    cursor: pointer;
+    padding: 8px;
+    font-size: 13px;
+    z-index: 2;
+}
 
-        .auth-button {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 9px;
-            background: linear-gradient(135deg, #536dfe, #9333ea);
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.forgot-password {
+    display: block;
+    text-align: right;
+    margin-top: -8px;
+    margin-bottom: 22px;
+    color: #a8a6ff;
+    text-decoration: none;
+    font-size: 13px;
+}
 
-        .auth-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
+.forgot-password:hover,
+.auth-footer a:hover {
+    color: #45d7ff;
+}
 
-        .auth-message {
-            margin-top: 15px;
-            font-size: 14px;
-            line-height: 1.5;
-        }
+.auth-button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(120deg,#536dfe,#9333ea,#536dfe);
+    background-size: 200% 200%;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .35s ease;
+    box-shadow: 0 8px 25px rgba(83,109,254,.25);
+    animation: buttonGlow 5s ease infinite;
+}
 
-        .auth-footer {
-            text-align: center;
-            margin-top: 22px;
-            color: #b9c3dc;
-            font-size: 14px;
-        }
+.auth-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(147,51,234,.35);
+}
 
-        .auth-footer a,
-        .back-home,
-        .back-to-login {
-            color: #a8a6ff;
-            text-decoration: none;
-            font-weight: bold;
-        }
+.auth-button:active {
+    transform: scale(.98);
+}
 
-        .back-home {
-            display: inline-block;
-            margin-bottom: 18px;
-        }
+.auth-button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
 
-        .recovery-info {
-            background: rgba(83, 109, 254, 0.10);
-            border: 1px solid rgba(120, 130, 255, 0.25);
-            border-radius: 10px;
-            padding: 13px;
-            color: #c6d0eb;
-            font-size: 13px;
-            line-height: 1.6;
-            margin-bottom: 22px;
-        }
+@keyframes buttonGlow {
+    0%,100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
 
-        .back-to-login {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-        }
+.auth-message {
+    margin-top: 15px;
+    font-size: 14px;
+    line-height: 1.5;
+}
 
-        .hidden {
-            display: none !important;
-        }
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #b9c3dc;
+    font-size: 14px;
+}
 
-        /* 3D OPENING ANIMATION */
+.auth-footer a,
+.back-home,
+.back-to-login {
+    color: #a8a6ff;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-        .mg-intro {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            display: flex;
-            overflow: hidden;
-            perspective: 1200px;
-            pointer-events: none;
-            background: #080d1c;
-            animation: introDisappear 1.9s ease forwards;
-        }
+.back-home {
+    display: inline-block;
+    margin-bottom: 18px;
+}
 
-        .mg-intro::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: 3;
-            opacity: 0.16;
-            background-image:
-                linear-gradient(rgba(69, 215, 255, 0.12) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(69, 215, 255, 0.12) 1px, transparent 1px);
-            background-size: 45px 45px;
-        }
+.recovery-info {
+    background: rgba(83,109,254,.10);
+    border: 1px solid rgba(120,130,255,.25);
+    border-radius: 12px;
+    padding: 14px;
+    color: #c6d0eb;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
 
-        .mg-door {
-            position: absolute;
-            top: 0;
-            width: 52%;
-            height: 100%;
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(71, 118, 255, 0.25),
-                    transparent 55%
-                ),
-                linear-gradient(145deg, #111a30, #080d1c 75%);
-            border-color: rgba(69, 215, 255, 0.3);
-            border-style: solid;
-            box-sizing: border-box;
-            box-shadow: 0 0 45px rgba(71, 118, 255, 0.2);
-        }
+.back-to-login {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
 
-        .mg-door-left {
-            left: 0;
-            border-right-width: 1px;
-            clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
-            transform-origin: left center;
-            animation: openLeftDoor 1.45s cubic-bezier(.77, 0, .18, 1) forwards;
-        }
+.hidden {
+    display: none !important;
+}
 
-        .mg-door-right {
-            right: 0;
-            border-left-width: 1px;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 18% 100%);
-            transform-origin: right center;
-            animation: openRightDoor 1.45s cubic-bezier(.77, 0, .18, 1) forwards;
-        }
+.auth-container::before,
+.auth-container::after {
+    content: "";
+    position: fixed;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: .16;
+    pointer-events: none;
+    z-index: -1;
+    animation: floatLight 8s ease-in-out infinite alternate;
+}
 
-        .mg-door::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(
-                transparent,
-                #45d7ff,
-                #9b6dff,
-                transparent
-            );
-            opacity: 0.8;
-            box-shadow: 0 0 20px #4776ff;
-        }
+.auth-container::before {
+    background: #4776ff;
+    top: 25%;
+    left: -80px;
+}
 
-        .mg-door-left::after {
-            right: 18%;
-        }
+.auth-container::after {
+    background: #9333ea;
+    bottom: 15%;
+    right: -80px;
+    animation-delay: 2s;
+}
 
-        .mg-door-right::after {
-            left: 18%;
-        }
+@keyframes floatLight {
+    from { transform: translateY(-20px); }
+    to { transform: translateY(35px); }
+}
 
-        .mg-intro-brand {
-            position: absolute;
-            z-index: 5;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            white-space: nowrap;
-            animation: brandDisappear 1.15s ease forwards;
-        }
+/* OPENING DOOR ANIMATION */
 
-        .mg-intro-brand strong {
-            display: block;
-            font-size: clamp(28px, 6vw, 48px);
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: #ffffff;
-            text-shadow:
-                0 0 12px rgba(71, 118, 255, 0.9),
-                0 0 30px rgba(155, 109, 255, 0.65);
-        }
+.mg-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    overflow: hidden;
+    perspective: 1200px;
+    pointer-events: none;
+    background: #080d1c;
+    animation: introDisappear 1.9s ease forwards;
+}
 
-        .mg-intro-brand span {
-            display: block;
-            margin-top: 10px;
-            color: #45d7ff;
-            font-size: 12px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
+.mg-door {
+    position: absolute;
+    top: 0;
+    width: 52%;
+    height: 100%;
+    background:
+        radial-gradient(circle at center,rgba(71,118,255,.25),transparent 55%),
+        linear-gradient(145deg,#111a30,#080d1c 75%);
+    border-color: rgba(69,215,255,.3);
+    border-style: solid;
+    box-shadow: 0 0 45px rgba(71,118,255,.2);
+}
 
-        @keyframes openLeftDoor {
-            0% {
-                transform: translateX(0) rotateY(0);
-            }
-            100% {
-                transform: translateX(-105%) rotateY(15deg);
-            }
-        }
+.mg-door-left {
+    left: 0;
+    clip-path: polygon(0 0,100% 0,82% 100%,0 100%);
+    transform-origin: left center;
+    animation: openLeftDoor 1.45s cubic-bezier(.77,0,.18,1) forwards;
+}
 
-        @keyframes openRightDoor {
-            0% {
-                transform: translateX(0) rotateY(0);
-            }
-            100% {
-                transform: translateX(105%) rotateY(-15deg);
-            }
-        }
+.mg-door-right {
+    right: 0;
+    clip-path: polygon(0 0,100% 0,100% 100%,18% 100%);
+    transform-origin: right center;
+    animation: openRightDoor 1.45s cubic-bezier(.77,0,.18,1) forwards;
+}
 
-        @keyframes brandDisappear {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -40%) scale(0.8);
-            }
-            25% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            65% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -55%) scale(1.1);
-            }
-        }
+.mg-door::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(transparent,#45d7ff,#9b6dff,transparent);
+    box-shadow: 0 0 20px #4776ff;
+}
 
-        @keyframes introDisappear {
-            0%, 75% {
-                visibility: visible;
-                opacity: 1;
-            }
-            100% {
-                visibility: hidden;
-                opacity: 0;
-            }
-        }
+.mg-door-left::after { right: 18%; }
+.mg-door-right::after { left: 18%; }
 
-        @media(max-width: 500px) {
-            .auth-card {
-                padding: 22px;
-            }
+.mg-intro-brand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    white-space: nowrap;
+    animation: brandDisappear 1.15s ease forwards;
+}
 
-            .auth-card h1 {
-                font-size: 25px;
-            }
+.mg-intro-brand strong {
+    display: block;
+    color: white;
+    font-size: clamp(28px,6vw,48px);
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px #4776ff,0 0 30px #9b6dff;
+}
 
-            .auth-container {
-                margin: 35px auto;
-            }
+.mg-intro-brand span {
+    display: block;
+    color: #45d7ff;
+    margin-top: 10px;
+    font-size: 12px;
+    letter-spacing: 4px;
+}
 
-            .mg-intro-brand strong {
-                letter-spacing: 1px;
-            }
-        }
+@keyframes openLeftDoor {
+    to { transform: translateX(-105%) rotateY(15deg); }
+}
 
-        @media (prefers-reduced-motion: reduce) {
-            .mg-intro {
-                display: none;
-                animation: none;
-            }
+@keyframes openRightDoor {
+    to { transform: translateX(105%) rotateY(-15deg); }
+}
 
-            .mg-door,
-            .mg-intro-brand {
-                animation: none;
-            }
-        }
-    </style>
+@keyframes brandDisappear {
+    0% { opacity: 0; transform: translate(-50%,-40%) scale(.8); }
+    25%,65% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%,-55%) scale(1.1); }
+}
+
+@keyframes introDisappear {
+    0%,75% { visibility: visible; opacity: 1; }
+    100% { visibility: hidden; opacity: 0; }
+}
+
+@media(max-width:500px) {
+    .auth-card {
+        padding: 23px;
+        border-radius: 20px;
+    }
+
+    .auth-card h1 {
+        font-size: 26px;
+    }
+
+    .auth-container {
+        margin: 35px auto;
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    .mg-intro {
+        display: none;
+        animation: none;
+    }
+
+    .mg-door,
+    .mg-intro-brand {
+        animation: none;
+    }
+
+    .auth-container::before,
+    .auth-container::after,
+    .auth-button {
+        animation: none;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- 3D OPENING ANIMATION -->
-    <div class="mg-intro" id="mgIntro" aria-hidden="true">
+<div class="mg-intro" id="mgIntro" aria-hidden="true">
+    <div class="mg-door mg-door-left"></div>
+    <div class="mg-door mg-door-right"></div>
 
-        <div class="mg-door mg-door-left"></div>
-
-        <div class="mg-door mg-door-right"></div>
-
-        <div class="mg-intro-brand">
-            <strong>MathGenius</strong>
-            <span>Solve Smarter. Learn Better.</span>
-        </div>
-
+    <div class="mg-intro-brand">
+        <strong>MathGenius</strong>
+        <span>Solve Smarter. Learn Better.</span>
     </div>
+</div>
 
-    <header>
-        <nav>
-            <a href="index.html" class="logo">MathGenius</a>
-            <a href="index.html">Home</a>
-        </nav>
-    </header>
+<header>
+    <nav>
+        <a href="index.html" class="logo">MathGenius</a>
+        <a href="index.html">Home</a>
+    </nav>
+</header>
 
-    <main class="auth-container">
+<main class="auth-container">
 
-        <a href="index.html" class="back-home">← Back to Home</a>
+    <a href="index.html" class="back-home">← Back to Home</a>
 
-        <section class="auth-card">
+    <section class="auth-card">
 
-            <!-- LOGIN SECTION -->
-            <div id="loginSection">
+        <div id="loginSection">
 
-                <h1>Welcome Back!</h1>
+            <h1>Welcome Back!</h1>
 
-                <p>
-                    Log in to your MathGenius account and continue
-                    your mathematics journey.
-                </p>
+            <p>
+                Log in to your MathGenius account and continue
+                your mathematics journey.
+            </p>
 
-                <form id="loginForm">
+            <form id="loginForm">
 
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-
-                        <input
-                            type="email"
-                            id="email"
-                            placeholder="Enter your email address"
-                            autocomplete="email"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-
-                        <label for="password">Password</label>
-
-                        <div class="password-wrapper">
-
-                            <input
-                                type="password"
-                                id="password"
-                                placeholder="Enter your password"
-                                autocomplete="current-password"
-                                required
-                            >
-
-                            <button
-                                type="button"
-                                class="toggle-password"
-                                id="togglePassword"
-                            >
-                                Show
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <a href="#" id="forgotPassword" class="forgot-password">
-                        Forgot Password?
-                    </a>
-
-                    <button
-                        type="submit"
-                        class="auth-button"
-                        id="loginButton"
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                        required
                     >
-                        Log In
-                    </button>
-
-                    <p
-                        id="authMessage"
-                        class="auth-message"
-                        role="status"
-                        aria-live="polite"
-                    ></p>
-
-                </form>
-
-                <div class="auth-footer">
-                    Don't have an account?
-                    <a href="register.html">Create Account</a>
                 </div>
 
-            </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
 
-            <!-- PASSWORD RECOVERY SECTION -->
-            <div id="recoverySection" class="hidden">
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
 
-                <h1>Reset Password</h1>
-
-                <p>
-                    Recover access to your MathGenius account
-                    using your recovery code.
-                </p>
-
-                <div class="recovery-info">
-                    Enter the email address you registered with
-                    and the recovery code you received when
-                    creating your account.
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="togglePassword"
+                        >Show</button>
+                    </div>
                 </div>
 
-                <form id="resetPasswordForm">
-
-                    <div class="form-group">
-                        <label for="resetEmail">
-                            Registered Email Address
-                        </label>
-
-                        <input
-                            type="email"
-                            id="resetEmail"
-                            placeholder="Enter your registered email"
-                            autocomplete="email"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="resetRecoveryCode">
-                            Recovery Code
-                        </label>
-
-                        <input
-                            type="text"
-                            id="resetRecoveryCode"
-                            placeholder="Enter your recovery code"
-                            autocomplete="off"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-
-                        <label for="newPassword">
-                            New Password
-                        </label>
-
-                        <div class="password-wrapper">
-
-                            <input
-                                type="password"
-                                id="newPassword"
-                                placeholder="Create a new password"
-                                autocomplete="new-password"
-                                minlength="6"
-                                required
-                            >
-
-                            <button
-                                type="button"
-                                class="toggle-password"
-                                id="toggleNewPassword"
-                            >
-                                Show
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label for="confirmNewPassword">
-                            Confirm New Password
-                        </label>
-
-                        <div class="password-wrapper">
-
-                            <input
-                                type="password"
-                                id="confirmNewPassword"
-                                placeholder="Confirm your new password"
-                                autocomplete="new-password"
-                                minlength="6"
-                                required
-                            >
-
-                            <button
-                                type="button"
-                                class="toggle-password"
-                                id="toggleConfirmPassword"
-                            >
-                                Show
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="auth-button"
-                        id="resetPasswordButton"
-                    >
-                        Reset Password
-                    </button>
-
-                    <p
-                        id="resetMessage"
-                        class="auth-message"
-                        role="status"
-                        aria-live="polite"
-                    ></p>
-
-                </form>
-
-                <a href="#" id="backToLogin" class="back-to-login">
-                    ← Back to Login
+                <a href="#" id="forgotPassword" class="forgot-password">
+                    Forgot Password?
                 </a>
 
+                <button
+                    type="submit"
+                    class="auth-button"
+                    id="loginButton"
+                >
+                    Log In
+                </button>
+
+                <p
+                    id="authMessage"
+                    class="auth-message"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+
+            </form>
+
+            <div class="auth-footer">
+                Don't have an account?
+                <a href="register.html">Create Account</a>
             </div>
 
-        </section>
+        </div>
 
-    </main>
+        <div id="recoverySection" class="hidden">
 
-    <!-- AUTHENTICATION SCRIPT -->
-    <script src="./auth.js"></script>
+            <h1>Reset Password</h1>
 
-    <!-- PASSWORD VISIBILITY AND PAGE NAVIGATION -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+            <p>
+                Recover access to your MathGenius account
+                using your recovery code.
+            </p>
 
-            // REMOVE INTRO AFTER ANIMATION
-            const intro = document.getElementById("mgIntro");
+            <div class="recovery-info">
+                Enter the email address you registered with
+                and the recovery code you received when
+                creating your account.
+            </div>
 
-            if (intro) {
-                setTimeout(function () {
-                    intro.remove();
-                }, 2000);
-            }
+            <form id="resetPasswordForm">
 
-            // PASSWORD VISIBILITY CONTROLS
-            function setupPasswordToggle(inputId, buttonId) {
+                <div class="form-group">
+                    <label for="resetEmail">Registered Email Address</label>
+                    <input
+                        type="email"
+                        id="resetEmail"
+                        placeholder="Enter your registered email"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
 
-                const input = document.getElementById(inputId);
-                const button = document.getElementById(buttonId);
+                <div class="form-group">
+                    <label for="resetRecoveryCode">Recovery Code</label>
+                    <input
+                        type="text"
+                        id="resetRecoveryCode"
+                        placeholder="Enter your recovery code"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
 
-                if (!input || !button) return;
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
 
-                button.type = "button";
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="newPassword"
+                            placeholder="Create a new password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
 
-                button.addEventListener("click", function (event) {
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="toggleNewPassword"
+                        >Show</button>
+                    </div>
+                </div>
 
-                    event.preventDefault();
+                <div class="form-group">
+                    <label for="confirmNewPassword">Confirm New Password</label>
 
-                    const isHidden = input.type === "password";
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="confirmNewPassword"
+                            placeholder="Confirm your new password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
 
-                    input.type = isHidden ? "text" : "password";
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="toggleConfirmPassword"
+                        >Show</button>
+                    </div>
+                </div>
 
-                    button.textContent = isHidden ? "Hide" : "Show";
+                <button
+                    type="submit"
+                    class="auth-button"
+                    id="resetPasswordButton"
+                >
+                    Reset Password
+                </button>
 
-                });
-            }
+                <p
+                    id="resetMessage"
+                    class="auth-message"
+                    role="status"
+                    aria-live="polite"
+                ></p>
 
-            setupPasswordToggle("password", "togglePassword");
+            </form>
 
-            setupPasswordToggle("newPassword", "toggleNewPassword");
+            <a href="#" id="backToLogin" class="back-to-login">
+                ← Back to Login
+            </a>
 
-            setupPasswordToggle("confirmNewPassword", "toggleConfirmPassword");
+        </div>
 
-            // SWITCH BETWEEN LOGIN AND RECOVERY SECTIONS
-            const loginSection =
-                document.getElementById("loginSection");
+    </section>
 
-            const recoverySection =
-                document.getElementById("recoverySection");
+</main>
 
-            const forgotPassword =
-                document.getElementById("forgotPassword");
+<script src="./auth.js"></script>
 
-            const backToLogin =
-                document.getElementById("backToLogin");
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-            forgotPassword.addEventListener("click", function(event) {
+    const intro = document.getElementById("mgIntro");
 
-                event.preventDefault();
+    if (intro) {
+        setTimeout(() => intro.remove(), 2000);
+    }
 
-                loginSection.classList.add("hidden");
+    function setupPasswordToggle(inputId, buttonId) {
+        const input = document.getElementById(inputId);
+        const button = document.getElementById(buttonId);
 
-                recoverySection.classList.remove("hidden");
+        if (!input || !button) return;
 
-                document.getElementById("resetEmail").value =
-                    document.getElementById("email").value.trim();
+        button.addEventListener("click", function(event) {
+            event.preventDefault();
 
-                document.getElementById("resetMessage").textContent = "";
+            const isHidden = input.type === "password";
 
-            });
-
-            backToLogin.addEventListener("click", function(event) {
-
-                event.preventDefault();
-
-                recoverySection.classList.add("hidden");
-
-                loginSection.classList.remove("hidden");
-
-                document.getElementById("authMessage").textContent = "";
-
-            });
-
+            input.type = isHidden ? "text" : "password";
+            button.textContent = isHidden ? "Hide" : "Show";
         });
-    </script>
+    }
+
+    setupPasswordToggle("password", "togglePassword");
+    setupPasswordToggle("newPassword", "toggleNewPassword");
+    setupPasswordToggle("confirmNewPassword", "toggleConfirmPassword");
+
+    const loginSection = document.getElementById("loginSection");
+    const recoverySection = document.getElementById("recoverySection");
+
+    document.getElementById("forgotPassword").addEventListener("click", function(event) {
+        event.preventDefault();
+
+        loginSection.classList.add("hidden");
+        recoverySection.classList.remove("hidden");
+
+        document.getElementById("resetEmail").value =
+            document.getElementById("email").value.trim();
+
+        document.getElementById("resetMessage").textContent = "";
+    });
+
+    document.getElementById("backToLogin").addEventListener("click", function(event) {
+        event.preventDefault();
+
+        recoverySection.classList.add("hidden");
+        loginSection.classList.remove("hidden");
+
+        document.getElementById("authMessage").textContent = "";
+    });
+
+});
+</script>
 
 </body>
 </html>
