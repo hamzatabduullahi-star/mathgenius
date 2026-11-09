@@ -4,14 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#080d1c">
+
     <title>Create Account | MathGenius</title>
 
     <link rel="stylesheet" href="./style.css">
 
     <style>
+        /* AUTHENTICATION PAGE */
+
         .auth-container {
             width: min(460px, 92%);
             margin: 45px auto;
+            position: relative;
+            z-index: 1;
         }
 
         .auth-card {
@@ -25,6 +30,7 @@
         .auth-card h1 {
             font-size: 28px;
             margin-bottom: 10px;
+            color: #ffffff;
         }
 
         .auth-card > p {
@@ -47,6 +53,7 @@
         .form-group input,
         .form-group select {
             width: 100%;
+            box-sizing: border-box;
             padding: 13px;
             border-radius: 9px;
             border: 1px solid #39466b;
@@ -115,9 +122,204 @@
             margin-top: 6px;
         }
 
+
+        /* 3D OPENING DOOR ANIMATION */
+
+        .mg-intro {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            overflow: hidden;
+            perspective: 1200px;
+            pointer-events: none;
+            background: #080d1c;
+            animation: introDisappear 1.9s ease forwards;
+        }
+
+        .mg-intro::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            opacity: 0.16;
+            background-image:
+                linear-gradient(rgba(69, 215, 255, 0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(69, 215, 255, 0.12) 1px, transparent 1px);
+            background-size: 45px 45px;
+        }
+
+        .mg-door {
+            position: absolute;
+            top: 0;
+            width: 52%;
+            height: 100%;
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(71, 118, 255, 0.25),
+                    transparent 55%
+                ),
+                linear-gradient(145deg, #111a30, #080d1c 75%);
+            border-color: rgba(69, 215, 255, 0.3);
+            border-style: solid;
+            box-sizing: border-box;
+            box-shadow: 0 0 45px rgba(71, 118, 255, 0.2);
+        }
+
+        .mg-door-left {
+            left: 0;
+            border-right-width: 1px;
+            clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
+            transform-origin: left center;
+            animation: openLeftDoor 1.45s cubic-bezier(.77, 0, .18, 1) forwards;
+        }
+
+        .mg-door-right {
+            right: 0;
+            border-left-width: 1px;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 18% 100%);
+            transform-origin: right center;
+            animation: openRightDoor 1.45s cubic-bezier(.77, 0, .18, 1) forwards;
+        }
+
+        .mg-door::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(
+                transparent,
+                #45d7ff,
+                #9b6dff,
+                transparent
+            );
+            opacity: 0.8;
+            box-shadow: 0 0 20px #4776ff;
+        }
+
+        .mg-door-left::after {
+            right: 18%;
+        }
+
+        .mg-door-right::after {
+            left: 18%;
+        }
+
+        .mg-intro-brand {
+            position: absolute;
+            z-index: 5;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            white-space: nowrap;
+            animation: brandDisappear 1.15s ease forwards;
+        }
+
+        .mg-intro-brand strong {
+            display: block;
+            font-size: clamp(28px, 6vw, 48px);
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow:
+                0 0 12px rgba(71, 118, 255, 0.9),
+                0 0 30px rgba(155, 109, 255, 0.65);
+        }
+
+        .mg-intro-brand span {
+            display: block;
+            margin-top: 10px;
+            color: #45d7ff;
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+
+        /* ANIMATION KEYFRAMES */
+
+        @keyframes openLeftDoor {
+            0% {
+                transform: translateX(0) rotateY(0);
+            }
+
+            100% {
+                transform: translateX(-105%) rotateY(15deg);
+            }
+        }
+
+        @keyframes openRightDoor {
+            0% {
+                transform: translateX(0) rotateY(0);
+            }
+
+            100% {
+                transform: translateX(105%) rotateY(-15deg);
+            }
+        }
+
+        @keyframes brandDisappear {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -40%) scale(0.8);
+            }
+
+            25% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            65% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -55%) scale(1.1);
+            }
+        }
+
+        @keyframes introDisappear {
+            0%, 75% {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            100% {
+                visibility: hidden;
+                opacity: 0;
+            }
+        }
+
+
+        /* MOBILE RESPONSIVENESS */
+
         @media(max-width: 500px) {
             .auth-card {
                 padding: 22px;
+            }
+
+            .mg-intro-brand strong {
+                letter-spacing: 1px;
+            }
+        }
+
+
+        /* ACCESSIBILITY */
+
+        @media (prefers-reduced-motion: reduce) {
+            .mg-intro {
+                display: none;
+                animation: none;
+            }
+
+            .mg-door,
+            .mg-intro-brand {
+                animation: none;
             }
         }
     </style>
@@ -125,12 +327,33 @@
 
 <body>
 
+    <!-- 3D OPENING ANIMATION -->
+
+    <div class="mg-intro" id="mgIntro" aria-hidden="true">
+
+        <div class="mg-door mg-door-left"></div>
+
+        <div class="mg-door mg-door-right"></div>
+
+        <div class="mg-intro-brand">
+            <strong>MathGenius</strong>
+            <span>Solve Smarter. Learn Better.</span>
+        </div>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
     <header>
         <nav>
             <a href="index.html" class="logo">MathGenius</a>
             <a href="index.html">Home</a>
         </nav>
     </header>
+
+
+    <!-- REGISTRATION PAGE -->
 
     <main class="auth-container">
 
@@ -149,6 +372,7 @@
 
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
+
                     <input
                         type="text"
                         id="fullName"
@@ -160,6 +384,7 @@
 
                 <div class="form-group">
                     <label for="email">Email Address</label>
+
                     <input
                         type="email"
                         id="email"
@@ -182,6 +407,7 @@
 
                 <div class="form-group">
                     <label for="institution">School / Institution</label>
+
                     <input
                         type="text"
                         id="institution"
@@ -191,6 +417,7 @@
 
                 <div class="form-group">
                     <label for="password">Password</label>
+
                     <input
                         type="password"
                         id="password"
@@ -199,6 +426,7 @@
                         minlength="8"
                         required
                     >
+
                     <p class="password-hint">
                         Use at least 8 characters.
                     </p>
@@ -206,6 +434,7 @@
 
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password</label>
+
                     <input
                         type="password"
                         id="confirmPassword"
@@ -215,7 +444,11 @@
                     >
                 </div>
 
-                <button type="submit" class="auth-button" id="registerButton">
+                <button
+                    type="submit"
+                    class="auth-button"
+                    id="registerButton"
+                >
                     Create Free Account
                 </button>
 
@@ -237,7 +470,27 @@
 
     </main>
 
+
+    <!-- AUTHENTICATION SCRIPT -->
+
     <script src="./auth.js"></script>
+
+
+    <!-- ANIMATION CONTROL -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const intro = document.getElementById("mgIntro");
+
+            if (intro) {
+                setTimeout(function () {
+                    intro.remove();
+                }, 2000);
+            }
+
+        });
+    </script>
 
 </body>
 </html>
