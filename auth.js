@@ -1,6 +1,7 @@
 // ==========================================
 // MATHGENIUS - IMPROVED LOCAL ACCOUNT SYSTEM
 // Persistent Sessions + Recovery Codes
+// Mobile Safari Compatible
 // ==========================================
 
 const USERS_KEY = "mathgenius_users";
@@ -14,9 +15,7 @@ const SESSION_KEY = "mathgenius_session";
 function getUsers() {
     try {
         const users = JSON.parse(localStorage.getItem(USERS_KEY));
-
         return Array.isArray(users) ? users : [];
-
     } catch (error) {
         console.error("Unable to read accounts:", error);
         return [];
@@ -25,12 +24,37 @@ function getUsers() {
 
 
 function saveUsers(users) {
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+    try {
+        localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        return true;
+    } catch (error) {
+        console.error("Unable to save accounts:", error);
+        throw error;
+    }
 }
 
 
 function normalizeEmail(email) {
     return String(email || "").trim().toLowerCase();
+}
+
+
+// ==========================================
+// ID GENERATOR
+// Supports browsers without crypto.randomUUID
+// ==========================================
+
+function generateID() {
+
+    if (crypto.randomUUID) {
+        return crypto.randomUUID();
+    }
+
+    const bytes = crypto.getRandomValues(new Uint8Array(16));
+
+    return Array.from(bytes)
+        .map(byte => byte.toString(16).padStart(2, "0"))
+        .join("");
 }
 
 
@@ -46,8 +70,6 @@ function saveSession(userId) {
     });
 
     localStorage.setItem(SESSION_KEY, session);
-
-    // Remove an older temporary session if present.
     sessionStorage.removeItem(SESSION_KEY);
 }
 
@@ -56,10 +78,8 @@ function getSavedSession() {
 
     try {
 
-        // First check persistent session.
         let session = localStorage.getItem(SESSION_KEY);
 
-        // Support an older session created by previous versions.
         if (!session) {
 
             session = sessionStorage.getItem(SESSION_KEY);
@@ -75,7 +95,6 @@ function getSavedSession() {
     } catch (error) {
 
         console.error("Session error:", error);
-
         return null;
     }
 }
@@ -89,12 +108,18 @@ function showMessage(message, success = false) {
 
     const messageBox = document.getElementById("authMessage");
 
-    if (!messageBox) return;
+    if (!messageBox) {
+        alert(message);
+        return;
+    }
 
     messageBox.textContent = message;
 
-    messageBox.style.color =
-        success ? "#4ade80" : "#ff8585";
+    messageBox.classList.remove("success", "error");
+
+    messageBox.classList.add(success ? "success" : "error");
+
+    messageBox.style.display = "block";
 }
 
 
@@ -103,6 +128,10 @@ function showMessage(message, success = false) {
 // ==========================================
 
 async function hashPassword(password, salt) {
+
+    if (!window.crypto || !crypto.subtle) {
+        throw new Error("Secure password hashing is unavailable.");
+    }
 
     const encoder = new TextEncoder();
 
@@ -137,9 +166,7 @@ async function hashPassword(password, salt) {
 
 function createSalt() {
 
-    const bytes = crypto.getRandomValues(
-        new Uint8Array(16)
-    );
+    const bytes = crypto.getRandomValues(new Uint8Array(16));
 
     return Array.from(bytes)
         .map(byte => byte.toString(16).padStart(2, "0"))
@@ -164,10 +191,7 @@ function hashesMatch(first, second) {
     let difference = 0;
 
     for (let i = 0; i < first.length; i++) {
-
-        difference |=
-            first.charCodeAt(i) ^ second.charCodeAt(i);
-
+        difference |= first.charCodeAt(i) ^ second.charCodeAt(i);
     }
 
     return difference === 0;
@@ -180,8 +204,7 @@ function hashesMatch(first, second) {
 
 function generateRecoveryCode() {
 
-    const characters =
-        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    const characters = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
     const randomValues = crypto.getRandomValues(
         new Uint8Array(16)
@@ -190,9 +213,7 @@ function generateRecoveryCode() {
     let code = "";
 
     randomValues.forEach(value => {
-
         code += characters[value % characters.length];
-
     });
 
     return code.match(/.{1,4}/g).join("-");
@@ -204,7 +225,6 @@ function normalizeRecoveryCode(code) {
     return String(code || "")
         .toUpperCase()
         .replace(/[^A-Z0-9]/g, "");
-
 }
 
 
@@ -214,17 +234,18 @@ function normalizeRecoveryCode(code) {
 
 function showRecoveryCode(code, message) {
 
-    const messageBox =
-        document.getElementById("authMessage");
+    const messageBox = document.getElementById("authMessage");
 
     if (!messageBox) {
-
         alert("Your MathGenius recovery code is: " + code);
-
         return;
     }
 
     messageBox.innerHTML = "";
+
+    messageBox.classList.remove("error");
+    messageBox.classList.add("success");
+    messageBox.style.display = "block";
 
     const container = document.createElement("div");
 
@@ -241,12 +262,16 @@ function showRecoveryCode(code, message) {
     `;
 
     const heading = document.createElement("h3");
-
     heading.textContent = "Your Recovery Code";
 
     const description = document.createElement("p");
-
     description.textContent = message;
+
+    description.style.cssText = `
+        font-size:13px;
+        line-height:1.6;
+        margin-top:10px;
+    `;
 
     const codeBox = document.createElement("div");
 
@@ -279,6 +304,7 @@ function showRecoveryCode(code, message) {
         border-radius:8px;
         font-weight:bold;
         margin-bottom:12px;
+        cursor:pointer;
     `;
 
     copyButton.addEventListener("click", async function () {
@@ -286,15 +312,15 @@ function showRecoveryCode(code, message) {
         try {
 
             await navigator.clipboard.writeText(code);
-
             copyButton.textContent = "Copied Successfully!";
 
         } catch {
 
-            alert("Please select and copy your recovery code manually.");
+            codeBox.focus?.();
+
+            alert("Please select and copy your recovery code manually: " + code);
 
         }
-
     });
 
     const warning = document.createElement("p");
@@ -312,9 +338,7 @@ function showRecoveryCode(code, message) {
     const continueButton = document.createElement("button");
 
     continueButton.type = "button";
-
-    continueButton.textContent =
-        "I've Saved My Code - Continue";
+    continueButton.textContent = "I've Saved My Code - Continue";
 
     continueButton.style.cssText = `
         padding:13px;
@@ -324,12 +348,11 @@ function showRecoveryCode(code, message) {
         border:none;
         border-radius:8px;
         font-weight:bold;
+        cursor:pointer;
     `;
 
     continueButton.addEventListener("click", function () {
-
         window.location.href = "dashboard.html";
-
     });
 
     container.appendChild(heading);
@@ -347,17 +370,20 @@ function showRecoveryCode(code, message) {
 // REGISTRATION
 // ==========================================
 
-const registerForm =
-    document.getElementById("registerForm");
+const registerForm = document.getElementById("registerForm");
 
 if (registerForm) {
 
-    registerForm.addEventListener("submit", async event => {
+    registerForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
-        const button =
-            document.getElementById("registerButton");
+        const button = document.getElementById("registerButton");
+
+        if (!button) {
+            showMessage("Registration button could not be found.");
+            return;
+        }
 
         const fullName =
             document.getElementById("fullName").value.trim();
@@ -379,32 +405,28 @@ if (registerForm) {
             document.getElementById("confirmPassword").value;
 
         if (!fullName || !email || !accountType || !password) {
-
             showMessage("Please complete all required fields.");
-
             return;
         }
 
         if (password.length < 8) {
-
             showMessage("Password must contain at least 8 characters.");
-
             return;
         }
 
         if (password !== confirmPassword) {
-
             showMessage("Your passwords do not match.");
-
             return;
         }
 
-        if (!crypto.subtle || !crypto.randomUUID) {
-
+        if (
+            !window.crypto ||
+            !crypto.subtle ||
+            !crypto.getRandomValues
+        ) {
             showMessage(
-                "Your browser does not support the required security features."
+                "Secure account creation is unavailable. Please open MathGenius using its official HTTPS website."
             );
-
             return;
         }
 
@@ -413,9 +435,7 @@ if (registerForm) {
         if (users.some(user =>
             normalizeEmail(user.email) === email
         )) {
-
             showMessage("An account with this email already exists.");
-
             return;
         }
 
@@ -426,8 +446,10 @@ if (registerForm) {
 
             const salt = createSalt();
 
-            const passwordHash =
-                await hashPassword(password, salt);
+            const passwordHash = await hashPassword(
+                password,
+                salt
+            );
 
             const recoveryCode = generateRecoveryCode();
 
@@ -440,23 +462,23 @@ if (registerForm) {
 
             const newUser = {
 
-                id: crypto.randomUUID(),
+                id: generateID(),
 
-                fullName,
+                fullName: fullName,
 
-                email,
+                email: email,
 
-                accountType,
+                accountType: accountType,
 
-                institution,
+                institution: institution,
 
-                salt,
+                salt: salt,
 
-                passwordHash,
+                passwordHash: passwordHash,
 
-                recoverySalt,
+                recoverySalt: recoverySalt,
 
-                recoveryHash,
+                recoveryHash: recoveryHash,
 
                 createdAt: new Date().toISOString()
 
@@ -478,15 +500,15 @@ if (registerForm) {
 
         } catch (error) {
 
-            console.error(error);
+            console.error("Registration error:", error);
 
             showMessage(
-                "Something went wrong. Please try again."
+                "Account creation failed: " +
+                (error.message || "Please try again.")
             );
 
             button.disabled = false;
             button.textContent = "Create Free Account";
-
         }
 
     });
@@ -498,17 +520,15 @@ if (registerForm) {
 // LOGIN
 // ==========================================
 
-const loginForm =
-    document.getElementById("loginForm");
+const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
 
-    loginForm.addEventListener("submit", async event => {
+    loginForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
-        const button =
-            document.getElementById("loginButton");
+        const button = document.getElementById("loginButton");
 
         const email = normalizeEmail(
             document.getElementById("email").value
@@ -518,18 +538,14 @@ if (loginForm) {
             document.getElementById("password").value;
 
         if (!email || !password) {
-
             showMessage("Please enter your email and password.");
-
             return;
         }
 
         if (!crypto.subtle) {
-
             showMessage(
                 "Secure password verification is unavailable. Open the official HTTPS website."
             );
-
             return;
         }
 
@@ -545,18 +561,14 @@ if (loginForm) {
             );
 
             if (!user) {
-
                 showMessage("Incorrect email or password.");
-
                 return;
             }
 
             if (!user.salt || !user.passwordHash) {
-
                 showMessage(
                     "This account's password information is incomplete."
                 );
-
                 return;
             }
 
@@ -566,15 +578,11 @@ if (loginForm) {
             );
 
             if (!hashesMatch(enteredHash, user.passwordHash)) {
-
                 showMessage("Incorrect email or password.");
-
                 return;
             }
 
             saveSession(user.id);
-
-            // Generate recovery code for older accounts.
 
             if (!user.recoveryHash || !user.recoverySalt) {
 
@@ -602,10 +610,8 @@ if (loginForm) {
 
             showMessage("Login successful!", true);
 
-            setTimeout(() => {
-
+            setTimeout(function () {
                 window.location.href = "dashboard.html";
-
             }, 600);
 
         } catch (error) {
@@ -619,9 +625,7 @@ if (loginForm) {
         } finally {
 
             button.disabled = false;
-
             button.textContent = "Log In";
-
         }
 
     });
@@ -633,12 +637,11 @@ if (loginForm) {
 // FORGOT PASSWORD
 // ==========================================
 
-const forgotPassword =
-    document.getElementById("forgotPassword");
+const forgotPassword = document.getElementById("forgotPassword");
 
 if (forgotPassword) {
 
-    forgotPassword.addEventListener("click", async event => {
+    forgotPassword.addEventListener("click", async function (event) {
 
         event.preventDefault();
 
@@ -657,18 +660,14 @@ if (forgotPassword) {
         );
 
         if (!user) {
-
             showMessage("Account not found.");
-
             return;
         }
 
         if (!user.recoveryHash || !user.recoverySalt) {
-
             showMessage(
                 "Log in successfully first to generate your recovery code."
             );
-
             return;
         }
 
@@ -686,9 +685,7 @@ if (forgotPassword) {
             );
 
             if (!hashesMatch(enteredHash, user.recoveryHash)) {
-
                 showMessage("Invalid recovery code.");
-
                 return;
             }
 
@@ -699,9 +696,7 @@ if (forgotPassword) {
             if (!newPassword) return;
 
             if (newPassword.length < 8) {
-
                 showMessage("Password must contain at least 8 characters.");
-
                 return;
             }
 
@@ -710,9 +705,7 @@ if (forgotPassword) {
             );
 
             if (newPassword !== confirmation) {
-
                 showMessage("Your passwords do not match.");
-
                 return;
             }
 
@@ -736,9 +729,7 @@ if (forgotPassword) {
         } catch (error) {
 
             console.error(error);
-
             showMessage("Password reset failed.");
-
         }
 
     });
@@ -761,7 +752,6 @@ function getCurrentUser() {
     return getUsers().find(
         user => user.id === session.userId
     ) || null;
-
 }
 
 
@@ -772,11 +762,9 @@ function getCurrentUser() {
 function logout() {
 
     localStorage.removeItem(SESSION_KEY);
-
     sessionStorage.removeItem(SESSION_KEY);
 
     window.location.href = "login.html";
-
 }
 
 
@@ -787,11 +775,8 @@ function logout() {
 function requireLogin() {
 
     if (!getCurrentUser()) {
-
         window.location.href = "login.html";
-
     }
-
 }
 
 
@@ -805,14 +790,9 @@ function displayCurrentUser() {
 
     if (!user) return;
 
-    const nameElement =
-        document.getElementById("userName");
-
-    const emailElement =
-        document.getElementById("userEmail");
-
-    const roleElement =
-        document.getElementById("userRole");
+    const nameElement = document.getElementById("userName");
+    const emailElement = document.getElementById("userEmail");
+    const roleElement = document.getElementById("userRole");
 
     if (nameElement) {
         nameElement.textContent = user.fullName;
@@ -825,5 +805,4 @@ function displayCurrentUser() {
     if (roleElement) {
         roleElement.textContent = user.accountType;
     }
-
 }
