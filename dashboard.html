@@ -1,577 +1,774 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#080d1c">
-    <title>Dashboard | MathGenius</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1c">
 
-    <link rel="stylesheet" href="style.css">
+<title>Dashboard | MathGenius</title>
 
-    <style>
-        .dashboard-page {
-            width: 100%;
-            max-width: 1200px;
-            margin: auto;
-            padding: 30px 20px 60px;
-        }
+<link rel="stylesheet" href="style.css">
 
-        .dashboard-nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 18px 5%;
-            background: #0d1427;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        .dashboard-nav .logo {
-            font-size: 25px;
-            font-weight: 800;
-            color: #fff;
-            text-decoration: none;
-            white-space: nowrap;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        .dashboard-nav .logo span {
-            color: #6d91ff;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #f4f6ff;
+    background:
+        radial-gradient(ellipse at 10% 10%, rgba(71,118,255,.15), transparent 35%),
+        radial-gradient(ellipse at 90% 30%, rgba(155,109,255,.13), transparent 35%),
+        radial-gradient(ellipse at 50% 90%, rgba(0,210,255,.08), transparent 40%),
+        #080d1c;
+    min-height: 100vh;
+}
 
-        .dashboard-nav nav {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+/* GLASS NAVIGATION */
 
-        .dashboard-nav nav a {
-            color: #aebbd3;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            transition: 0.2s;
-        }
+.dashboard-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 5%;
+    background: rgba(9,15,32,.76);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border-bottom: 1px solid rgba(150,170,255,.15);
+    box-shadow: 0 8px 30px rgba(0,0,0,.15);
+}
 
-        .dashboard-nav nav a:hover,
-        .dashboard-nav nav a.active {
-            color: #fff;
-            background: rgba(71,118,255,0.17);
-        }
+.dashboard-nav .logo {
+    font-size: 25px;
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+}
 
-        .dashboard-welcome {
-            padding: 45px 35px;
-            margin-bottom: 35px;
-            border-radius: 22px;
-            background:
-                radial-gradient(circle at top right, rgba(155,109,255,0.2), transparent 40%),
-                linear-gradient(120deg, #111d39, #10152b);
-            border: 1px solid rgba(255,255,255,0.09);
-        }
+.dashboard-nav .logo span {
+    color: #819fff;
+}
 
-        .dashboard-welcome .section-label {
-            color: #779aff;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 3px;
-            margin-bottom: 18px;
-        }
+.dashboard-nav nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+}
 
-        .dashboard-welcome h1 {
-            color: #fff;
-            font-size: clamp(28px, 5vw, 46px);
-            line-height: 1.2;
-            overflow-wrap: anywhere;
-            margin-bottom: 15px;
-        }
+.dashboard-nav nav a {
+    color: #b3bfd8;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 10px 12px;
+    border-radius: 9px;
+    border: 1px solid transparent;
+    transition: .25s ease;
+}
 
-        .dashboard-welcome h1 span {
-            color: #8ba8ff;
-        }
+.dashboard-nav nav a:hover,
+.dashboard-nav nav a.active {
+    color: #fff;
+    background: rgba(91,125,255,.16);
+    border-color: rgba(109,145,255,.25);
+    box-shadow: 0 0 18px rgba(71,118,255,.12);
+}
 
-        .dashboard-welcome > p:last-child {
-            color: #aab6ce;
-            font-size: 16px;
-            line-height: 1.7;
-            max-width: 600px;
-        }
+/* MAIN CONTENT */
 
-        .dashboard-section {
-            margin-bottom: 45px;
-        }
+.dashboard-page {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 35px 20px 60px;
+}
 
-        .dashboard-heading {
-            margin-bottom: 22px;
-        }
+/* WELCOME GLASS CARD */
 
-        .dashboard-heading h2 {
-            color: #fff;
-            font-size: 27px;
-            margin-bottom: 8px;
-        }
+.dashboard-welcome {
+    position: relative;
+    overflow: hidden;
+    padding: 48px 38px;
+    margin-bottom: 40px;
+    border-radius: 25px;
 
-        .dashboard-heading p {
-            color: #9ca9c2;
-            font-size: 14px;
-        }
+    background:
+        radial-gradient(circle at 85% 15%, rgba(0,220,255,.17), transparent 35%),
+        radial-gradient(circle at 15% 90%, rgba(155,109,255,.18), transparent 40%),
+        linear-gradient(135deg, rgba(31,54,95,.58), rgba(19,22,52,.62));
 
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 20px;
-        }
+    border: 1px solid rgba(139,164,255,.25);
 
-        .dashboard-card {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            min-width: 0;
-            min-height: 220px;
-            padding: 25px;
-            text-decoration: none;
-            border-radius: 18px;
-            background: #111a30;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: transform 0.25s, border-color 0.25s, background 0.25s;
-        }
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
 
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(109,145,255,0.6);
-            background: #16223d;
-        }
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.08);
+}
 
-        .dashboard-card .card-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            border-radius: 13px;
-            background: rgba(71,118,255,0.15);
-            font-size: 25px;
-            margin-bottom: 18px;
-        }
+.dashboard-welcome::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: rgba(104,125,255,.12);
+    filter: blur(65px);
+    pointer-events: none;
+}
 
-        .dashboard-card h3 {
-            color: #f4f6ff;
-            font-size: 19px;
-            margin-bottom: 10px;
-        }
+.dashboard-welcome .section-label {
+    position: relative;
+    color: #8ba8ff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
 
-        .dashboard-card p {
-            color: #a0abc2;
-            font-size: 14px;
-            line-height: 1.7;
-            margin-bottom: 18px;
-        }
+.dashboard-welcome h1 {
+    position: relative;
+    color: #fff;
+    font-size: clamp(28px, 5vw, 46px);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    margin: 0 0 15px;
+}
 
-        .dashboard-card > span {
-            color: #80a0ff;
-            font-size: 14px;
-            font-weight: 700;
-            margin-top: auto;
-        }
+.dashboard-welcome h1 span {
+    background: linear-gradient(90deg,#8daaff,#c39aff,#54dfff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
 
-        /* LEARNING CENTRE FEATURE CARD */
+.dashboard-welcome > p:last-child {
+    position: relative;
+    color: #b0bfd9;
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 600px;
+    margin-bottom: 0;
+}
 
-        .learning-card {
-            background:
-                radial-gradient(circle at top right, rgba(0,220,255,0.12), transparent 45%),
-                linear-gradient(135deg, #142747, #191c40);
-            border: 1px solid rgba(91,163,255,0.35);
-        }
+/* SECTIONS */
 
-        .learning-card .card-icon {
-            background: rgba(0,200,255,0.13);
-        }
+.dashboard-section {
+    margin-bottom: 48px;
+}
 
-        .learning-card > span {
-            color: #62d9ff;
-        }
+.dashboard-heading {
+    margin-bottom: 22px;
+}
 
-        .information-card {
-            padding: 30px;
-            margin-top: 10px;
-            border-radius: 18px;
-            background: linear-gradient(120deg, #111a30, #171b36);
-            border: 1px solid rgba(255,255,255,0.08);
-        }
+.dashboard-heading h2 {
+    color: #fff;
+    font-size: 27px;
+    margin: 0 0 8px;
+}
 
-        .information-card h2 {
-            color: #fff;
-            font-size: 23px;
-            margin-bottom: 15px;
-        }
+.dashboard-heading p {
+    color: #9caac5;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
 
-        .information-card p {
-            color: #aab6ce;
-            font-size: 14px;
-            line-height: 1.8;
-            margin-bottom: 12px;
-        }
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 20px;
+}
 
-        .information-card strong {
-            color: #8ba8ff;
-        }
+/* GLASS CARDS */
 
-        .dashboard-logout {
-            display: flex;
-            justify-content: center;
-            margin: 35px 0;
-        }
+.dashboard-card {
+    position: relative;
+    overflow: hidden;
 
-        .dashboard-logout button {
-            padding: 13px 35px;
-            color: #ffb4b4;
-            background: rgba(255,70,70,0.09);
-            border: 1px solid rgba(255,100,100,0.3);
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-        }
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-        .dashboard-logout button:hover {
-            background: rgba(255,70,70,0.18);
-        }
+    min-width: 0;
+    min-height: 220px;
+    padding: 26px;
 
-        .dashboard-footer {
-            padding: 25px 15px;
-            text-align: center;
-            color: #8995ad;
-            font-size: 13px;
-            border-top: 1px solid rgba(255,255,255,0.07);
-        }
+    text-decoration: none;
+    border-radius: 19px;
 
-        @media (max-width: 850px) {
-            .dashboard-nav {
-                align-items: flex-start;
-                flex-direction: column;
-                gap: 15px;
-            }
+    background: linear-gradient(
+        145deg,
+        rgba(28,43,75,.72),
+        rgba(15,23,45,.65)
+    );
 
-            .dashboard-nav nav {
-                justify-content: flex-start;
-                width: 100%;
-            }
-        }
+    border: 1px solid rgba(148,169,255,.15);
 
-        @media (max-width: 600px) {
-            .dashboard-nav {
-                padding: 17px 16px;
-            }
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-            .dashboard-nav .logo {
-                font-size: 23px;
-            }
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.055);
 
-            .dashboard-nav nav {
-                display: grid;
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-                gap: 7px;
-                width: 100%;
-            }
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+}
 
-            .dashboard-nav nav a {
-                text-align: center;
-                padding: 10px 4px;
-                font-size: 12px;
-                background: rgba(255,255,255,0.035);
-            }
+.dashboard-card::before {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: -90px;
+    right: -70px;
+    background: rgba(88,123,255,.12);
+    filter: blur(45px);
+    border-radius: 50%;
+    pointer-events: none;
+}
 
-            .dashboard-page {
-                padding: 22px 15px 45px;
-            }
+.dashboard-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(116,153,255,.55);
 
-            .dashboard-welcome {
-                padding: 28px 20px;
-                margin-bottom: 30px;
-                border-radius: 17px;
-            }
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.3),
+        0 0 25px rgba(71,118,255,.10),
+        inset 0 1px 0 rgba(255,255,255,.09);
+}
 
-            .dashboard-welcome .section-label {
-                font-size: 10px;
-                letter-spacing: 2px;
-            }
+.dashboard-card .card-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            .dashboard-welcome h1 {
-                font-size: 29px;
-                line-height: 1.3;
-            }
+    width: 52px;
+    height: 52px;
 
-            .dashboard-welcome > p:last-child {
-                font-size: 14px;
-            }
+    border-radius: 15px;
+    background: linear-gradient(
+        135deg,
+        rgba(71,118,255,.23),
+        rgba(155,109,255,.18)
+    );
 
-            .dashboard-heading h2 {
-                font-size: 23px;
-            }
+    border: 1px solid rgba(133,158,255,.22);
 
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
+    font-size: 25px;
+    margin-bottom: 19px;
 
-            .dashboard-card {
-                min-height: 190px;
-                padding: 22px;
-            }
+    box-shadow: 0 5px 20px rgba(71,118,255,.12);
+}
 
-            .dashboard-card h3 {
-                font-size: 18px;
-            }
+.dashboard-card h3 {
+    position: relative;
+    color: #f4f6ff;
+    font-size: 19px;
+    margin: 0 0 10px;
+}
 
-            .information-card {
-                padding: 23px 20px;
-            }
+.dashboard-card p {
+    position: relative;
+    color: #a8b5ce;
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 0 0 18px;
+}
 
-            .information-card h2 {
-                font-size: 21px;
-            }
-        }
+.dashboard-card > span {
+    position: relative;
+    color: #91aaff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: auto;
+}
 
-        @media (max-width: 360px) {
-            .dashboard-nav nav a {
-                font-size: 11px;
-            }
+/* LEARNING CENTRE FEATURE */
 
-            .dashboard-welcome h1 {
-                font-size: 25px;
-            }
-        }
-    </style>
+.learning-card {
+    background:
+        radial-gradient(circle at top right,rgba(0,220,255,.16),transparent 45%),
+        linear-gradient(135deg,rgba(28,66,104,.75),rgba(30,28,77,.72));
+
+    border-color: rgba(75,204,255,.30);
+}
+
+.learning-card .card-icon {
+    background: rgba(0,200,255,.15);
+    border-color: rgba(0,210,255,.25);
+}
+
+.learning-card > span {
+    color: #62dcff;
+}
+
+.learning-card:hover {
+    border-color: rgba(98,220,255,.65);
+    box-shadow: 0 18px 45px rgba(0,180,255,.10);
+}
+
+/* INFORMATION CARD */
+
+.information-card {
+    position: relative;
+    overflow: hidden;
+    padding: 32px;
+    margin-top: 15px;
+    border-radius: 20px;
+
+    background:
+        radial-gradient(circle at 100% 0%,rgba(155,109,255,.14),transparent 40%),
+        linear-gradient(135deg,rgba(27,40,70,.75),rgba(17,24,49,.75));
+
+    border: 1px solid rgba(143,162,255,.19);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow: 0 15px 40px rgba(0,0,0,.18);
+}
+
+.information-card h2 {
+    color: #fff;
+    font-size: 23px;
+    margin: 0 0 16px;
+}
+
+.information-card p {
+    color: #aab8d2;
+    font-size: 14px;
+    line-height: 1.9;
+    margin-bottom: 12px;
+}
+
+.information-card strong {
+    color: #91aaff;
+}
+
+/* LOGOUT */
+
+.dashboard-logout {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.dashboard-logout button {
+    padding: 14px 38px;
+    color: #ffb4c0;
+
+    background: rgba(255,70,100,.09);
+    border: 1px solid rgba(255,100,130,.28);
+
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.dashboard-logout button:hover {
+    background: rgba(255,70,100,.17);
+    border-color: rgba(255,100,130,.55);
+    box-shadow: 0 0 22px rgba(255,70,100,.10);
+    transform: translateY(-2px);
+}
+
+/* FOOTER */
+
+.dashboard-footer {
+    padding: 27px 15px;
+    text-align: center;
+    color: #8995ad;
+    font-size: 13px;
+    border-top: 1px solid rgba(148,169,255,.12);
+    background: rgba(8,13,28,.45);
+}
+
+/* TABLET */
+
+@media(max-width:850px) {
+    .dashboard-nav {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .dashboard-nav nav {
+        justify-content: flex-start;
+        width: 100%;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+    .dashboard-nav {
+        padding: 17px 16px;
+        background: rgba(9,15,32,.88);
+    }
+
+    .dashboard-nav .logo {
+        font-size: 23px;
+    }
+
+    .dashboard-nav nav {
+        display: grid;
+        grid-template-columns: repeat(3,minmax(0,1fr));
+        gap: 7px;
+        width: 100%;
+    }
+
+    .dashboard-nav nav a {
+        text-align: center;
+        padding: 11px 4px;
+        font-size: 12px;
+        background: rgba(255,255,255,.035);
+    }
+
+    .dashboard-page {
+        padding: 24px 15px 45px;
+    }
+
+    .dashboard-welcome {
+        padding: 30px 21px;
+        margin-bottom: 32px;
+        border-radius: 19px;
+    }
+
+    .dashboard-welcome .section-label {
+        font-size: 10px;
+        letter-spacing: 2px;
+    }
+
+    .dashboard-welcome h1 {
+        font-size: 29px;
+        line-height: 1.35;
+    }
+
+    .dashboard-welcome > p:last-child {
+        font-size: 14px;
+    }
+
+    .dashboard-heading h2 {
+        font-size: 23px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .dashboard-card {
+        min-height: 190px;
+        padding: 23px;
+        border-radius: 17px;
+    }
+
+    .dashboard-card h3 {
+        font-size: 18px;
+    }
+
+    .information-card {
+        padding: 24px 20px;
+        border-radius: 17px;
+    }
+
+    .information-card h2 {
+        font-size: 21px;
+    }
+}
+
+@media(max-width:360px) {
+    .dashboard-nav nav a {
+        font-size: 11px;
+    }
+
+    .dashboard-welcome h1 {
+        font-size: 25px;
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media(prefers-reduced-motion:reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- NAVIGATION -->
+<!-- NAVIGATION -->
 
-    <header class="dashboard-nav">
+<header class="dashboard-nav">
 
-        <a href="dashboard.html" class="logo">
-            Math<span>Genius</span>
-        </a>
+    <a href="dashboard.html" class="logo">
+        Math<span>Genius</span>
+    </a>
 
-        <nav>
-            <a href="dashboard.html" class="active">Dashboard</a>
-            <a href="learning.html">Learning Centre</a>
-            <a href="calculator.html">Calculator</a>
-            <a href="solver.html">Equation Solver</a>
-            <a href="statistics.html">Statistics</a>
-            <a href="matrix.html">Matrix</a>
-            <a href="history.html">History</a>
-        </nav>
+    <nav>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="learning.html">Learning Centre</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="solver.html">Equation Solver</a>
+        <a href="statistics.html">Statistics</a>
+        <a href="matrix.html">Matrix</a>
+        <a href="history.html">History</a>
+    </nav>
 
-    </header>
+</header>
 
-    <main class="dashboard-page">
+<main class="dashboard-page">
 
-        <!-- WELCOME SECTION -->
+    <!-- WELCOME SECTION -->
 
-        <section class="dashboard-welcome">
+    <section class="dashboard-welcome">
 
-            <p class="section-label">
-                YOUR PERSONAL WORKSPACE
-            </p>
+        <p class="section-label">
+            YOUR PERSONAL WORKSPACE
+        </p>
 
-            <h1>
-                Welcome back,<br>
-                <span id="userName">Math Genius</span>!
-            </h1>
+        <h1>
+            Welcome back,<br>
+            <span id="userName">Math Genius</span>!
+        </h1>
+
+        <p>
+            Your mathematics and academic learning workspace is ready.
+            What would you like to explore today?
+        </p>
+
+    </section>
+
+    <!-- WORKSPACE -->
+
+    <section class="dashboard-section">
+
+        <div class="dashboard-heading">
+            <h2>Your Workspace</h2>
 
             <p>
-                Your mathematics and academic learning workspace is ready.
-                What would you like to explore today?
+                Learn, practise and solve problems with MathGenius.
             </p>
+        </div>
 
-        </section>
+        <div class="dashboard-grid">
 
-        <!-- MATHEMATICS AND LEARNING TOOLS -->
+            <a href="learning.html" class="dashboard-card learning-card">
+                <div class="card-icon">🎓</div>
 
-        <section class="dashboard-section">
-
-            <div class="dashboard-heading">
-                <h2>Your Workspace</h2>
+                <h3>Learning Centre</h3>
 
                 <p>
-                    Learn, practise and solve problems with MathGenius.
+                    Explore academic programmes, discover courses,
+                    study chapters and topics, and practise with
+                    worked examples and questions.
                 </p>
-            </div>
 
-            <div class="dashboard-grid">
+                <span>Explore Learning Centre →</span>
+            </a>
 
-                <!-- LEARNING CENTRE -->
+            <a href="calculator.html" class="dashboard-card">
+                <div class="card-icon">🧮</div>
 
-                <a href="learning.html" class="dashboard-card learning-card">
-                    <div class="card-icon">🎓</div>
-                    <h3>Learning Centre</h3>
-                    <p>
-                        Explore academic programmes, discover courses,
-                        study chapters and topics, and practise with
-                        worked examples and questions.
-                    </p>
-                    <span>Explore Learning Centre →</span>
-                </a>
-
-                <a href="calculator.html" class="dashboard-card">
-                    <div class="card-icon">🧮</div>
-                    <h3>Scientific Calculator</h3>
-                    <p>
-                        Perform basic and advanced mathematical calculations.
-                    </p>
-                    <span>Open Calculator →</span>
-                </a>
-
-                <a href="solver.html" class="dashboard-card">
-                    <div class="card-icon">📐</div>
-                    <h3>Equation Solver</h3>
-                    <p>
-                        Solve linear and quadratic equations step by step.
-                    </p>
-                    <span>Solve Equations →</span>
-                </a>
-
-                <a href="statistics.html" class="dashboard-card">
-                    <div class="card-icon">📊</div>
-                    <h3>Statistics Calculator</h3>
-                    <p>
-                        Calculate mean, median, mode, variance and more.
-                    </p>
-                    <span>Calculate Statistics →</span>
-                </a>
-
-                <a href="matrix.html" class="dashboard-card">
-                    <div class="card-icon">🔢</div>
-                    <h3>Matrix Calculator</h3>
-                    <p>
-                        Perform matrix addition, subtraction,
-                        multiplication and other operations.
-                    </p>
-                    <span>Open Matrix Tool →</span>
-                </a>
-
-            </div>
-
-        </section>
-
-        <!-- ACCOUNT SECTION -->
-
-        <section class="dashboard-section">
-
-            <div class="dashboard-heading">
-                <h2>Your Account</h2>
+                <h3>Scientific Calculator</h3>
 
                 <p>
-                    Manage your personal mathematics space.
+                    Perform basic and advanced mathematical calculations.
                 </p>
-            </div>
 
-            <div class="dashboard-grid">
+                <span>Open Calculator →</span>
+            </a>
 
-                <a href="history.html" class="dashboard-card">
-                    <div class="card-icon">📚</div>
-                    <h3>Calculation History</h3>
-                    <p>
-                        Review and manage your previously saved calculations.
-                    </p>
-                    <span>View History →</span>
-                </a>
+            <a href="solver.html" class="dashboard-card">
+                <div class="card-icon">📐</div>
 
-                <a href="profile.html" class="dashboard-card">
-                    <div class="card-icon">👤</div>
-                    <h3>My Profile</h3>
-                    <p>
-                        View and update your personal account information.
-                    </p>
-                    <span>Manage Profile →</span>
-                </a>
+                <h3>Equation Solver</h3>
 
-            </div>
+                <p>
+                    Solve linear and quadratic equations step by step.
+                </p>
 
-        </section>
+                <span>Solve Equations →</span>
+            </a>
 
-        <!-- INFORMATION -->
+            <a href="statistics.html" class="dashboard-card">
+                <div class="card-icon">📊</div>
 
-        <section class="information-card">
+                <h3>Statistics Calculator</h3>
 
-            <h2>Keep Learning. Keep Solving.</h2>
+                <p>
+                    Calculate mean, median, mode, variance and more.
+                </p>
+
+                <span>Calculate Statistics →</span>
+            </a>
+
+            <a href="matrix.html" class="dashboard-card">
+                <div class="card-icon">🔢</div>
+
+                <h3>Matrix Calculator</h3>
+
+                <p>
+                    Perform matrix addition, subtraction,
+                    multiplication and other operations.
+                </p>
+
+                <span>Open Matrix Tool →</span>
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- ACCOUNT SECTION -->
+
+    <section class="dashboard-section">
+
+        <div class="dashboard-heading">
+            <h2>Your Account</h2>
 
             <p>
-                MathGenius provides free mathematical tools and academic
-                learning resources for students, lecturers and researchers.
-                Explore programmes, study courses, practise problems and
-                improve your understanding.
+                Manage your personal mathematics space.
             </p>
+        </div>
 
-            <p>
-                <strong>Remember:</strong> Your calculations are saved
-                locally in the browser on this device.
-            </p>
+        <div class="dashboard-grid">
 
-        </section>
+            <a href="history.html" class="dashboard-card">
+                <div class="card-icon">📚</div>
 
-        <!-- LOGOUT -->
+                <h3>Calculation History</h3>
 
-        <section class="dashboard-logout">
+                <p>
+                    Review and manage your previously saved calculations.
+                </p>
 
-            <button type="button" id="logoutButton">
-                Log Out
-            </button>
+                <span>View History →</span>
+            </a>
 
-        </section>
+            <a href="profile.html" class="dashboard-card">
+                <div class="card-icon">👤</div>
 
-    </main>
+                <h3>My Profile</h3>
 
-    <!-- FOOTER -->
+                <p>
+                    View and update your personal account information.
+                </p>
 
-    <footer class="dashboard-footer">
-        © 2026 MathGenius. Solve Smarter. Learn Better.
-    </footer>
+                <span>Manage Profile →</span>
+            </a>
 
-    <!-- AUTHENTICATION -->
+        </div>
 
-    <script src="auth.js"></script>
+    </section>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+    <!-- INFORMATION -->
 
-            if (typeof getCurrentUser !== "function") {
-                window.location.href = "login.html";
-                return;
-            }
+    <section class="information-card">
 
-            const user = getCurrentUser();
+        <h2>Keep Learning. Keep Solving.</h2>
 
-            if (!user) {
-                window.location.href = "login.html";
-                return;
-            }
+        <p>
+            MathGenius provides free mathematical tools and academic
+            learning resources for students, lecturers and researchers.
+            Explore programmes, study courses, practise problems and
+            improve your understanding.
+        </p>
 
-            const nameElement = document.getElementById("userName");
+        <p>
+            <strong>Remember:</strong> Your calculations are saved
+            locally in the browser on this device.
+        </p>
 
-            if (nameElement) {
-                nameElement.textContent =
-                    user.fullName || "Math Genius";
-            }
+    </section>
 
-            const logoutButton =
-                document.getElementById("logoutButton");
+    <!-- LOGOUT -->
 
-            if (logoutButton) {
-                logoutButton.addEventListener("click", function () {
+    <section class="dashboard-logout">
 
-                    if (confirm("Are you sure you want to log out?")) {
-                        logout();
-                    }
+        <button type="button" id="logoutButton">
+            Log Out
+        </button>
 
-                });
+    </section>
+
+</main>
+
+<footer class="dashboard-footer">
+    © 2026 MathGenius. Solve Smarter. Learn Better.
+</footer>
+
+<!-- AUTHENTICATION -->
+
+<script src="auth.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    if (typeof getCurrentUser !== "function") {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const user = getCurrentUser();
+
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const nameElement = document.getElementById("userName");
+
+    if (nameElement) {
+        nameElement.textContent = user.fullName || "Math Genius";
+    }
+
+    const logoutButton = document.getElementById("logoutButton");
+
+    if (logoutButton) {
+
+        logoutButton.addEventListener("click", function () {
+
+            if (confirm("Are you sure you want to log out?")) {
+                logout();
             }
 
         });
-    </script>
+
+    }
+
+});
+</script>
 
 </body>
 </html>
