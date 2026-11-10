@@ -1,6 +1,7 @@
 // ==========================================
 // MATHGENIUS - IMPROVED LOCAL ACCOUNT SYSTEM
 // Persistent Sessions + Recovery Codes
+// Rotating Login Success Animation
 // Mobile Safari Compatible
 // ==========================================
 
@@ -41,7 +42,6 @@ function normalizeEmail(email) {
 
 // ==========================================
 // ID GENERATOR
-// Supports browsers without crypto.randomUUID
 // ==========================================
 
 function generateID() {
@@ -316,8 +316,6 @@ function showRecoveryCode(code, message) {
 
         } catch {
 
-            codeBox.focus?.();
-
             alert("Please select and copy your recovery code manually: " + code);
 
         }
@@ -518,6 +516,7 @@ if (registerForm) {
 
 // ==========================================
 // LOGIN
+// ROTATING ORB + SUCCESS ANIMATION
 // ==========================================
 
 const loginForm = document.getElementById("loginForm");
@@ -542,7 +541,7 @@ if (loginForm) {
             return;
         }
 
-        if (!crypto.subtle) {
+        if (!window.crypto || !crypto.subtle) {
             showMessage(
                 "Secure password verification is unavailable. Open the official HTTPS website."
             );
@@ -551,6 +550,8 @@ if (loginForm) {
 
         button.disabled = true;
         button.textContent = "Checking Account...";
+
+        let loginSuccessful = false;
 
         try {
 
@@ -582,8 +583,10 @@ if (loginForm) {
                 return;
             }
 
+            // Save authenticated session
             saveSession(user.id);
 
+            // Generate recovery code if missing
             if (!user.recoveryHash || !user.recoverySalt) {
 
                 const recoveryCode = generateRecoveryCode();
@@ -608,11 +611,27 @@ if (loginForm) {
                 return;
             }
 
-            showMessage("Login successful!", true);
+            // Password is correct
+            loginSuccessful = true;
 
-            setTimeout(function () {
-                window.location.href = "dashboard.html";
-            }, 600);
+            button.textContent = "Login Successful...";
+
+            // Trigger rotating ball animation
+            if (
+                typeof window.showLoginSuccessAnimation === "function"
+            ) {
+
+                window.showLoginSuccessAnimation();
+
+            } else {
+
+                showMessage("Login successful!", true);
+
+                setTimeout(function () {
+                    window.location.href = "dashboard.html";
+                }, 1000);
+
+            }
 
         } catch (error) {
 
@@ -624,8 +643,11 @@ if (loginForm) {
 
         } finally {
 
-            button.disabled = false;
-            button.textContent = "Log In";
+            if (!loginSuccessful) {
+                button.disabled = false;
+                button.textContent = "Log In";
+            }
+
         }
 
     });
