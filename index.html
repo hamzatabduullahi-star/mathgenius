@@ -5,50 +5,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MathGenius — Solve Smarter. Learn Better.</title>
+    <title>MathGenius — Enter the Mathematics Universe</title>
 
-    <meta name="description" content="MathGenius is a free mathematics platform for students, lecturers and researchers. Solve equations, calculate statistics and explore mathematics tools.">
+    <meta name="description" content="Explore MathGenius, your futuristic mathematics workspace. Solve equations, calculate statistics, explore matrices and improve your mathematical skills for free.">
 
-    <meta name="theme-color" content="#080d1c">
+    <meta name="theme-color" content="#050816">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- CORRECT CSS PATH -->
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
-    <div class="background-glow glow-one"></div>
-    <div class="background-glow glow-two"></div>
+    <!-- BACKGROUND UNIVERSE -->
+
+    <div class="universe-background">
+
+        <canvas id="universeCanvas" aria-hidden="true"></canvas>
+
+        <div class="background-glow glow-one"></div>
+        <div class="background-glow glow-two"></div>
+        <div class="background-glow glow-three"></div>
+
+        <div class="background-grid"></div>
+
+    </div>
+
 
     <!-- NAVIGATION -->
+
     <header class="header">
 
         <nav class="navbar">
 
             <a href="index.html" class="logo">
+
                 <span class="logo-icon">∑</span>
-                <span>Math<span class="logo-highlight">Genius</span></span>
+
+                <span>
+                    Math<span class="logo-highlight">Genius</span>
+                </span>
+
             </a>
 
-            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Toggle navigation"
+                aria-expanded="false"
+                aria-controls="navLinks"
+            >
                 ☰
             </button>
 
+
             <div class="nav-links" id="navLinks">
+
                 <a href="#home">Home</a>
+
                 <a href="#tools">Tools</a>
+
                 <a href="#audience">Who It's For</a>
+
                 <a href="#about">About</a>
+
             </div>
 
+
             <div class="nav-actions">
-                <a href="login.html" class="login-link">Log In</a>
-                <a href="register.html" class="btn btn-small">Get Started</a>
+
+                <a href="login.html" class="login-link">
+                    Log In
+                </a>
+
+                <a href="register.html" class="btn btn-small">
+                    Get Started
+                </a>
+
             </div>
 
         </nav>
@@ -56,441 +94,974 @@
     </header>
 
 
+
     <main>
 
-        <!-- HERO -->
+
+        <!-- =================================
+             HERO SECTION
+        ================================== -->
+
         <section class="hero" id="home">
+
+
+            <!-- HERO TEXT -->
 
             <div class="hero-content">
 
                 <div class="announcement">
+
                     <span class="announcement-dot"></span>
-                    Mathematics made easier for everyone
+
+                    <span>THE FUTURE OF MATHEMATICS IS HERE</span>
+
                 </div>
 
+
+                <div class="hero-eyebrow">
+                    THINK · EXPLORE · SOLVE
+                </div>
+
+
                 <h1>
-                    Understand Maths.
-                    <span class="gradient-text">Unlock Your Potential.</span>
+
+                    Mathematics
+
+                    <span class="gradient-text">
+                        Beyond Limits.
+                    </span>
+
                 </h1>
 
+
                 <p class="hero-description">
-                    Your all-in-one mathematics workspace. Solve problems,
-                    explore calculations, understand concepts and improve
-                    your mathematical skills — all in one place.
+
+                    Welcome to a smarter mathematics experience.
+
+                    Solve complex equations, explore powerful
+                    mathematical tools and develop your understanding
+                    in one futuristic digital workspace.
+
                 </p>
+
 
                 <div class="hero-buttons">
 
                     <a href="register.html" class="btn btn-primary">
-                        Get Started Free <span>→</span>
+
+                        Explore MathGenius
+
+                        <span>→</span>
+
                     </a>
 
+
                     <a href="#tools" class="btn btn-outline">
-                        Explore Tools
+
+                        Discover Tools
+
                     </a>
 
                 </div>
 
+
                 <div class="hero-note">
-                    <span>✓</span> Free to use
-                    <span>✓</span> Built for everyone
-                    <span>✓</span> Learn at your pace
+
+                    <div>
+                        <span>✓</span>
+                        Completely free
+                    </div>
+
+                    <div>
+                        <span>✓</span>
+                        Easy to explore
+                    </div>
+
+                    <div>
+                        <span>✓</span>
+                        Built for everyone
+                    </div>
+
+                </div>
+
+
+                <div class="hero-scroll">
+
+                    <span class="scroll-line"></span>
+
+                    <span>SCROLL TO EXPLORE</span>
+
                 </div>
 
             </div>
 
 
-            <!-- MATHEMATICS PREVIEW -->
-            <div class="hero-visual">
 
-                <div class="math-card">
+            <!-- =================================
+                 3D MATHEMATICS UNIVERSE
+            ================================== -->
 
-                    <div class="math-card-header">
+            <div class="hero-visual" id="heroVisual">
 
-                        <div>
-                            <span class="card-label">MATHGENIUS WORKSPACE</span>
-                            <h3>Equation Solver</h3>
+
+                <div class="universe-label">
+
+                    <span class="live-indicator"></span>
+
+                    MATHGENIUS DIGITAL UNIVERSE
+
+                </div>
+
+
+                <!-- 3D SCENE -->
+
+                <div class="math-universe" id="mathUniverse">
+
+
+                    <!-- OUTER ORBIT -->
+
+                    <div class="orbit orbit-outer">
+
+                        <div class="orbit-object orbit-object-one">
+                            π
                         </div>
-
-                        <span class="status-badge">● Ready</span>
 
                     </div>
 
-                    <div class="equation-area">
 
-                        <span class="equation-label">Example equation</span>
+                    <!-- MIDDLE ORBIT -->
 
-                        <div class="equation">
-                            x² - 5x + 6 = 0
-                        </div>
+                    <div class="orbit orbit-middle">
 
-                        <div class="solution-line">
-                            <span>Solution</span>
-                            <strong>x = 2 or x = 3</strong>
+                        <div class="orbit-object orbit-object-two">
+                            √
                         </div>
 
                     </div>
 
-                    <div class="math-card-footer">
 
-                        <div class="mini-stat">
+                    <!-- INNER ORBIT -->
 
-                            <span class="mini-icon purple">∑</span>
+                    <div class="orbit orbit-inner">
 
-                            <div>
-                                <strong>Mathematics</strong>
-                                <small>Explore concepts</small>
-                            </div>
+                        <div class="orbit-object orbit-object-three">
+                            ∞
+                        </div>
+
+                    </div>
+
+
+                    <!-- CENTRAL MATHEMATICAL CORE -->
+
+                    <div class="math-core">
+
+                        <div class="core-glow"></div>
+
+                        <div class="core-ring core-ring-one"></div>
+
+                        <div class="core-ring core-ring-two"></div>
+
+                        <div class="core-ring core-ring-three"></div>
+
+
+                        <div class="core-content">
+
+                            <span class="core-symbol">
+                                ∑
+                            </span>
+
+                            <span class="core-name">
+                                MATH
+                            </span>
+
+                            <span class="core-subtitle">
+                                GENIUS
+                            </span>
 
                         </div>
 
-                        <div class="mini-stat">
+                    </div>
 
-                            <span class="mini-icon blue">✓</span>
 
-                            <div>
-                                <strong>Smart tools</strong>
-                                <small>Calculate with ease</small>
-                            </div>
+                    <!-- FLOATING MATHEMATICAL OBJECTS -->
 
-                        </div>
+                    <div class="floating-object floating-object-one">
+
+                        <span>∫</span>
+
+                        <small>CALCULUS</small>
+
+                    </div>
+
+
+                    <div class="floating-object floating-object-two">
+
+                        <span>π</span>
+
+                        <small>3.14159</small>
+
+                    </div>
+
+
+                    <div class="floating-object floating-object-three">
+
+                        <span>√x</span>
+
+                        <small>ALGEBRA</small>
+
+                    </div>
+
+
+                    <div class="floating-object floating-object-four">
+
+                        <span>∞</span>
+
+                        <small>INFINITY</small>
+
+                    </div>
+
+
+                    <div class="floating-object floating-object-five">
+
+                        <span>∂</span>
+
+                        <small>DERIVATIVE</small>
+
+                    </div>
+
+
+                    <!-- FLOATING EQUATIONS -->
+
+                    <div class="floating-equation equation-one">
+
+                        E = mc²
+
+                    </div>
+
+
+                    <div class="floating-equation equation-two">
+
+                        a² + b² = c²
+
+                    </div>
+
+
+                    <div class="floating-equation equation-three">
+
+                        f(x) = y
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- FLOATING INFORMATION CARD -->
+
+                <div class="universe-info-card">
+
+                    <div class="info-card-icon">
+                        ✦
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Explore the impossible
+                        </strong>
+
+                        <small>
+                            Your mathematical journey begins here
+                        </small>
 
                     </div>
 
                 </div>
 
-                <div class="floating-symbol symbol-one">π</div>
-                <div class="floating-symbol symbol-two">√</div>
-                <div class="floating-symbol symbol-three">∞</div>
 
             </div>
 
         </section>
 
 
-        <!-- STATISTICS -->
+
+        <!-- =================================
+             STATISTICS
+        ================================== -->
+
         <section class="stats-section">
 
             <div class="stat-item">
+
+                <span class="stat-symbol">◈</span>
+
                 <h2>100%</h2>
+
                 <p>Free access</p>
+
             </div>
 
+
             <div class="stat-item">
+
+                <span class="stat-symbol">◎</span>
+
                 <h2>3+</h2>
+
                 <p>User categories</p>
+
             </div>
 
+
             <div class="stat-item">
+
+                <span class="stat-symbol">◷</span>
+
                 <h2>24/7</h2>
+
                 <p>Learn anytime</p>
+
             </div>
 
+
             <div class="stat-item">
+
+                <span class="stat-symbol">∞</span>
+
                 <h2>∞</h2>
+
                 <p>Learning possibilities</p>
+
             </div>
 
         </section>
 
 
-        <!-- TOOLS -->
+
+        <!-- =================================
+             MATHEMATICS TOOLS
+        ================================== -->
+
         <section class="section tools-section" id="tools">
+
 
             <div class="section-heading">
 
-                <span class="section-label">YOUR MATHEMATICS WORKSPACE</span>
+                <span class="section-label">
+                    YOUR DIGITAL MATHEMATICS LABORATORY
+                </span>
+
 
                 <h2>
-                    Everything you need to
-                    <span class="gradient-text">solve smarter.</span>
+
+                    Powerful tools.
+
+                    <span class="gradient-text">
+                        Limitless possibilities.
+                    </span>
+
                 </h2>
 
+
                 <p>
-                    Access useful mathematics tools designed to make
-                    calculations and problem-solving easier.
+
+                    Everything you need to explore mathematics,
+                    perform calculations and solve problems
+                    without unnecessary complications.
+
                 </p>
 
             </div>
+
 
 
             <div class="tools-grid">
 
+
+                <!-- CALCULATOR -->
+
                 <a href="calculator.html" class="tool-card">
 
-                    <div class="tool-icon purple-icon">＋</div>
+                    <div class="tool-card-top">
 
-                    <h3>Scientific Calculator</h3>
+                        <div class="tool-icon purple-icon">
+                            ＋
+                        </div>
+
+                        <span class="tool-number">
+                            01
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Scientific Calculator
+                    </h3>
+
 
                     <p>
+
                         Perform basic and advanced mathematical
                         calculations with ease.
+
                     </p>
 
-                    <span class="tool-link">Open Calculator →</span>
+
+                    <span class="tool-link">
+                        Open Calculator →
+                    </span>
 
                 </a>
 
+
+
+                <!-- EQUATION SOLVER -->
 
                 <a href="solver.html" class="tool-card">
 
-                    <div class="tool-icon blue-icon">x²</div>
+                    <div class="tool-card-top">
 
-                    <h3>Equation Solver</h3>
+                        <div class="tool-icon blue-icon">
+                            x²
+                        </div>
+
+                        <span class="tool-number">
+                            02
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Equation Solver
+                    </h3>
+
 
                     <p>
+
                         Work through mathematical equations
                         and explore their solutions.
+
                     </p>
 
-                    <span class="tool-link">Solve Equations →</span>
+
+                    <span class="tool-link">
+                        Solve Equations →
+                    </span>
 
                 </a>
 
+
+
+                <!-- STATISTICS -->
 
                 <a href="statistics.html" class="tool-card">
 
-                    <div class="tool-icon pink-icon">∑</div>
+                    <div class="tool-card-top">
 
-                    <h3>Statistics Calculator</h3>
+                        <div class="tool-icon pink-icon">
+                            ∑
+                        </div>
+
+                        <span class="tool-number">
+                            03
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Statistics Calculator
+                    </h3>
+
 
                     <p>
+
                         Calculate mean, median, mode, range
                         and other statistical values.
+
                     </p>
 
-                    <span class="tool-link">Explore Statistics →</span>
+
+                    <span class="tool-link">
+                        Explore Statistics →
+                    </span>
 
                 </a>
 
+
+
+                <!-- MATRIX -->
 
                 <a href="matrix.html" class="tool-card">
 
-                    <div class="tool-icon orange-icon">▦</div>
+                    <div class="tool-card-top">
 
-                    <h3>Matrix Calculator</h3>
+                        <div class="tool-icon orange-icon">
+                            ▦
+                        </div>
+
+                        <span class="tool-number">
+                            04
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Matrix Calculator
+                    </h3>
+
 
                     <p>
-                        Perform matrix operations and
-                        explore important matrix calculations.
+
+                        Perform matrix operations and explore
+                        important matrix calculations.
+
                     </p>
 
-                    <span class="tool-link">Open Matrix Tool →</span>
+
+                    <span class="tool-link">
+                        Open Matrix Tool →
+                    </span>
 
                 </a>
 
 
+
+                <!-- ADVANCED MATHEMATICS -->
+
                 <div class="tool-card coming-soon">
 
-                    <div class="tool-icon green-icon">ƒ</div>
+                    <div class="tool-card-top">
 
-                    <span class="coming-badge">Coming Soon</span>
+                        <div class="tool-icon green-icon">
+                            ƒ
+                        </div>
 
-                    <h3>Advanced Mathematics</h3>
+                        <span class="coming-badge">
+                            Coming Soon
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Advanced Mathematics
+                    </h3>
+
 
                     <p>
+
                         Explore more advanced mathematical
                         concepts and problem-solving tools.
+
                     </p>
 
-                    <span class="tool-link">Coming Soon</span>
+
+                    <span class="tool-link">
+                        Coming Soon
+                    </span>
 
                 </div>
 
+
+
+                <!-- IMAGE QUESTION SOLVER -->
 
                 <div class="tool-card coming-soon">
 
-                    <div class="tool-icon cyan-icon">📷</div>
+                    <div class="tool-card-top">
 
-                    <span class="coming-badge">Coming Soon</span>
+                        <div class="tool-icon cyan-icon">
+                            ▧
+                        </div>
 
-                    <h3>Image Question Solver</h3>
+                        <span class="coming-badge">
+                            Coming Soon
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Image Question Solver
+                    </h3>
+
 
                     <p>
+
                         Upload a mathematics question image
                         and get help understanding the problem.
+
                     </p>
 
-                    <span class="tool-link">Coming Soon</span>
+
+                    <span class="tool-link">
+                        Coming Soon
+                    </span>
 
                 </div>
+
 
             </div>
 
         </section>
 
 
-        <!-- AUDIENCE -->
+
+        <!-- =================================
+             AUDIENCE
+        ================================== -->
+
         <section class="section audience-section" id="audience">
+
 
             <div class="section-heading">
 
-                <span class="section-label">MADE FOR EVERYONE</span>
+                <span class="section-label">
+                    BUILT FOR CURIOUS MINDS
+                </span>
+
 
                 <h2>
-                    One platform.
-                    <span class="gradient-text">Different possibilities.</span>
+
+                    One universe.
+
+                    <span class="gradient-text">
+                        Different ambitions.
+                    </span>
+
                 </h2>
 
+
                 <p>
+
                     Whether you're learning, teaching or conducting
-                    research, MathGenius is designed to support you.
+                    research, there's a place for you here.
+
                 </p>
 
             </div>
+
 
 
             <div class="audience-grid">
 
+
+                <!-- STUDENTS -->
+
                 <div class="audience-card">
 
-                    <div class="audience-icon">🎓</div>
+                    <div class="audience-icon">
+                        🎓
+                    </div>
 
-                    <h3>Students</h3>
+
+                    <span class="audience-tag">
+                        LEARN
+                    </span>
+
+
+                    <h3>
+                        Students
+                    </h3>
+
 
                     <p>
-                        Improve your understanding, practise calculations
-                        and build confidence in mathematics.
+
+                        Improve your understanding, practise
+                        calculations and build confidence
+                        in mathematics.
+
                     </p>
 
+
                     <a href="register.html?role=student">
+
                         Join as a Student →
+
                     </a>
 
                 </div>
 
+
+
+                <!-- LECTURERS -->
 
                 <div class="audience-card featured-audience">
 
-                    <div class="audience-icon">👨‍🏫</div>
+                    <div class="audience-icon">
+                        👨‍🏫
+                    </div>
 
-                    <h3>Lecturers</h3>
+
+                    <span class="audience-tag">
+                        TEACH
+                    </span>
+
+
+                    <h3>
+                        Lecturers
+                    </h3>
+
 
                     <p>
-                        Access mathematical tools that can support
-                        teaching, explanations and academic activities.
+
+                        Access mathematical tools that support
+                        teaching, explanations and academic
+                        activities.
+
                     </p>
 
+
                     <a href="register.html?role=lecturer">
+
                         Join as a Lecturer →
+
                     </a>
 
                 </div>
 
+
+
+                <!-- RESEARCHERS -->
 
                 <div class="audience-card">
 
-                    <div class="audience-icon">🔬</div>
+                    <div class="audience-icon">
+                        🔬
+                    </div>
 
-                    <h3>Researchers</h3>
+
+                    <span class="audience-tag">
+                        DISCOVER
+                    </span>
+
+
+                    <h3>
+                        Researchers
+                    </h3>
+
 
                     <p>
-                        Explore calculations and mathematical tools
-                        that support research and analysis.
+
+                        Explore calculations and mathematical
+                        tools that support research and analysis.
+
                     </p>
 
+
                     <a href="register.html?role=researcher">
+
                         Join as a Researcher →
+
                     </a>
 
                 </div>
 
+
             </div>
 
         </section>
 
 
-        <!-- ABOUT -->
+
+        <!-- =================================
+             ABOUT MATHGENIUS
+        ================================== -->
+
         <section class="section about-section" id="about">
+
 
             <div class="about-content">
 
-                <span class="section-label">ABOUT MATHGENIUS</span>
+                <span class="section-label">
+                    THE IDEA BEHIND MATHGENIUS
+                </span>
+
 
                 <h2>
-                    Making mathematics
-                    <span class="gradient-text">accessible to everyone.</span>
+
+                    Mathematics should have
+
+                    <span class="gradient-text">
+                        no boundaries.
+                    </span>
+
                 </h2>
 
-                <p>
-                    MathGenius is designed to make mathematical learning
-                    and problem-solving more accessible. Our goal is to
-                    bring useful mathematics tools together in one
-                    convenient digital workspace.
-                </p>
 
                 <p>
-                    We believe that everyone should have the opportunity
-                    to explore mathematics, develop their skills and
-                    solve problems without unnecessary barriers.
+
+                    MathGenius is designed to make mathematical
+                    learning and problem-solving more accessible.
+
+                    Our goal is to bring useful mathematics tools
+                    together in one convenient digital workspace.
+
                 </p>
+
+
+                <p>
+
+                    We believe everyone deserves the opportunity
+                    to explore mathematics, develop their skills
+                    and solve problems without unnecessary barriers.
+
+                </p>
+
 
                 <a href="register.html" class="btn btn-primary">
+
                     Create Your Free Account →
+
                 </a>
 
             </div>
 
+
+
+            <!-- ABOUT VISUAL -->
 
             <div class="about-visual">
 
-                <div class="about-symbol">∫</div>
-                <div class="about-equation">E = mc²</div>
-                <div class="about-pi">π = 3.14159...</div>
-                <div class="about-square">√x</div>
+
+                <div class="about-orbit about-orbit-one"></div>
+
+                <div class="about-orbit about-orbit-two"></div>
+
+
+                <div class="about-symbol">
+                    ∫
+                </div>
+
+
+                <div class="about-equation">
+                    E = mc²
+                </div>
+
+
+                <div class="about-pi">
+                    π = 3.14159...
+                </div>
+
+
+                <div class="about-square">
+                    √x
+                </div>
+
+
+                <div class="about-matrix">
+                    [ 1  0 ]
+                    <br>
+                    [ 0  1 ]
+                </div>
+
 
             </div>
 
         </section>
 
 
-        <!-- CALL TO ACTION -->
+
+        <!-- =================================
+             CALL TO ACTION
+        ================================== -->
+
         <section class="cta-section">
+
+
+            <div class="cta-decoration">
+
+                <span>π</span>
+
+                <span>∑</span>
+
+                <span>∞</span>
+
+                <span>√</span>
+
+            </div>
+
 
             <div class="cta-content">
 
-                <span class="section-label">YOUR JOURNEY STARTS HERE</span>
+                <span class="section-label">
+                    YOUR JOURNEY STARTS HERE
+                </span>
+
 
                 <h2>
-                    Ready to make mathematics
-                    <span class="gradient-text">easier?</span>
+
+                    Think bigger.
+
+                    <span class="gradient-text">
+                        Solve smarter.
+                    </span>
+
                 </h2>
 
+
                 <p>
-                    Join MathGenius and explore a smarter way
-                    to learn and work with mathematics.
+
+                    Step into the MathGenius universe and
+                    discover a better way to explore mathematics.
+
                 </p>
 
+
                 <a href="register.html" class="btn btn-primary">
+
                     Get Started — It's Free →
+
                 </a>
 
             </div>
 
         </section>
+
 
     </main>
 
 
-    <!-- FOOTER -->
+
+    <!-- =================================
+         FOOTER
+    ================================== -->
+
     <footer class="footer">
 
+
         <div class="footer-content">
+
 
             <div class="footer-brand">
 
                 <a href="index.html" class="logo">
+
                     <span class="logo-icon">∑</span>
-                    <span>Math<span class="logo-highlight">Genius</span></span>
+
+                    <span>
+                        Math<span class="logo-highlight">Genius</span>
+                    </span>
+
                 </a>
 
+
                 <p>
+
                     Solve Smarter. Learn Better.
+
                     <br>
+
                     Mathematics made accessible to everyone.
+
                 </p>
 
             </div>
+
 
 
             <div class="footer-column">
@@ -498,11 +1069,15 @@
                 <h4>Explore</h4>
 
                 <a href="#home">Home</a>
+
                 <a href="#tools">Mathematics Tools</a>
+
                 <a href="#audience">Who It's For</a>
+
                 <a href="#about">About Us</a>
 
             </div>
+
 
 
             <div class="footer-column">
@@ -510,10 +1085,13 @@
                 <h4>Account</h4>
 
                 <a href="login.html">Log In</a>
+
                 <a href="register.html">Create Account</a>
+
                 <a href="dashboard.html">Dashboard</a>
 
             </div>
+
 
 
             <div class="footer-column">
@@ -521,31 +1099,45 @@
                 <h4>Tools</h4>
 
                 <a href="calculator.html">Calculator</a>
+
                 <a href="solver.html">Equation Solver</a>
+
                 <a href="statistics.html">Statistics</a>
+
                 <a href="matrix.html">Matrix Calculator</a>
 
             </div>
 
+
         </div>
+
 
 
         <div class="footer-bottom">
 
             <p>
+
                 © <span id="currentYear"></span> MathGenius.
+
                 All rights reserved.
+
             </p>
 
-            <p>Made for curious minds. 💙</p>
+
+            <p>
+                Made for curious minds. 💙
+            </p>
 
         </div>
 
     </footer>
 
 
-    <!-- CORRECT JAVASCRIPT PATH -->
+
+    <!-- JAVASCRIPT -->
+
     <script src="./main.js"></script>
 
 </body>
+
 </html>
